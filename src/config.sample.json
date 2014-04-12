@@ -1,0 +1,6 @@
+{
+    "STORAGE_NAME": "storage account name",
+    "STORAGE_KEY": "storage access key",
+    "PARTITION_KEY": "mytasks",
+    "TABLE_NAME": "tasks"
+}
