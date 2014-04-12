@@ -7,7 +7,7 @@ module.exports = (grunt)->
 				options:
 					force: true
 				src:
-					["./build/**/*.js"]
+					["./build/**/*.js", "./build/**/*.hbs"]
 		coffee:
 			dev:
 				expand: true
@@ -17,8 +17,11 @@ module.exports = (grunt)->
 				ext: ".js"
 		copy:
 			configuration:
-				files:
-					'./config.json' : './src/config.json'
+				src: './config.json'
+				dest: './src/config.json' 
+			views:
+				src: './src/views/index.hbs'
+				dest: './build/views/index.hbs'
 					
 
 	# Plugins
@@ -27,4 +30,4 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-contrib-copy'
 
 	# Tasks
-	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration']
+	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration', 'copy:views']
