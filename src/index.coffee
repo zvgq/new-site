@@ -11,7 +11,7 @@ nconf.env().file({ file: 'config.json'});
 
 gameTableName 	= nconf.get "GAME_TABLE_NAME"
 partitionKey 	= nconf.get "PARTITION_KEY"
-accountName 	= nconf.get "STORAGE_NAME"
+accountName 		= nconf.get "STORAGE_NAME"
 accountKey 		= nconf.get "STORAGE_KEY"
 
 # setup server
@@ -30,4 +30,9 @@ server.use "/api", apiRouter.router
 browseRouter = new routers.BrowseRouter()
 server.use "/browse", browseRouter.router
 
+# redirect root to browse application
+server.use "/", (req, res)->
+	res.redirect "/browse"
+
 server.listen 3000
+console.log "Listening on port 3000"
