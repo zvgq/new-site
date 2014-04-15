@@ -12,8 +12,14 @@ module.exports = (grunt)->
 			dev:
 				expand: true
 				cwd: "./src"
-				src: "**/*.coffee"
+				src: ["**/*.coffee", "!client/**/*.*"]
 				dest: "./build"
+				ext: ".js"
+			devclient:
+				expand: true
+				cwd: "./src/client"
+				src: "**/*.coffee"
+				dest: "./public/script"
 				ext: ".js"
 		copy:
 			configuration:
@@ -30,4 +36,4 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-contrib-copy'
 
 	# Tasks
-	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration', 'copy:views']
+	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'coffee:devclient', 'copy:configuration', 'copy:views']

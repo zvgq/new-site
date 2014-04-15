@@ -1,0 +1,32 @@
+{
+  "name": "zvgq",
+  "version": "0.0.0",
+  "homepage": "https://github.com/zvgq/zvgq",
+  "authors": [
+    "David Wesst <dw@davidwesst.com>"
+  ],
+  "description": "The zvgq update project",
+  "main": "/build/index.js",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "zvgq",
+    "zany"
+  ],
+  "license": "GNUv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.11",
+    "semantic-ui": "~0.15.5"
+  }
+}
