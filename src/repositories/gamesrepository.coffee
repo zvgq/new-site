@@ -1,6 +1,6 @@
 azure = require "azure"
 
-GameModel = require "../models/GameModel"
+GameModel = require "../models/gamemodel"
 
 class GamesRepository
 	# constructor
