@@ -20,8 +20,8 @@ module.exports = (grunt)->
 				src: './config.json'
 				dest: './src/config.json' 
 			views:
-				src: './src/views/index.hbs'
-				dest: './build/views/index.hbs'
+				src: './src/views/browse.handlebars'
+				dest: './build/views/browse.handlebars'
 					
 
 	# Plugins

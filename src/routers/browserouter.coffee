@@ -6,6 +6,6 @@ class BrowseRouter
 		@router = express.Router()
 
 		@router.get "/", (req, res, next)->
-			res.render "index", { title: "Hello", body: "Hello again!"}
+			res.render "browse", { title: "Hello", body: "Hello again!"}
 
 module.exports = BrowseRouter

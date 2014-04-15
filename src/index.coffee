@@ -1,7 +1,7 @@
 azure 		= require "azure"
 bodyParser 	= require 'body-parser'
 engines		= require "consolidate"
-express 	= require "express"
+express 		= require "express"
 nconf 		= require "nconf"
 
 routers	= require "./routers"
@@ -17,9 +17,9 @@ accountKey 		= nconf.get "STORAGE_KEY"
 # setup server
 server = express()
 
-server.set "view engine", "hbs"
+server.set "view engine", "handlebars"
 server.set "views", "#{ __dirname }/views"
-server.engine "hbs", engines.handlebars
+server.engine "handlebars", engines.handlebars
 
 server.use express.static(__dirname + '/public')
 server.use bodyParser()
