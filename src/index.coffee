@@ -5,7 +5,7 @@ express 		= require "express"
 nconf 		= require "nconf"
 path			= require "path"
 
-routers	= require "./routers"
+routers		= require "./routers"
 
 # get configuration data
 nconf.env().file({ file: 'config.json'});
@@ -25,8 +25,7 @@ server.engine "handlebars", engines.handlebars
 server.use bodyParser.json()
 server.use bodyParser.urlencoded()
 
-thePath = path.join(__dirname, '/public')
-server.use(express.static(thePath))
+server.use(express.static(path.join(__dirname, "/public")))
 
 apiRouter = new routers.ApiRouter()
 server.use "/api", apiRouter.router

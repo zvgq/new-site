@@ -2,14 +2,35 @@
 <html>
 	<head>
 		<title>ZVGQ - {{title}}</title>
+		
+		<link rel="stylesheet" type="text/css" href="bower_components/reset-css/reset.css" >
+		<link rel="stylesheet" type="text/css" href="bower_components/semantic-ui/build/packaged/css/semantic.min.css" />
 	</head>
 	<body>
+		<header>
+			<div class="ui fixed tiered compact main menu">
+				<div class="menu">
+					<a class="item">
+						<i class="browser icon"></i>Browse
+					</a>
+				</div>
+				<div class="ui sub menu">
+					{{#each filters}}
+					<a class="item" href="#">{{this.description}}</a>
+					{{/each}}
+				</div>
+			</div>
+		</header>
+		
 		<div class="entry">
 			<h1>{{title}}</h1>
 			<div class="body">
 				{{body}}
 			</div>
 		</div>
+		
+		<footer>
+		</footer>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>
 	</body>
