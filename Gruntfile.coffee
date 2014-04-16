@@ -7,19 +7,19 @@ module.exports = (grunt)->
 				options:
 					force: true
 				src:
-					["./build/**/*.js", "./build/**/*.hbs"]
+					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.hbs"]
 		coffee:
 			dev:
 				expand: true
 				cwd: "./src"
-				src: ["**/*.coffee", "!client/**/*.*"]
+				src: ["**/*.coffee", "!public/**/*.*"]
 				dest: "./build"
 				ext: ".js"
 			devclient:
 				expand: true
-				cwd: "./src/client"
+				cwd: "./src/public"
 				src: "**/*.coffee"
-				dest: "./public/script"
+				dest: "./build/public/script"
 				ext: ".js"
 		copy:
 			configuration:

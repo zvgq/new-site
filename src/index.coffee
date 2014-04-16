@@ -3,6 +3,7 @@ bodyParser 	= require 'body-parser'
 engines		= require "consolidate"
 express 		= require "express"
 nconf 		= require "nconf"
+path			= require "path"
 
 routers	= require "./routers"
 
@@ -21,8 +22,11 @@ server.set "view engine", "handlebars"
 server.set "views", "#{ __dirname }/views"
 server.engine "handlebars", engines.handlebars
 
-server.use express.static(__dirname + '/public')
-server.use bodyParser()
+server.use bodyParser.json()
+server.use bodyParser.urlencoded()
+
+thePath = path.join(__dirname, '/public')
+server.use(express.static(thePath))
 
 apiRouter = new routers.ApiRouter()
 server.use "/api", apiRouter.router
@@ -30,7 +34,6 @@ server.use "/api", apiRouter.router
 browseRouter = new routers.BrowseRouter()
 server.use "/browse", browseRouter.router
 
-# redirect root to browse application
 server.use "/", (req, res)->
 	res.redirect "/browse"
 
