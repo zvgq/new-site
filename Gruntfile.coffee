@@ -8,6 +8,11 @@ module.exports = (grunt)->
 					force: true
 				src:
 					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.hbs"]
+			devclient:
+				options:
+					force: true
+				src:
+					["./build/**/*.hbs"]				
 		coffee:
 			dev:
 				expand: true
@@ -37,3 +42,4 @@ module.exports = (grunt)->
 
 	# Tasks
 	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'coffee:devclient', 'copy:configuration', 'copy:views']
+	grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'copy:views']

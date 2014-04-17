@@ -28,6 +28,7 @@
   "dependencies": {
     "requirejs": "~2.1.11",
     "semantic-ui": "~0.15.5",
-    "reset-css": "~2.0.20110126"
+    "reset-css": "~2.0.20110126",
+    "backbone": "~1.1.2"
   }
 }
