@@ -33,13 +33,21 @@ module.exports = (grunt)->
 			views:
 				src: './src/views/browse.handlebars'
 				dest: './build/views/browse.handlebars'
+		less:
+			dev:
+				options:
+					cleancss: false
+				files:
+					"./build/public/style/main.css": "./src/public/style/main.less"
+			
 					
 
 	# Plugins
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
+	grunt.loadNpmTasks 'grunt-contrib-less'
 
 	# Tasks
 	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'coffee:devclient', 'copy:configuration', 'copy:views']
-	grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'copy:views']
+	grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'less:dev', 'copy:views']

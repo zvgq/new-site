@@ -3,34 +3,29 @@
 	<head>
 		<title>ZVGQ - {{title}}</title>
 		
-		<link rel="stylesheet" type="text/css" href="bower_components/reset-css/reset.css" />
 		<link rel="stylesheet" type="text/css" href="bower_components/semantic-ui/build/packaged/css/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="style/main.css" />
 	</head>
 	<body>
-		<header>
-			<div class="ui fixed tiered compact main menu">
-				<div class="menu">
-					<a class="header item">	
-						Zany Video Game Quotes
-					</a>
-					<a class="right item">
-						<i class="browser icon"></i>Browse
-					</a>
-				</div>
-				<div class="ui inverted sub menu">
-					{{#each filters}}
-					<a class="item" href="#">{{this.description}}</a>
-					{{/each}}
-				</div>
-			</div>
+		<header class="ui fixed transparent compact inverted main menu">
+			<a class="header item">	
+				Zany Video Game Quotes
+			</a>
+			<a class="right item">
+				<i class="browser icon"></i>Browse
+			</a>
 		</header>
-		
-		<div class="entry">
-			<h1>{{title}}</h1>
-			<div class="body">
-				{{body}}
-			</div>
+		<div class="sub menu">
+			{{#each filters}}
+			<a class="item" href="#">{{this.description}}</a>
+			{{/each}}
 		</div>
+		
+		<section class="segment"
+		
+		<section id="main">
+			
+		</section>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>
 	</body>
