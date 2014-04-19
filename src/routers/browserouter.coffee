@@ -5,16 +5,23 @@ class BrowseRouter
 	constructor: ()->
 		@router = express.Router()
 		@router.get "/", (req, res, next)=>
-			res.render "browse", { title: "Hello", body: "Hello again!", filters: @filters }
+			compare = (a, b)->
+				if a.description < b.description
+					return 1
+				if a.description > b.description
+					return -1
+				return 0
+		
+			res.render "browse", { title: "Hello", body: "Hello again!", filters: @filters.sort(compare) }
 			
 	filters: [
-		{ "description": "NEW", "filter": "new" }
 		{ "description": "#", "filter": "num" }
 		{ "description": "A", "filter": "a" }
 		{ "description": "B", "filter": "b" }
 		{ "description": "C", "filter": "c" }
 		{ "description": "D", "filter": "d" }
 		{ "description": "E", "filter": "e" }
+		{ "description": "F", "filter": "f" }
 		{ "description": "G", "filter": "g" }
 		{ "description": "H", "filter": "h" }
 		{ "description": "I", "filter": "i" }
