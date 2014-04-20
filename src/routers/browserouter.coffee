@@ -1,5 +1,5 @@
-azure = require "azure"
 express = require "express"
+http	= require "http"	
 
 class BrowseRouter
 	constructor: ()->
@@ -11,8 +11,19 @@ class BrowseRouter
 				if a.description > b.description
 					return -1
 				return 0
+			
+			resultData = ''
+			result = http.get "http://localhost:3000/api/games", (res)->
+				console.log "Response received: #{ res.statusCode } for request #{ res.url }"
+				body = ""
+
+				res.on 'data', (chunk)->
+					body += chunk
+
+				res.on 'end', ()->
+					resultData = JSON.parse body
 		
-			res.render "browse", { title: "Hello", body: "Hello again!", filters: @filters.sort(compare) }
+			res.render "browse", { title: "Hello", body: "Hello again!", filters: @filters.sort(compare), results: resultData }
 			
 	filters: [
 		{ "description": "#", "filter": "num" }
@@ -43,5 +54,7 @@ class BrowseRouter
 		{ "description": "Y", "filter": "y" }
 		{ "description": "Z", "filter": "z" }
 	]
+	
+	
 
 module.exports = BrowseRouter

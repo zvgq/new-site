@@ -28,8 +28,8 @@ module.exports = (grunt)->
 				ext: ".js"
 		copy:
 			configuration:
-				src: './config.json'
-				dest: './src/config.json' 
+				src: './src/config.json'
+				dest: './config.json' 
 			views:
 				src: './src/views/browse.handlebars'
 				dest: './build/views/browse.handlebars'

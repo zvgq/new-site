@@ -4,7 +4,7 @@ GameModel = require "../models/gamemodel"
 
 class GamesRepository
 	# constructor
-	constructor: (@storageClient, @tableName, @partitionKey)->
+	constructor: (@storageClient, @partitionKey, @tableName)->
 		@storageClient.createTableIfNotExists @tableName, (error)->
 			if error
 				throw error

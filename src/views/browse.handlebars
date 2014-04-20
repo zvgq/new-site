@@ -17,7 +17,18 @@
 		</header>
 		
 		<section id="main">
-			
+			<article class="title segment">
+				<h1>Results</h1>
+			</article>
+			<article class="ui list">
+				{{#each results}}
+				<div class="item">
+					<div class="content">
+						<header class="header">{{this.title}}</header>
+					</div>
+				</div>
+				{{/each}}
+			</article>
 		</section>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>
