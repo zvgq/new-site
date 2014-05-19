@@ -15,14 +15,8 @@ requirejs.config
 		"underscore": "../bower_components/underscore/underscore"
 		"backbone": "../bower_components/backbone/backbone"
 
-require ["jquery", "backbone"], ($, Backbone)->
-	class GameListView extends Backbone.View
-		el: "#main"
-		
-		initialize: ()->
-			this.render()
-			
-		render: ()->
-			$(@el).html "<h1>Hello World</h1>"
-			
+require [
+	"backbone"
+	"./browse/views/gamelistview"
+], (Backbone, GameListView)->
 	gameList = new GameListView()
