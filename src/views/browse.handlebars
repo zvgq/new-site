@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style/main.css" />
 	</head>
 	<body>
-		<header class="ui fixed transparent compact inverted main menu">
+		<header class="ui fixed transparent compact inverted main site menu">
 			<a class="left item">
 				Zany Video Game Quotes - ALPHA
 			</a>
@@ -20,14 +20,8 @@
 			<article class="title segment">
 				<h1>Results</h1>
 			</article>
-			<article class="ui list">
-				{{#each results}}
-				<div class="item">
-					<div class="content">
-						<header class="header">{{this.title}}</header>
-					</div>
-				</div>
-				{{/each}}
+			<article id="games" class="ui game list">
+
 			</article>
 		</section>
 		

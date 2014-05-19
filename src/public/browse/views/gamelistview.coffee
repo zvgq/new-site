@@ -5,9 +5,7 @@ define [
 	"../collections/gamecollection"
 	"../views/gameview"
 ], ($, Backbone, GameModel, GameCollection, GameView)->
-	class GameListView extends Backbone.View
-		el: "#main"
-		
+	class GameListView extends Backbone.View	
 		initialize: ->
 			@counter = 0
 			@render()

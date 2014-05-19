@@ -16,7 +16,15 @@ requirejs.config
 		"backbone": "../bower_components/backbone/backbone"
 
 require [
+	"jquery"
 	"backbone"
 	"./browse/views/gamelistview"
-], (Backbone, GameListView)->
-	gameList = new GameListView()
+], ($, Backbone, GameListView)->
+
+	class BrowseAppView extends Backbone.View
+		el: $ "body"
+			
+		initialize: ->
+			@games = new GameListView { el: "#games"}
+			
+	appview = new BrowseAppView()
