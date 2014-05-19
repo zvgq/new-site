@@ -10,7 +10,7 @@ define [
 			@counter = 0
 			@render()
 			
-			@collection = new GameCollection
+			#@collection = new GameCollection
 			@collection.bind "add", @appendItem
 			
 		render: ->

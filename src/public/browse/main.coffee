@@ -19,12 +19,24 @@ require [
 	"jquery"
 	"backbone"
 	"./browse/views/gamelistview"
-], ($, Backbone, GameListView)->
+	"./browse/collections/gamecollection"
+], ($, Backbone, GameListView, GameCollection)->
 
 	class BrowseAppView extends Backbone.View
 		el: $ "body"
-			
+		
+		events:
+			"click .filter": "addAll"
+		
 		initialize: ->
-			@games = new GameListView { el: "#games"}
+			@counter = 1000
+		
+			@games = new GameCollection
+			@gamesView = new GameListView { el: "#games", collection: @games }
 			
+			@games.fetch()
+			
+		addAll: (event)->
+			@games.fetch({ data: $(event.currentTarget).data()})
+		
 	appview = new BrowseAppView()

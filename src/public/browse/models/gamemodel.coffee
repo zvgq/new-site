@@ -4,9 +4,9 @@ define [
 ], ($, Backbone)->
 	class GameModel extends Backbone.Model
 		defaults:
-			title: "Game Name"
-			platform: "Playstation 4"
-			message: "Message Goes Here"
+			id: 0
+			title: "Title"
+			titleMedia: "TitleMedia"
 	
 		# return		
 		@
