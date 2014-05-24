@@ -10,24 +10,11 @@ define [
 			@counter = 0
 			@render()
 			
-			#@collection = new GameCollection
 			@collection.bind "add", @appendItem
 			
 		render: ->
-			$(@el).append "<button>Add New Item</button>"
-			$(@el).append "<ul><li>Hello World</li></ul>"
-			
-		addItem: ->
-			@counter++
-			
-			item = new GameModel
-			item.set message: "#{item.get 'title'} #{@counter}"
-			
-			@collection.add item
+			# nothing
 		
-		appendItem: (item)->
+		appendItem: (item)=>
 			gameView = new GameView model: item
-			$("ul").append gameView.render().el
-		
-		events:
-			"click button": "addItem"
+			$(@el).append gameView.render().el

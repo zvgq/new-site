@@ -1,15 +1,23 @@
-define ["backbone"], (Backbone)->
+define ["jquery", "backbone"], ($, Backbone)->
 	class GameView extends Backbone.View
-		tagName: "li"
+		tagName: "div"
 		
 		initialize: ->
 			# nothing
 			
 		render: ->
-			$(@el).html "<span>#{@model.get 'title'} Message: #{@model.get 'message'}</span>"
+			htmlString = """
+						<span>#{ @model.get 'title' }</span>
+						<img alt='#{ @model.get 'title' }' src='#{ @model.get 'titleMedia' }' />
+						"""
+			$(@el).html htmlString
 			
-			#return
-			@
+			@ #end render
 			
-		#return
-		@
+		events:
+			"click": "showQuotes"
+			
+		showQuotes: ->
+			$("#quotes").modal('show')
+		
+		@ #end class
