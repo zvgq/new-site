@@ -3,7 +3,7 @@ define [
 ], (Backbone)->
 	class QuoteModel extends Backbone.Model
 		defaults:
-			id: "Id"
+			id: 0
 			gameId: "GameId"
 			text: "Title"
 			mediaUrl: "TitleMedia"

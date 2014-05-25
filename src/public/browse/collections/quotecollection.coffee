@@ -4,7 +4,12 @@ define [
 ], (Backbone, QuoteModel)->
 	class QuoteCollection extends Backbone.Collection
 		model: QuoteModel
-		url: "/api/quotes/a-boy-and-his-blob"
+		
+		initialize: (models, options)->
+			@options = options
+			
+		url: ()->
+			"/api/quotes/#{ @options.gameId }"
 		
 		#returns
 		@

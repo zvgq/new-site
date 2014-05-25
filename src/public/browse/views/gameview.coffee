@@ -2,9 +2,10 @@ define [
 	"jquery"
 	"backbone"
 	"../collections/quotecollection"
+	"../models/quotemodel"
 	"../views/quotelistview"
 	"../views/quoteview"
-], ($, Backbone, QuoteCollection, QuoteListView, QuoteView)->
+], ($, Backbone, QuoteCollection, QuoteModel, QuoteListView, QuoteView)->
 	class GameView extends Backbone.View
 		tagName: "div"
 		
@@ -23,10 +24,12 @@ define [
 			"click": "showQuotes"
 			
 		showQuotes: =>
-			@quotes = new QuoteCollection
+			@quotes = new QuoteCollection [], { "gameId": @model.id }
 			@quotesView = new QuoteListView { el: "#quotes .list", collection: @quotes }
 			successCallback = (collection, response, options)->
 				$("#quotes").modal('show')
+			errorCallback = (collection, response, options)->
+				console.log("Error occured")
 			
 			@quotes.fetch { "success": successCallback }
 		
