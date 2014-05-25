@@ -1,9 +1,14 @@
-define ["jquery", "backbone"], ($, Backbone)->
+define [
+	"jquery"
+	"backbone"
+	"../collections/quotecollection"
+	"../views/quotelistview"
+	"../views/quoteview"
+], ($, Backbone, QuoteCollection, QuoteListView, QuoteView)->
 	class GameView extends Backbone.View
 		tagName: "div"
 		
 		initialize: ->
-			# nothing
 			
 		render: ->
 			htmlString = """
@@ -17,7 +22,12 @@ define ["jquery", "backbone"], ($, Backbone)->
 		events:
 			"click": "showQuotes"
 			
-		showQuotes: ->
-			$("#quotes").modal('show')
+		showQuotes: =>
+			@quotes = new QuoteCollection
+			@quotesView = new QuoteListView { el: "#quotes .list", collection: @quotes }
+			successCallback = (collection, response, options)->
+				$("#quotes").modal('show')
+			
+			@quotes.fetch { "success": successCallback }
 		
 		@ #end class

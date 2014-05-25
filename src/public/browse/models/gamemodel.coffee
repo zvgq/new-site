@@ -1,7 +1,6 @@
 define [
-	"jquery"
 	"backbone"
-], ($, Backbone)->
+], (Backbone)->
 	class GameModel extends Backbone.Model
 		defaults:
 			id: 0
