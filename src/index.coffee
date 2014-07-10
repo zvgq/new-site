@@ -1,9 +1,9 @@
 azure 		= require "azure"
 bodyParser 	= require 'body-parser'
 engines		= require "consolidate"
-express 		= require "express"
+express 	= require "express"
 nconf 		= require "nconf"
-path			= require "path"
+path		= require "path"
 
 routers		= require "./routers"
 
@@ -12,7 +12,7 @@ nconf.env().file({ file: 'config.json'});
 
 gameTableName 	= nconf.get "GAME_TABLE_NAME"
 partitionKey 	= nconf.get "PARTITION_KEY"
-accountName 		= nconf.get "STORAGE_NAME"
+accountName 	= nconf.get "STORAGE_NAME"
 accountKey 		= nconf.get "STORAGE_KEY"
 
 # setup server
