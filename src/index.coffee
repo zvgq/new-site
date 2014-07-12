@@ -23,7 +23,7 @@ server.set "views", "#{ __dirname }/views"
 server.engine "handlebars", engines.handlebars
 
 server.use bodyParser.json()
-server.use bodyParser.urlencoded()
+server.use bodyParser.urlencoded({ extended: true })
 
 server.use(express.static(path.join(__dirname, "/public")))
 
@@ -35,6 +35,8 @@ server.use "/browse", browseRouter.router
 
 server.use "/", (req, res)->
 	res.redirect "/browse"
+
+	
 
 server.listen 3000
 console.log "Listening on port 3000"
