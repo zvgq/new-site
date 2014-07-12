@@ -3,30 +3,40 @@
 	<head>
 		<title>ZVGQ - {{title}}</title>
 		
-		<link rel="stylesheet" type="text/css" href="bower_components/semantic-ui/build/packaged/css/semantic.min.css" />
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		
 		<link rel="stylesheet" type="text/css" href="style/main.css" />
 	</head>
 	<body>
-		<header class="ui fixed transparent compact inverted main site menu">
-			<a class="left item">
-				Zany Video Game Quotes - ALPHA
-			</a>
-			{{#each filters}}
-			<a class="right filter item" href="#" data-filter="{{this.description}}">{{this.description}}</a>
-			{{/each}}
+		<header>
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="container">
+					<a class="brand">
+						Zany Video Game Quotes - ALPHA
+					</a>
+				</div>
+			</nav>
+			<ul class="nav nav-pills nav-justified filters">
+				{{#each filters}}
+				<li>
+					<a class="filter" href="#" data-filter="{{this.description}}">{{this.description}}</a>
+				</li>
+				{{/each}}
+			</ul>
 		</header>
 		
-		<section id="main">
-			<article class="title segment">
+		<section id="main" class="main">
+			<article>
 				<h1>Results</h1>
 			</article>
-			<article id="games" class="ui game list">
+			<article id="games">
 
 			</article>
-			<article id="quotes" class="ui basic modal">
-				<section class="list">
+			<article id="quotes">
+				<section>
 				</section>
-				<article class="quote">
+				<article>
 					Quote media goes here
 				</article>
 			</article>

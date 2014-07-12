@@ -10,22 +10,25 @@ requirejs.config
 			]
 			"exports":
 				"Backbone"
-		"semantic":
+		"bootstrap":
+			"deps": [
+				"jquery"
+			]
 			"exports":
-				"Semantic"
+				"Bootstrap"
 	paths:
 		"jquery": "../bower_components/jquery/dist/jquery"
 		"underscore": "../bower_components/underscore/underscore"
 		"backbone": "../bower_components/backbone/backbone"
-		"semantic": "../bower_components/semantic-ui/build/packaged/javascript/semantic"
+		"bootstrap": "../bower_components/bootstrap/dist/js/bootstrap.min.js"
 
 require [
 	"jquery"
 	"backbone"
-	"semantic"
+	"bootstrap"
 	"./browse/views/gamelistview"
 	"./browse/collections/gamecollection"
-], ($, Backbone, Semantic, GameListView, GameCollection)->
+], ($, Backbone, Bootstrap, GameListView, GameCollection)->
 
 	class BrowseAppView extends Backbone.View
 		el: $ "body"
@@ -38,8 +41,6 @@ require [
 			@gamesView = new GameListView { el: "#games", collection: @games }
 			
 			@games.fetch()
-			
-			$("#quotes").modal()
 			
 		addAll: (event)->
 			@games.fetch({ data: $(event.currentTarget).data()})
