@@ -15,7 +15,6 @@ npm-debug.log
 
 **/config.json
 
-build
 node_modules
 public/bower_components
 
