@@ -1,13 +1,16 @@
-azure = require "azure"
+azure = require "azure-storage"
 
 GameModel = require "../models/gamemodel"
 
 class GamesRepository
 	# constructor
-	constructor: (@storageClient, @partitionKey, @tableName)->
-		@storageClient.createTableIfNotExists @tableName, (error)->
-			if error
-				throw error
+	constructor: (accountName, accountKey)->
+        @tableName = "games"
+        
+        @tableService = azure.createTableService accountName, accountKey
+        @tableService.createTableIfNotExists @tableName, (error, result, response)->
+            if error
+                console.log "Error createIfNotExists 'games' table in GamesRepository"
 
 	# Static Methods
 	list: (req, res)=>
@@ -17,29 +20,24 @@ class GamesRepository
 			letter = req.params.letter
 			nextLetter = String.fromCharCode(letter.charCodeAt(0) + 1)
 			
-			query = azure.TableQuery
-						.select()
-						.from 'games'
+			query = new azure.TableQuery
+						.top(10)
 						.where 'RowKey ge ?', letter
 						.and 'RowKey lt ?', nextLetter
 		else
-			query = azure.TableQuery
-						.select()
-						.from 'games'
-						.top 100
+			query = new azure.TableQuery()
+                        .select ["RowKey", "Name", "Description", "TitleMedia"]
+						.top 10
 
-		@storageClient.queryEntities query, (error, entities)->
-			if not error
-				results = []
-				for e in entities 
-					do (e)->
-						results.push(new GameModel(e))
-
-				console.log "Entities returned #{ entities.length }"
-				res.json(200, results)
+		@tableService.queryEntities @tableName, query, null, (error, result)->
+			if error
+                console.log "Error occurred with code #{ error.code } and statusCode #{ error.statusCode }"
+                res.status 500
+                    .end()
 			else
-				console.log "Error occurred with code #{ error.code } and statusCode #{ error.statusCode }"
-				res.send 500
+				# TODO: Return result.entries as formatted objects
+				res.status 200
+                    .end()
 
 	get: (req, res)=>
 		rowKey = req.params.title
