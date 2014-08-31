@@ -40,8 +40,6 @@ module.exports = (grunt)->
 				files:
 					"./build/public/style/main.css": "./src/public/style/main.less"
 			
-					
-
 	# Plugins
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
@@ -49,5 +47,5 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-contrib-less'
 
 	# Tasks
-	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'coffee:devclient', 'copy:configuration', 'copy:views']
-	grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'less:dev', 'copy:views']
+	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration', 'copy:views']
+	#grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'less:dev', 'copy:views']
