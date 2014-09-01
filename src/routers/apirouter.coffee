@@ -6,10 +6,7 @@ repositories = require "../repositories"
 
 class ApiRouter
 	constructor: ()->
-		# nconf.file "../config.json"
-
-		mediaTableName 	= nconf.get "MEDIA_TABLE_NAME"
-		partitionKey 	= nconf.get "GAME_PARTITION_KEY"
+		gameTableName 	= nconf.get "GAME_TABLE_NAME"
 		accountName 	= nconf.get "STORAGE_NAME"
 		accountKey 		= nconf.get "STORAGE_KEY"
 
@@ -17,7 +14,7 @@ class ApiRouter
 		@router = express.Router()
 
 		# setup game routes
-		gamesRepo = new repositories.GamesRepository(accountName, accountKey)
+		gamesRepo = new repositories.GamesRepository(gameTableName, accountName, accountKey)
 
 		@router.get "/games", gamesRepo.list
 		#@router.get "/games/:title", gamesRepo.get

@@ -1,7 +1,6 @@
 {
     "STORAGE_NAME": "storage account name",
     "STORAGE_KEY": "storage access key",
-    "PARTITION_KEY": "mykey",
     "GAME_TABLE_NAME": "games",
-    "QUOTE_TABLE_NAME": "quotes"
+    "GAME_PARTITION_KEY": "mykey"
 }

@@ -4,8 +4,8 @@ GameModel = require "../models/gamemodel"
 
 class GamesRepository
 	# constructor
-	constructor: (accountName, accountKey)->
-        @tableName = "games"
+	constructor: (tableName, accountName, accountKey)->
+        @tableName = tableName
         
         @tableService = azure.createTableService accountName, accountKey
         @tableService.createTableIfNotExists @tableName, (error, result, response)->
