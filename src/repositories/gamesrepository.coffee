@@ -39,6 +39,7 @@ class GamesRepository
                 results = 
                     new GameModel entry for entry in result.entries
                 res.status 200
+                    .json { "result": results }
                     .end()
 
 	get: (req, res)=>
