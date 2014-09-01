@@ -14,29 +14,31 @@ class GamesRepository
 
 	# Static Methods
 	list: (req, res)=>
-		query = null
+        query = null
 
-		if req.params.letter
-			letter = req.params.letter
-			nextLetter = String.fromCharCode(letter.charCodeAt(0) + 1)
-			
-			query = new azure.TableQuery
-						.top(10)
-						.where 'RowKey ge ?', letter
-						.and 'RowKey lt ?', nextLetter
-		else
-			query = new azure.TableQuery()
+        if req.params.letter
+            letter = req.params.letter
+            nextLetter = String.fromCharCode(letter.charCodeAt(0) + 1)
+
+            query = new azure.TableQuery
+                        .top(10)
+                        .where 'RowKey ge ?', letter
+                        .and 'RowKey lt ?', nextLetter
+        else
+            query = new azure.TableQuery()
                         .select ["RowKey", "Name", "Description", "TitleMedia"]
-						.top 10
-
-		@tableService.queryEntities @tableName, query, null, (error, result)->
-			if error
+                        .top 10
+                    
+        @tableService.queryEntities @tableName, query, null, (error, result)->
+            if error
                 console.log "Error occurred with code #{ error.code } and statusCode #{ error.statusCode }"
                 res.status 500
                     .end()
-			else
-				# TODO: Return result.entries as formatted objects
-				res.status 200
+            else
+                # TODO: Return result.entries as formatted objects
+                results = 
+                    new GameModel entry for entry in result.entries
+                res.status 200
                     .end()
 
 	get: (req, res)=>
