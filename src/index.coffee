@@ -24,11 +24,11 @@ server.use(express.static(path.join(__dirname, "/public")))
 apiRouter = new routers.ApiRouter()
 server.use "/api", apiRouter.router
 
-#browseRouter = new routers.BrowseRouter()
-#server.use "/browse", browseRouter.router
+browseRouter = new routers.BrowseRouter()
+server.use "/browse", browseRouter.router
 
 server.use "/", (req, res)->
-	res.redirect "/api"
+	res.redirect "/browse"
     
 server.listen 3000
 console.log "Listening on port 3000"
