@@ -7,24 +7,19 @@ module.exports = (grunt)->
 				options:
 					force: true
 				src:
-					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.hbs"]
-			devclient:
-				options:
-					force: true
-				src:
-					["./build/**/*.hbs"]				
+					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.hbs"]			
 		coffee:
 			dev:
 				expand: true
 				cwd: "./src"
-				src: ["**/*.coffee", "!public/**/*.*"]
+				src: ["**/*.coffee", "!client/**/*.*"]
 				dest: "./build"
 				ext: ".js"
-			devclient:
+			browseclient:
 				expand: true
-				cwd: "./src/public"
+				cwd: "./src/client/browse"
 				src: "**/*.coffee"
-				dest: "./build/public/script"
+				dest: "./build/public/script/browse"
 				ext: ".js"
 		copy:
 			configuration:
@@ -38,7 +33,7 @@ module.exports = (grunt)->
 				options:
 					cleancss: false
 				files:
-					"./build/public/style/main.css": "./src/public/style/main.less"
+					"./build/public/style/main.css": "./src/client/style/main.less"
 			
 	# Plugins
 	grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -48,4 +43,4 @@ module.exports = (grunt)->
 
 	# Tasks
 	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration', 'copy:views']
-	#grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'less:dev', 'copy:views']
+	grunt.registerTask 'client', ['coffee:browseclient', 'less:dev', 'copy:views']

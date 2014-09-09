@@ -15,3 +15,4 @@ require [
 	"jquery"
 	"bootstrap"
 ], ($, Bootstrap)->
+    alert "Hello from Script!"
