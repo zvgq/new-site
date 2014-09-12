@@ -1,4 +1,3 @@
-azure = require "azure"
 express = require "express"
 nconf	= require "nconf"
 
