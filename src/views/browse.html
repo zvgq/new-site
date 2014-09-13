@@ -13,6 +13,7 @@
 		<script type="text/x-handlebars">
 			<header>
 				<h1>ZVGQ - Application Template</h1>
+                {{#link-to 'games'}} Games {{/link-to}}
 			</header>
 			<article>
 				{{outlet}}
@@ -22,14 +23,8 @@
 			</footer>
 		</script>
 		
-		<script type="text/x-handlebars" data-template-name="games" id="games">
-			<ul>
-				<li>This</li>
-				<li>is</li>
-				<li>a</li>
-				<li>game</li>
-				<li>list</li>
-			</ul>
+		<script type="text/x-handlebars" data-template-name="games">
+			<h3>You rendered the games template!</h3>
 		</script>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>

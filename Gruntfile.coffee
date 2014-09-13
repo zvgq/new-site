@@ -7,7 +7,7 @@ module.exports = (grunt)->
 				options:
 					force: true
 				src:
-					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.hbs"]			
+					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.html", "./build/**/*.jade"]			
 		coffee:
 			dev:
 				expand: true
@@ -26,8 +26,9 @@ module.exports = (grunt)->
 				src: './src/config.json'
 				dest: './config.json' 
 			views:
-				src: './src/views/browse.handlebars'
-				dest: './build/views/browse.handlebars'
+                files:
+                    "./build/views/browse.html": "./src/views/browse.html"
+                    "./build/views/browse.jade": "./src/views/browse.jade"
 		less:
 			dev:
 				options:

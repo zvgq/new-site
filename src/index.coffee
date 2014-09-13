@@ -12,9 +12,9 @@ nconf.env().file({ file: 'config.json'});
 # setup server
 server = express()
 
-server.set "view engine", "handlebars"
+server.set "view engine", "jade"
 server.set "views", "#{ __dirname }/views"
-server.engine "handlebars", engines.handlebars
+server.engine "jade", engines.jade
 
 server.use bodyParser.json()
 server.use bodyParser.urlencoded({ extended: true })

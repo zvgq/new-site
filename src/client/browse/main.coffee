@@ -1,32 +1,24 @@
-requirejs.config
-	baseUrl: "/script"
-	shim:
-		"bootstrap":
-			"deps": [
-				"jquery"
-			]
-			"exports":
-				"Bootstrap"
-		"ember":
-			"deps": [
-				"handlebars"
-			]
-	paths:
-		"bootstrap": "../bower_components/bootstrap/dist/js/bootstrap.min"
-		"ember": "../bower_components/ember/ember"
-		"handlebars": "./handlebars-1.1.2"
-		"jquery": "../bower_components/jquery/dist/jquery"
-		
-require [
-	"jquery"
-	"bootstrap"
-	"ember"
-], 
-($, Bootstrap)->
-	@App = Ember.Application.create()
+require.config
+    baseUrl: "/script"
+    paths:
+        "ember": "../bower_components/ember/ember.prod"
+        "jquery": "../bower_components/jquery/dist/jquery.min"
+        "handlebars": "../bower_components/handlebars/handlebars.min"
 
-	#Setup Routes
-	mapRoutes = ()->
-		@route "games"
-	
-	@App.Router.map mapRoutes
+    shim:
+        "bootstrap":
+            deps: "jquery"
+            exports: "Bootstrap"
+        "ember":
+            deps: ["jquery", "handlebars"]
+            exports: "Ember"
+                
+require ["ember"], 
+	(Ember)->
+		@App = Ember.Application.create()
+
+		setupRoutes = ()->
+			@route "games"
+
+		@App.Router.map setupRoutes
+		@App.Router.reopen { rootURL: '/browse/' }
