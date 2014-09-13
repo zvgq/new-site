@@ -13,19 +13,11 @@ require.config
             deps: ["jquery", "handlebars"]
             exports: "Ember"
                 
-require ["ember"], 
-	(Ember)->
+require ["ember", "./browse/gamesroute"], 
+	(Ember, GamesRoute)->
 		@App = Ember.Application.create()
-		
-		route = 
-			model: ()->
-				games = [
-					{ "title": "Shadowgate", "titleMediaUri": "/content/default-title.png" }
-					{ "title": "Shadowgate (2014)", "titleMediaUri": "/content/default-title.png" }
-				]
-				return games
-		@App.GamesRoute = Ember.Route.extend(route)
 
+		GamesRoute.setup(@App)
 		setupRoutes = ()->
 			@route "games"
 
