@@ -24,7 +24,17 @@
 		</script>
 		
 		<script type="text/x-handlebars" data-template-name="games">
-			<h3>You rendered the games template!</h3>
+			<h5>Games</h5>
+			<ul>
+				{{#each}}
+				<li>
+					<figure>
+						<img {{bindAttr src=titleMediaUri}} />
+						<figcaption>{{title}}</figcaption>
+					</figure>
+				</li>
+				{{/each}}
+			</ul>
 		</script>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>

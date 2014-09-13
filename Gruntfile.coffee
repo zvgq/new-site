@@ -29,6 +29,9 @@ module.exports = (grunt)->
                 files:
                     "./build/views/browse.html": "./src/views/browse.html"
                     "./build/views/browse.jade": "./src/views/browse.jade"
+			content:
+				files:
+					"./build/public/content/default-title.png": "./src/client/content/default-title.png"
 		less:
 			dev:
 				options:
@@ -44,4 +47,4 @@ module.exports = (grunt)->
 
 	# Tasks
 	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration', 'copy:views']
-	grunt.registerTask 'client', ['coffee:browseclient', 'less:dev', 'copy:views']
+	grunt.registerTask 'client', ['coffee:browseclient', 'less:dev', 'copy:views', 'copy:content']

@@ -16,6 +16,15 @@ require.config
 require ["ember"], 
 	(Ember)->
 		@App = Ember.Application.create()
+		
+		route = 
+			model: ()->
+				games = [
+					{ "title": "Shadowgate", "titleMediaUri": "/content/default-title.png" }
+					{ "title": "Shadowgate (2014)", "titleMediaUri": "/content/default-title.png" }
+				]
+				return games
+		@App.GamesRoute = Ember.Route.extend(route)
 
 		setupRoutes = ()->
 			@route "games"
