@@ -9,15 +9,28 @@
 		<link rel="stylesheet" type="text/css" href="style/main.css" />
 	</head>
 	<body>
-		<header>
-            <h1>This is the header</h1>
-        </header>
-        <article class="main">
-            This the main article on the page.
-        </article>
-        <footer>
-            <h1>This is the footer</h1>
-        </footer>
+	
+		<script type="text/x-handlebars">
+			<header>
+				<h1>ZVGQ - Application Template</h1>
+			</header>
+			<article>
+				{{outlet}}
+			</article>
+			<footer>
+				Copyright &copy; 2014
+			</footer>
+		</script>
+		
+		<script type="text/x-handlebars" data-template-name="games" id="games">
+			<ul>
+				<li>This</li>
+				<li>is</li>
+				<li>a</li>
+				<li>game</li>
+				<li>list</li>
+			</ul>
+		</script>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>
 	</body>

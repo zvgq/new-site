@@ -29,6 +29,7 @@
     "requirejs": "~2.1.x",
     "reset-css": "~2.0.x",
     "jquery": "~2.1.x",
-    "bootstrap": "~3.2.x"
+    "bootstrap": "~3.2.x",
+    "ember": "~1.7.0"
   }
 }
