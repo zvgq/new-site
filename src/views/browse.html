@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>ZVGQ - {{title}}</title>
+		<title>ZVGQ</title>
 		
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -26,15 +26,25 @@
 		<script type="text/x-handlebars" data-template-name="games">
 			<h5>Games</h5>
 			<ul>
-				{{#each}}
+				{{#each game in games}}
 				<li>
+					{{#link-to 'game' game}}
 					<figure>
-						<img {{bindAttr src=titleMediaUri}} />
-						<figcaption>{{title}}</figcaption>
+						<img {{bindAttr src=game.titleMediaUri}} />
+						<figcaption>{{game.title}}</figcaption>
 					</figure>
+					{{/link-to}}
 				</li>
 				{{/each}}
 			</ul>
+		</script>
+		
+		<script type="text/x-handlebars" data-template-name="game">
+			<h1>{{title}}</h1>
+			<figure>
+				<img {{bindAttr src=titleMediaUri}} />
+				<figcaption>{{description}}</figcaption>
+			</figure>			
 		</script>
 		
 		<script data-main="script/browse/main" src="bower_components/requirejs/require.js"></script>

@@ -20,6 +20,7 @@ require ["ember", "./browse/gamesroute"],
 		GamesRoute.setup(@App)
 		setupRoutes = ()->
 			@route "games"
+			@route "game", { path: '/game/:game_id' }
 
 		@App.Router.map setupRoutes
 		@App.Router.reopen { rootURL: '/browse/' }
