@@ -26,14 +26,12 @@
 		<script type="text/x-handlebars" data-template-name="games">
 			<h5>Games</h5>
 			<ul>
-				{{#each game in games}}
+				{{#each}}
 				<li>
-					{{#link-to 'game' game}}
 					<figure>
-						<img {{bindAttr src=game.titleMediaUri}} />
-						<figcaption>{{game.title}}</figcaption>
+						<img {{bindAttr src=titleMediaUri}} />
+						<figcaption>{{title}}</figcaption>
 					</figure>
-					{{/link-to}}
 				</li>
 				{{/each}}
 			</ul>
