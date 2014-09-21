@@ -26,7 +26,9 @@ require ["ember", "models", "routes"],
 		Models.setup()
 		Routes.setup()
 		
-		ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
+		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
+		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
+			namespace: "api"
 
 		# configure router
 		setupRoutes = ()->

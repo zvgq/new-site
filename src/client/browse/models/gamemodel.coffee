@@ -1,5 +1,5 @@
 define ["ember-data"],
-	(DS)->
+	(DS)->		
 		model = DS.Model.extend
 			description: DS.attr 'string'
 			title: DS.attr 'string'
