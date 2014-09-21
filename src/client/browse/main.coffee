@@ -1,17 +1,21 @@
 require.config
-    baseUrl: "/script"
-    paths:
-        "ember": "../bower_components/ember/ember.prod"
-        "jquery": "../bower_components/jquery/dist/jquery.min"
-        "handlebars": "../bower_components/handlebars/handlebars.min"
+	baseUrl: "/script"
+	paths:
+		"ember": "../bower_components/ember/ember.prod"
+		"ember-data": "../bower_components/ember-data/ember-data"
+		"jquery": "../bower_components/jquery/dist/jquery.min"
+		"handlebars": "../bower_components/handlebars/handlebars.min"
 
-    shim:
-        "bootstrap":
-            deps: "jquery"
-            exports: "Bootstrap"
-        "ember":
-            deps: ["jquery", "handlebars"]
-            exports: "Ember"
+	shim:
+		"bootstrap":
+			deps: "jquery"
+			exports: "Bootstrap"
+		"ember":
+			deps: ["jquery", "handlebars"]
+			exports: "Ember"
+		"ember-data":
+			deps: ["ember"]
+			exports: "DS"
                 
 require ["ember", "./browse/gamesroute"], 
 	(Ember, GamesRoute)->
