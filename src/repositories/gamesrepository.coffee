@@ -26,7 +26,7 @@ class GamesRepository
                         .and 'RowKey lt ?', nextLetter
         else
             query = new azure.TableQuery()
-                        .select ["RowKey", "Name", "Description", "TitleMedia"]
+                        .select ["RowKey", "title", "description", "titleMediaUri"]
                         .top 10
                     
         @tableService.queryEntities @tableName, query, null, (error, result)->

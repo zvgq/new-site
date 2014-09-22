@@ -1,8 +1,8 @@
 class Game
 	constructor: (sourceEntity)->
 		@id 			= sourceEntity.RowKey._ if sourceEntity.RowKey
-		@description	= sourceEntity.Description._ if sourceEntity.Description
-		@title 			= sourceEntity.Title._ if sourceEntity.Title
-		@titleMediaUri 	= sourceEntity.TitleMediaUri._ if sourceEntity.TitleMediaUri
+		@description	= sourceEntity.description._ if sourceEntity.description
+		@title 			= sourceEntity.title._ if sourceEntity.title
+		@titleMediaUri 	= sourceEntity.titleMediaUri._ if sourceEntity.titleMediaUri
 
 module.exports = Game
