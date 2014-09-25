@@ -1,4 +1,6 @@
 GameModel = require "./gamemodel"
+QuoteModel = require "./quotemodel"
 
 module.exports = 
-	GameModel = GameModel
+	GameModel: GameModel
+	QuoteModel: QuoteModel

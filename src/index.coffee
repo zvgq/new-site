@@ -8,6 +8,7 @@ routers		= require "./routers"
 
 # get configuration data
 nconf.env().file({ file: 'config.json'});
+nconf.load()
 
 # setup server
 server = express()

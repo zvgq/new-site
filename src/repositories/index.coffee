@@ -1,7 +1,7 @@
 GamesRepository 	= require "./gamesrepository"
-#QuotesRepository	= require "./quotesrepository"
+QuotesRepository	= require "./quotesrepository"
 
 module.exports = 
 	GamesRepository : GamesRepository
-	#QuotesRepository : QuotesRepository
+	QuotesRepository : QuotesRepository
 	

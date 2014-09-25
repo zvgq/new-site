@@ -6,6 +6,7 @@ repositories = require "../repositories"
 class ApiRouter
 	constructor: ()->
 		gameTableName 	= nconf.get "GAME_TABLE_NAME"
+		quoteTableName	= nconf.get "QUOTE_TABLE_NAME"
 		accountName 	= nconf.get "STORAGE_NAME"
 		accountKey 		= nconf.get "STORAGE_KEY"
 
@@ -19,7 +20,7 @@ class ApiRouter
 		#@router.get "/games/:title", gamesRepo.get
 		
 		# setup quote routes
-		#quotesRepo = new repositories.QuotesRepository(@storageClient, partitionKey, quoteTableName)
+		# quotesRepo = new repositories.QuotesRepository(quoteTableName, accountName, accountKey)
 		
 		#@router.get "/quotes/:gameId", quotesRepo.listByGameId
 
