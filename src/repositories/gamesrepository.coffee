@@ -13,7 +13,8 @@ class GamesRepository
                 console.log "Error createIfNotExists 'games' table in GamesRepository"
 
 	# Public Functions
-	getGames: (filter, withQuotes)=>
+	# callback, function (error, games)
+	getGames: (filter, withQuotes, callback)=>
 		results = []
 		
 		# create gameQuery
@@ -33,5 +34,7 @@ class GamesRepository
 
 			else
 				console.log "Error Game Query"
+				
+			callback error, results
 
 module.exports = GamesRepository

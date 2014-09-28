@@ -18,18 +18,13 @@ class ApiRouter
 		
 		# private functions
 		retrieveGames = (req, res)->
-			gamesRepo.getGames '', false
+			gamesRepo.getGames '', false, (error, games)->
+				if not error
+					res.status(200).json({"games": games})
+				else
+					res.status(500).json({"error": 'An error occured in retrieveGames'})
 		
 		# setup routes
 		@router.get "/games", retrieveGames
-
-		
-
-		#@router.get "/games/:title", gamesRepo.get
-		
-		# setup quote routes
-		# quotesRepo = new repositories.QuotesRepository(quoteTableName, accountName, accountKey)
-		
-		#@router.get "/quotes/:gameId", quotesRepo.listByGameId
 
 module.exports = ApiRouter
