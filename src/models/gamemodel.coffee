@@ -9,14 +9,5 @@ class Game
 		
 		# collection proprties
 		@quotes = null
-		this.getQuotes()
-			
-	getQuotes: ()->
-		quotesRepo = new QuotesRepository()
-		setQuotes = (error, quotes)->
-			@quotes = quotes
-			
-		quotesRepo.getQuotesByGameId @id, setQuotes
-		
 
 module.exports = Game

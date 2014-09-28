@@ -13,10 +13,18 @@ class ApiRouter
 		# setup router
 		@router = express.Router()
 
-		# setup game routes
-		gamesRepo = new repositories.GamesRepository(gameTableName, accountName, accountKey)
+		# create link to repo
+		gamesRepo = new repositories.GamesRepository(accountName, accountKey)
+		
+		# private functions
+		retrieveGames = (req, res)->
+			gamesRepo.getGames '', false
+		
+		# setup routes
+		@router.get "/games", retrieveGames
 
-		@router.get "/games", gamesRepo.list
+		
+
 		#@router.get "/games/:title", gamesRepo.get
 		
 		# setup quote routes

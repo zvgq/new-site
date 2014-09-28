@@ -4,53 +4,34 @@ GameModel = require "../models/gamemodel"
 
 class GamesRepository
 	# constructor
-	constructor: (tableName, accountName, accountKey)->
-        @tableName = tableName
+	constructor: (accountName, accountKey)->
+        @tableName = 'games'
         
         @tableService = azure.createTableService accountName, accountKey
         @tableService.createTableIfNotExists @tableName, (error, result, response)->
             if error
                 console.log "Error createIfNotExists 'games' table in GamesRepository"
 
-	# Static Methods
-	list: (req, res)=>
-        query = null
-
-        if req.params.letter
-            letter = req.params.letter
-            nextLetter = String.fromCharCode(letter.charCodeAt(0) + 1)
-
-            query = new azure.TableQuery
-                        .top(10)
-                        .where 'RowKey ge ?', letter
-                        .and 'RowKey lt ?', nextLetter
-        else
-            query = new azure.TableQuery()
-                        .select ["RowKey", "title", "description", "titleMediaUri"]
-                        .top 10
-                    
-        @tableService.queryEntities @tableName, query, null, (error, result)->
-            if error
-                console.log "Error occurred with code #{ error.code } and statusCode #{ error.statusCode }"
-                res.status 500
-                    .end()
-            else
-                # TODO: Return result.entries as formatted objects
-                results = 
-                    new GameModel entry for entry in result.entries
-                res.status 200
-                    .json { "games": results }
-                    .end()
-
-	get: (req, res)=>
-		rowKey = req.params.title
-
-		@storageClient.queryEntity @tableName, @partitionKey, rowKey, (error, entity)->
+	# Public Functions
+	getGames: (filter, withQuotes)=>
+		results = []
+		
+		# create gameQuery
+		# TODO: Include filter in query
+		gameQuery = new azure.TableQuery()
+					.top 10
+					.where 'PartitionKey eq ?', 'zvgq-game'
+					
+		@tableService.queryEntities 'games', gameQuery, null, (error, entities)=>
 			if not error
-				result = new GameModel entity
-				res.json 200, result
+				# create game models
+				addGame = (sourceEntity)->
+					newGame = new GameModel sourceEntity
+					results.push newGame
+				
+				addGame game for game in entities.entries
+
 			else
-				console.log "Error occurred with code #{ error.code } and statusCode #{ error.statusCode }"
-				res.send 500
+				console.log "Error Game Query"
 
 module.exports = GamesRepository
