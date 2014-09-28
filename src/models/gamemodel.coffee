@@ -1,5 +1,3 @@
-QuotesRepository = require '../repositories/quotesrepository'
-
 class Game
 	constructor: (sourceEntity)->
 		@id 			= sourceEntity.RowKey._ if sourceEntity.RowKey
