@@ -18,7 +18,7 @@ class ApiRouter
 		
 		# private functions
 		retrieveGames = (req, res)->
-			gamesRepo.getGames '', false, (error, games)->
+			gamesRepo.getGames '', true, (error, games)->
 				if not error
 					res.status(200).json({"games": games})
 				else

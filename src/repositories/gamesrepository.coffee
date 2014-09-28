@@ -1,6 +1,7 @@
 azure = require "azure-storage"
 
 GameModel = require "../models/gamemodel"
+QuotesRepository = require "./quotesrepository"
 
 class GamesRepository
 	# constructor
@@ -16,6 +17,11 @@ class GamesRepository
 	# callback, function (error, games)
 	getGames: (filter, withQuotes, callback)=>
 		results = []
+		error = null;
+		
+		done = ()=>
+			# DONE -- use callback	
+			callback error, results
 		
 		# create gameQuery
 		# TODO: Include filter in query
@@ -23,18 +29,37 @@ class GamesRepository
 					.top 10
 					.where 'PartitionKey eq ?', 'zvgq-game'
 					
-		@tableService.queryEntities 'games', gameQuery, null, (error, entities)=>
+		@tableService.queryEntities 'games', gameQuery, null, (gameQueryError, entities)=>
+			# Add games to Results
 			if not error
 				# create game models
-				addGame = (sourceEntity)->
+				addResult = (sourceEntity)->
 					newGame = new GameModel sourceEntity
 					results.push newGame
 				
-				addGame game for game in entities.entries
+				addResult game for game in entities.entries
 
 			else
-				console.log "Error Game Query"
-				
-			callback error, results
+				error = gameQueryError
+			
+			# Add quotes to games, if requested
+			if withQuotes == true							
+				quotesRepo = new QuotesRepository @tableService
+				completeCount = 0
+				getQuotes = (game)->
+					quotesRepo.getQuotesForGame game.id, (quoteQueryError, quoteEntities)=>
+						if not error
+							game.quotes = quoteEntities
+						else
+							error = quoteQueryError
+						
+						completeCount++
+						if completeCount == results.length
+							done()
+						
+				getQuotes game for game in results
+			 
+			else						
+				done()
 
 module.exports = GamesRepository
