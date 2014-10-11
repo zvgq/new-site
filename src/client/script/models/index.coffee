@@ -1,4 +1,4 @@
-define ["ember-data", "./browse/models/gamemodel"],
+define ["ember-data", "models/gamemodel"],
 	(DS, GameModel)->
 		setup: ()->
 			ZVGQBrowse.Game = GameModel

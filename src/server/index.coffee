@@ -20,7 +20,7 @@ server.engine "jade", engines.jade
 server.use bodyParser.json()
 server.use bodyParser.urlencoded({ extended: true })
 
-server.use(express.static(path.join(__dirname, "/public")))
+server.use(express.static(path.join(__dirname, "/client")))
 
 apiRouter = new routers.ApiRouter()
 server.use "/api", apiRouter.router

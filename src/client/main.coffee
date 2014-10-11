@@ -1,12 +1,12 @@
 require.config
-	baseUrl: "/script"
+	baseUrl: "/"
 	paths:
-		"ember": "../bower_components/ember/ember"
-		"ember-data": "../bower_components/ember-data/ember-data"
-		"jquery": "../bower_components/jquery/dist/jquery.min"
-		"handlebars": "../bower_components/handlebars/handlebars.min"
-		"models": "./browse/models/index"
-		"routes": "./browse/routes/index"
+		"ember": "lib/ember/ember"
+		"ember-data": "lib/ember-data/ember-data"
+		"jquery": "lib/jquery/dist/jquery.min"
+		"handlebars": "lib/handlebars/handlebars.min"
+		"models": "script/models"
+		"routes": "script/routes"
 
 	shim:
 		"bootstrap":
@@ -19,7 +19,7 @@ require.config
 			deps: ["ember"]
 			exports: "DS"
                 
-require ["ember", "models", "routes"], 
+require ["ember", "models/index", "routes/index"], 
 	(Ember, Models, Routes)->
 		window.ZVGQBrowse = Ember.Application.create()
 		
