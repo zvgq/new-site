@@ -6,11 +6,11 @@ module.exports = (grunt)->
 			client:
 				options:
 					force: true
-				src: ["./dist/client/**/*.*","!./dist/bower_components/**/*.*"]
+				src: ["./dist/client/**/*.*","!./dist/client/lib/**/*.*"]
 			server:
 				options:
 					force: true
-				src: ["./dist/**/*.*", "./dist/**/*.html", "./dist/**/*.jade", "!./dist/public/**/*.*"]		
+				src: ["./dist/**/*.*", "./dist/**/*.html", "./dist/**/*.jade", "!./dist/client/**/*.*"]
 				
 		coffee:
 			client:
@@ -32,8 +32,8 @@ module.exports = (grunt)->
 				dest: './config.json' 
 			views:
                 files:
-                    "./dist/views/browse.html": "./src/views/browse.html"
-                    "./dist/views/browse.jade": "./src/views/browse.jade"
+                    "./dist/views/browse.html": "./src/server/views/browse.html"
+                    "./dist/views/browse.jade": "./src/server/views/browse.jade"
 			content:
 				files:
 					"./dist/client/content/default-title.png": "./src/client/content/default-title.png"
