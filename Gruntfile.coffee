@@ -3,41 +3,47 @@ module.exports = (grunt)->
 	grunt.initConfig
 		pkg: grunt.file.readJSON 'package.json'
 		clean:
-			dev: 
+			client:
 				options:
 					force: true
-				src:
-					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.html", "./build/**/*.jade"]			
+				src: ["./dist/client/**/*.*","!./dist/bower_components/**/*.*"]
+			server:
+				options:
+					force: true
+				src: ["./dist/**/*.*", "./dist/**/*.html", "./dist/**/*.jade", "!./dist/public/**/*.*"]		
+				
 		coffee:
-			dev:
+			client:
 				expand: true
-				cwd: "./src"
-				src: ["**/*.coffee", "!client/**/*.*"]
-				dest: "./build"
+				cwd: "./src/client"
+				src: ["**/*.coffee"]
+				dest: "./dist/client"
 				ext: ".js"
-			browseclient:
+			server:
 				expand: true
-				cwd: "./src/client/browse"
-				src: "**/*.coffee"
-				dest: "./build/public/script/browse"
+				cwd: "./src/server"
+				src: ["**/*.coffee"]
+				dest: "./dist"
 				ext: ".js"
-		copy:
+
+		copy:				
 			configuration:
 				src: './src/config.json'
 				dest: './config.json' 
 			views:
                 files:
-                    "./build/views/browse.html": "./src/views/browse.html"
-                    "./build/views/browse.jade": "./src/views/browse.jade"
+                    "./dist/views/browse.html": "./src/views/browse.html"
+                    "./dist/views/browse.jade": "./src/views/browse.jade"
 			content:
 				files:
-					"./build/public/content/default-title.png": "./src/client/content/default-title.png"
+					"./dist/client/content/default-title.png": "./src/client/content/default-title.png"
+					
 		less:
 			dev:
 				options:
 					cleancss: false
 				files:
-					"./build/public/style/main.css": "./src/client/style/main.less"
+					"./dist/client/style/main.css": "./src/client/style/main.less"
 			
 	# Plugins
 	grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -46,5 +52,6 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-contrib-less'
 
 	# Tasks
-	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'copy:configuration', 'copy:views']
-	grunt.registerTask 'client', ['coffee:browseclient', 'less:dev', 'copy:views', 'copy:content']
+	grunt.registerTask 'client', ['clean:client', 'coffee:client', 'less:dev', 'copy:views', 'copy:content']
+	grunt.registerTask 'server', ['clean:server','coffee:server','copy:configuration']
+	grunt.registerTask 'default', ['server', 'client']
