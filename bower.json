@@ -6,14 +6,15 @@
     "David Wesst <dw@davidwesst.com>"
   ],
   "description": "The zvgq update project",
-  "main": "/build/index.js",
+  "main": "/dist/index.js",
   "moduleType": [
     "amd",
     "node"
   ],
   "keywords": [
     "zvgq",
-    "zany"
+    "zany",
+	"video games"
   ],
   "license": "GNUv3",
   "private": true,
@@ -21,7 +22,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "/public/bower_components",
+	"/client/lib",
     "test",
     "tests"
   ],
