@@ -10,7 +10,7 @@ module.exports = (grunt)->
 			client:
 				options:
 					force: true
-				src: ["./client/**/*.js", "!./client/lib/**/*.*"]
+				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*"]
 			server:
 				options:
 					force: true
@@ -23,6 +23,8 @@ module.exports = (grunt)->
 				src: ["./**/*.coffee"]
 				dest: "./client"
 				ext: ".js"
+				options:
+					sourceMap: true
 			server:
 				expand: true
 				cwd: "./"

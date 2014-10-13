@@ -15,7 +15,10 @@ npm-debug.log
 
 **/config.json
 
+**/*.js.map
+**/*.js
+client/lib
+
 dist
 node_modules
-public/bower_components
 
