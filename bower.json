@@ -6,7 +6,7 @@
     "David Wesst <dw@davidwesst.com>"
   ],
   "description": "The zvgq update project",
-  "main": "/dist/index.js",
+  "main": "/index.js",
   "moduleType": [
     "amd",
     "node"

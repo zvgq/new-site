@@ -5,7 +5,7 @@
   "scripts": {
     "start": "grunt"
   },
-  "main": "./dist/index.js",
+  "main": "./index.js",
   "dependencies": {
     "azure-storage": "^0.3.x",
     "body-parser": "1.6.x",

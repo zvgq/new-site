@@ -3,27 +3,37 @@ module.exports = (grunt)->
 	grunt.initConfig
 		pkg: grunt.file.readJSON 'package.json'
 		clean:
+			dev:
+				options:
+					force: true
+				src: ["./**/*.js", "!./client/lib/**/*.*", "!./node_modules/**/*.*"]
 			client:
 				options:
 					force: true
-				src: ["./dist/client/**/*.*","!./dist/client/lib/**/*.*"]
+				src: ["./client/**/*.js", "!./client/lib/**/*.*"]
 			server:
 				options:
 					force: true
-				src: ["./dist/**/*.*", "./dist/**/*.html", "./dist/**/*.jade", "!./dist/client/**/*.*"]
+				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*"]
 				
 		coffee:
 			client:
 				expand: true
-				cwd: "./src/client"
-				src: ["**/*.coffee"]
-				dest: "./dist/client"
+				cwd: "./client"
+				src: ["./**/*.coffee"]
+				dest: "./client"
 				ext: ".js"
 			server:
 				expand: true
-				cwd: "./src/server"
-				src: ["**/*.coffee"]
-				dest: "./dist"
+				cwd: "./"
+				src: ["./**/*.coffee","!./client","!./Gruntfile.coffee"]
+				dest: "./"
+				ext: ".js"
+			dev:
+				expand: true
+				cwd: "./"
+				src: ["./**/*.coffee","!./client/lib","!./Gruntfile.coffee"]
+				dest: "./"
 				ext: ".js"
 
 		concurrent:
@@ -33,36 +43,36 @@ module.exports = (grunt)->
 				
 		copy:				
 			configuration:
-				src: './src/config.json'
+				src: './config.json'
 				dest: './config.json' 
 			views:
                 files:
-                    "./dist/views/browse.html": "./src/server/views/browse.html"
-                    "./dist/views/browse.jade": "./src/server/views/browse.jade"
+                    "./dist/views/browse.html": "./server/views/browse.html"
+                    "./dist/views/browse.jade": "./server/views/browse.jade"
 			content:
 				files:
-					"./dist/client/content/default-title.png": "./src/client/content/default-title.png"
+					"./dist/client/content/default-title.png": "./client/content/default-title.png"
 					
 		less:
 			dev:
 				options:
 					cleancss: false
 				files:
-					"./dist/client/style/main.css": "./src/client/style/main.less"
+					"./client/style/main.css": "./client/style/main.less"
 					
 		nodemon:
 			dev:
-				script: "./dist/index.js"
+				script: "./index.js"
 				options:
 					nodeArgs: ["--debug"]
-					ignore: ['node_modules/**', 'dist/client/**']
+					ignore: ['node_modules/**', 'client/**']
 					
 		watch:
 			client:
-				files: ["./src/client/**/*.coffee"]
+				files: ["./client/**/*.coffee"]
 				tasks: ["coffee:client"]
 			server:
-				files: ["./src/server/**/*.coffee"]
+				files: ["./**/*.coffee","!./client/**/*.*"]
 				tasks: ["coffee:server"]
 			
 	# Plugins
@@ -75,7 +85,7 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-concurrent'
 
 	# Tasks
-	grunt.registerTask 'client', ['clean:client', 'coffee:client', 'less:dev', 'copy:views', 'copy:content']
-	grunt.registerTask 'server', ['clean:server','coffee:server','copy:configuration']
+	grunt.registerTask 'client', ['clean:client', 'coffee:client']
+	grunt.registerTask 'server', ['clean:server','coffee:server']
 	
 	grunt.registerTask 'default', ['server', 'client', 'concurrent:start']
