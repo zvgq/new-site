@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>ZVGQ</title>
-		
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<title>"New" Zany Video Game Quotes</title>
 		
 		<link rel="stylesheet" type="text/css" href="style/main.css" />
 	</head>
@@ -14,7 +11,7 @@
 			<header>
 				<nav id="sitenav" class="navbar navbar-fixed-top site-bar">
 					<div class="container-fluid">
-						<a href="#" class="navbar-brand">"New" Zany Video Game Quotes</a>
+						<a href="#" class="navbar-brand pixel-text">"New" Zany Video Game Quotes</a>
 						<ul class="nav navbar-nav navbar-right">
 							<li><a href="#"><span class="glyphicon glyphicon-link"></span></a></li>
 							<li><a href="#"><span class="glyphicon glyphicon-link"></span></a></li>
@@ -24,7 +21,8 @@
 				</nav>
 				<nav class="navbar navbar-inverse navbar-fixed-top search-bar">
 					<div class="container-fluid">
-						<ul class="nav navbar-nav navbar-LEFT">
+						<ul class="nav navbar-nav browse-options">
+							<li><a href="#">NEW!</a></li>
 							<li><a href="#">#</a></li>
 							<li><a href="#">A</a></li>
 							<li><a href="#">B</a></li>
@@ -56,14 +54,16 @@
 					</div>
 				</nav>
 			</header>
-			<nav>
-				{{#link-to 'games'}} Games {{/link-to}}
-			</nav>
 			<main>
-				{{outlet}}
+				<header class="page-header">
+					<h3>{{#link-to 'games'}} Games {{/link-to}}</h3>
+				</header>
+				<section>
+					{{outlet}}	
+				</section>
 			</main>
 			<footer>
-				<div class="navbar navbar-inverse navbar-fixed-bottom">
+				<div class="navbar navbar-inverse navbar-fixed-bottom footer-bar">
 					<div class="navbar-text">Copyright &copy; 2014 David Wesst / Kevin Wojnarski</div>
 				</div>
 			</footer>
