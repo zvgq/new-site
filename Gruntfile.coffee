@@ -6,10 +6,11 @@ module.exports = (grunt)->
 			dev:
 				options:
 					force: true
-				src: ["./**/*.js", 
+				src: ["./**/*.js",
+					  "./**/*.js.map",
+					  "./client/style/*.css",
 					  "!./client/lib/**/*.*", 
-					  "!./node_modules/**/*.*",
-					 "./**/*.js.map",
+					  "!./node_modules/**/*.*"
 					 ]
 			client:
 				options:
@@ -75,8 +76,8 @@ module.exports = (grunt)->
 					
 		watch:
 			client:
-				files: ["./client/**/*.coffee"]
-				tasks: ["coffee:client"]
+				files: ["./client/**/*.coffee", "./client/**/*.less"]
+				tasks: ["coffee:client","less:dev"]
 			server:
 				files: ["./**/*.coffee","!./client/**/*.*"]
 				tasks: ["coffee:server"]
@@ -91,7 +92,7 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-concurrent'
 
 	# Tasks
-	grunt.registerTask 'client', ['clean:client', 'coffee:client']
+	grunt.registerTask 'client', ['clean:client', 'coffee:client', 'less:dev']
 	grunt.registerTask 'server', ['clean:server','coffee:server']
 	
 	grunt.registerTask 'default', ['server', 'client', 'concurrent:start']
