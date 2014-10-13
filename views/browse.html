@@ -12,14 +12,60 @@
 	
 		<script type="text/x-handlebars">
 			<header>
-				<h1>ZVGQ - Application Template</h1>
-                {{#link-to 'games'}} Games {{/link-to}}
+				<nav id="sitenav" class="navbar navbar-fixed-top site-bar">
+					<div class="container-fluid">
+						<a href="#" class="navbar-brand">"New" Zany Video Game Quotes</a>
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#"><span class="glyphicon glyphicon-link"></span></a></li>
+							<li><a href="#"><span class="glyphicon glyphicon-link"></span></a></li>
+							<li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+						</ul>
+					</div>
+				</nav>
+				<nav class="navbar navbar-inverse navbar-fixed-top search-bar">
+					<div class="container-fluid">
+						<ul class="nav navbar-nav navbar-LEFT">
+							<li><a href="#">#</a></li>
+							<li><a href="#">A</a></li>
+							<li><a href="#">B</a></li>
+							<li><a href="#">C</a></li>
+							<li><a href="#">D</a></li>
+							<li><a href="#">E</a></li>
+							<li><a href="#">F</a></li>
+							<li><a href="#">G</a></li>
+							<li><a href="#">H</a></li>
+							<li><a href="#">I</a></li>
+							<li><a href="#">J</a></li>
+							<li><a href="#">K</a></li>
+							<li><a href="#">L</a></li>
+							<li><a href="#">M</a></li>
+							<li><a href="#">N</a></li>
+							<li><a href="#">O</a></li>
+							<li><a href="#">P</a></li>
+							<li><a href="#">Q</a></li>
+							<li><a href="#">R</a></li>
+							<li><a href="#">S</a></li>
+							<li><a href="#">T</a></li>
+							<li><a href="#">U</a></li>
+							<li><a href="#">V</a></li>
+							<li><a href="#">W</a></li>
+							<li><a href="#">X</a></li>
+							<li><a href="#">Y</a></li>
+							<li><a href="#">Z</a></li>
+						</ul>
+					</div>
+				</nav>
 			</header>
-			<article>
+			<nav>
+				{{#link-to 'games'}} Games {{/link-to}}
+			</nav>
+			<main>
 				{{outlet}}
-			</article>
+			</main>
 			<footer>
-				Copyright &copy; 2014
+				<div class="navbar navbar-inverse navbar-fixed-bottom">
+					<div class="navbar-text">Copyright &copy; 2014 David Wesst / Kevin Wojnarski</div>
+				</div>
 			</footer>
 		</script>
 		
