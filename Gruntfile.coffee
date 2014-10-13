@@ -6,7 +6,11 @@ module.exports = (grunt)->
 			dev:
 				options:
 					force: true
-				src: ["./**/*.js", "!./client/lib/**/*.*", "!./node_modules/**/*.*"]
+				src: ["./**/*.js", 
+					  "!./client/lib/**/*.*", 
+					  "!./node_modules/**/*.*",
+					 "./**/*.js.map",
+					 ]
 			client:
 				options:
 					force: true
