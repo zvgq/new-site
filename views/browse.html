@@ -76,7 +76,7 @@
 				<li>
 					{{#link-to 'game' id}}
 					<figure>
-						<img {{bindAttr src=titleMediaUri}} />
+						<img {{bind-attr src=titleMediaUri}} />
 						<figcaption>{{title}}</figcaption>
 					</figure>
 					{{/link-to}}
@@ -88,7 +88,7 @@
 		<script type="text/x-handlebars" data-template-name="game">
 			<h1>{{title}}</h1>
 			<figure>
-				<img {{bindAttr src=titleMediaUri}} />
+				<img {{bind-attr src=titleMediaUri}} />
 				<figcaption>{{description}}</figcaption>
 			</figure>
 			<h2>Quotes</h2>
