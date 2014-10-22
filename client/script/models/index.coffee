@@ -1,7 +1,8 @@
-define ["ember-data", "models/gamemodel"],
-	(DS, GameModel)->
+define ["ember-data", "models/gamemodel", "models/quotemodel"],
+	(DS, GameModel, QuoteModel)->
 		setup: ()->
 			ZVGQBrowse.Game = GameModel
+			ZVGQBrowse.Quote = QuoteModel
 			ZVGQBrowse.Game.FIXTURES = [
 				{ 
 					"id": "shadowgate"

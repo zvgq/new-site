@@ -5,5 +5,7 @@ define ["ember-data"],
 			title: DS.attr 'string'
 			titleMediaUri: DS.attr 'string'
 			
+			quotes: DS.hasMany 'quote'
+			
 		return model
 			

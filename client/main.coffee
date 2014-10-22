@@ -7,6 +7,7 @@ require.config
 		"handlebars": "lib/handlebars/handlebars.min"
 		"models": "script/models"
 		"routes": "script/routes"
+		"serializers": "script/serializers"
 
 	shim:
 		"bootstrap":
@@ -19,12 +20,13 @@ require.config
 			deps: ["ember"]
 			exports: "DS"
                 
-require ["ember", "models/index", "routes/index"], 
-	(Ember, Models, Routes)->
+require ["ember", "models/index", "routes/index", "serializers/index"], 
+	(Ember, Models, Routes, Serializers)->
 		window.ZVGQBrowse = Ember.Application.create()
 		
 		Models.setup()
 		Routes.setup()
+		Serializers.setup()
 		
 		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
 		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
