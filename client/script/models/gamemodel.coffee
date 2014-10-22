@@ -1,5 +1,5 @@
-define ["ember-data"],
-	(DS)->		
+define ["ember", "ember-data"],
+	(Ember, DS)->		
 		model = DS.Model.extend
 			description: DS.attr 'string'
 			title: DS.attr 'string'
@@ -7,5 +7,10 @@ define ["ember-data"],
 			
 			quotes: DS.hasMany 'quote'
 			
+			quoteCount: Ember.computed(->
+				quotes = @get "quotes"  
+				quotes.get "length" 
+			).property("quotes.@each")
+					
 		return model
 			
