@@ -90,7 +90,15 @@
 			<figure>
 				<img {{bindAttr src=titleMediaUri}} />
 				<figcaption>{{description}}</figcaption>
-			</figure>			
+			</figure>
+			<h2>Quotes</h2>
+			<ul>
+				{{#each quote in quotes}}
+				<li>{{quote.description}}</li>
+				{{else}}
+				<li>No quotes for this game.</li>
+				{{/each}}
+			</ul>
 		</script>
 		
 		<script data-main="main" src="lib/requirejs/require.js"></script>
