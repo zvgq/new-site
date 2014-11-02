@@ -18,13 +18,19 @@ class ApiRouter
 		
 		# private functions
 		retrieveGames = (req, res)->
-			gamesRepo.getGames '', true, (error, games)->
+			gamesRepo.getGames req.params.filter, true, (error, games)->
 				if not error
 					res.status(200).json({"games": games})
 				else
 					res.status(500).json({"error": 'An error occured in retrieveGames'})
 		
+		# setup params
+		@router.param "filter", (req, res, next, filter)->
+			console.log filter
+			next()
+		
 		# setup routes
 		@router.get "/games", retrieveGames
+		@router.get "/games/:filter", retrieveGames
 
 module.exports = ApiRouter

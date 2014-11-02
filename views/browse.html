@@ -14,7 +14,9 @@
 			<header>
 				<nav id="sitenav" class="navbar navbar-fixed-top site-bar">
 					<div class="container-fluid">
-						<a href="#" class="navbar-brand pixel-text">"New" Zany Video Game Quotes</a>
+						{{#link-to 'games' 'new'}}
+							<span class="navbar-brand pixel-text">"New" Zany Video Game Quotes</span>
+						{{/link-to}}
 						<ul class="nav navbar-nav navbar-right">
 							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -35,7 +37,7 @@
 			</header>
 			<main>
 				<header class="page-header">
-					<h3>{{#link-to 'games'}} Games {{/link-to}}</h3>
+					<h3>{{#link-to 'games' 'new'}} Games {{/link-to}}</h3>
 				</header>
 				<section>
 					{{outlet}}	
