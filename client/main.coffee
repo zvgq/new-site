@@ -5,9 +5,12 @@ require.config
 		"ember-data": "lib/ember-data/ember-data"
 		"jquery": "lib/jquery/dist/jquery.min"
 		"handlebars": "lib/handlebars/handlebars.min"
+		"text": "lib/requirejs-text/text"
+		"data": "data"
 		"models": "script/models"
 		"routes": "script/routes"
 		"serializers": "script/serializers"
+		"controllers": "script/controllers"
 
 	shim:
 		"bootstrap":
@@ -20,13 +23,14 @@ require.config
 			deps: ["ember"]
 			exports: "DS"
                 
-require ["ember", "models/index", "routes/index", "serializers/index"], 
-	(Ember, Models, Routes, Serializers)->
+require ["ember", "models/index", "routes/index", "serializers/index", "controllers/index"], 
+	(Ember, Models, Routes, Serializers, Controllers, queries)->
 		window.ZVGQBrowse = Ember.Application.create()
 		
 		Models.setup()
 		Routes.setup()
 		Serializers.setup()
+		Controllers.setup()
 		
 		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
 		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
@@ -34,7 +38,9 @@ require ["ember", "models/index", "routes/index", "serializers/index"],
 
 		# configure router
 		setupRoutes = ()->
-			@route "games"
+			@resource "games", { path: '/games' }, ()->
+				@route "new"
+				@route "/:letter"
 			@route "game", { path: '/game/:game_id' }
 
 		ZVGQBrowse.Router.map setupRoutes
