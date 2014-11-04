@@ -22,4 +22,14 @@ The "New" Zany Video Game Quotes web site.
 		- num, games that start with a number (e.g. 8 Eyes)
 		- a-z, games that start with a letter
 
-## Development Environment
+## Development Setup
+- Clone repository
+- Copy config.sample.json to a new config.json file
+- Fill in values into config.json
+- Run `npm install`
+- Run `bower install`
+- Run `grunt`
+
+### Development Todo
+- Setup table storage development environment
+- Fix `grunt` to allow for node debugging
