@@ -69,15 +69,15 @@ module.exports = (grunt)->
 					
 		nodemon:
 			dev:
-				script: "./index.js"
+				script: "index.js"
 				options:
 					nodeArgs: ["--debug"]
 					ignore: ['node_modules/**', 'client/**']
 					
 		watch:
 			client:
-				files: ["./client/**/*.coffee", "./client/**/*.less"]
-				tasks: ["coffee:client","less:dev"]
+				files: ["./client/**/*.coffee", "./client/**/*.less", "./views/*.html"]
+				tasks: ["coffee:client","less:dev","copy:views"]
 			server:
 				files: ["./**/*.coffee","!./client/**/*.*"]
 				tasks: ["coffee:server"]
@@ -92,7 +92,7 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-concurrent'
 
 	# Tasks
-	grunt.registerTask 'client', ['clean:client', 'coffee:client', 'less:dev']
-	grunt.registerTask 'server', ['clean:server','coffee:server']
+	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
+	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
 	
-	grunt.registerTask 'default', ['server', 'client', 'concurrent:start']
+	grunt.registerTask 'f5', 'Build, run, and watch both client and server content', ['server', 'client', 'concurrent:start']
