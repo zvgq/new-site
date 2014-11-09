@@ -1,9 +1,9 @@
 {
   "name": "zvgq",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "grunt"
+    "start": "node ./index.js"
   },
   "main": "./index.js",
   "dependencies": {

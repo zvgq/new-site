@@ -59,6 +59,16 @@ module.exports = (grunt)->
 			content:
 				files:
 					"./dist/client/content/default-title.png": "./client/content/default-title.png"
+			buildweb:
+				files: [
+					{ expand: true, src: ["./config.json", "./package.json", "bower.json"], dest: "./dist/web" },
+					{ expand: true, src: "./*.js", dest: "./dist/web" },
+					{ expand: true, src: ["./client/**/*.js", "./client/**/*.json", "./client/**/*.css"], dest: "./dist/web" },
+					{ expand: true, src: "./models/**/*.js", dest: "./dist/web" }, 
+					{ expand: true, src: "./repositories/**/*.js", dest: "./dist/web" }, 
+					{ expand: true, src: "./routers/**/*.js", dest: "./dist/web" }, 
+					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" }, 
+				]
 					
 		less:
 			dev:
