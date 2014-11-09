@@ -10,16 +10,17 @@ module.exports = (grunt)->
 					  "./**/*.js.map",
 					  "./client/style/*.css",
 					  "!./client/lib/**/*.*", 
-					  "!./node_modules/**/*.*"
+					  "!./node_modules/**/*.*",
+					  "!./dist/**/*.*"
 					 ]
 			client:
 				options:
 					force: true
-				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*"]
+				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*"]
 			server:
 				options:
 					force: true
-				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*"]
+				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*"]
 				
 		coffee:
 			client:
@@ -104,5 +105,7 @@ module.exports = (grunt)->
 	# Tasks
 	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
 	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
+	
+	grunt.registerTask 'buildweb', 'Build the project into the dist/web', ["copy:buildweb"]
 	
 	grunt.registerTask 'f5', 'Build, run, and watch both client and server content', ['server', 'client', 'concurrent:start']

@@ -18,8 +18,8 @@ npm-debug.log
 **/*.js.map
 **/*.js
 client/style/*.css
-client/lib
+client/lib/**
 
-dist
+dist/**
 node_modules
 
