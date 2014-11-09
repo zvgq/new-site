@@ -16,6 +16,10 @@ class GamesRepository
 	# Public Functions
 	# callback, function (error, games)
 	getGames: (filter, withQuotes, callback)=>
+		# TODO: move util functions to separate module
+		getNextCharacter = (character)->
+			return String.fromCharCode(filter.charCodeAt(filter.length-1)+1)
+		
 		results = []
 		error = null;
 		
@@ -24,10 +28,19 @@ class GamesRepository
 			callback error, results
 		
 		# create gameQuery
-		# TODO: Include filter in query
-		gameQuery = new azure.TableQuery()
-					.top 10
-					.where 'PartitionKey eq ?', 'zvgq-game'
+		if filter == 'new'
+			gameQuery = new azure.TableQuery()
+			.top 50
+			.where 'PartitionKey eq ?', 'zvgq-game'
+		else if filter == 'num'
+			# TODO: Solve this
+		else
+			gameQuery = new azure.TableQuery()
+						.where 'PartitionKey eq ?', 'zvgq-game'
+						.and 'title ge ?', filter.toUpperCase()
+						.and 'title lt ?', getNextCharacter(filter).toUpperCase()
+						.or 'title ge ?', filter
+						.and 'title lt ?', getNextCharacter(filter)
 					
 		@tableService.queryEntities 'games', gameQuery, null, (gameQueryError, entities)=>
 			# Add games to Results

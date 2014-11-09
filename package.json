@@ -7,7 +7,7 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "azure-storage": "^0.3.x",
+    "azure-storage": "^0.4.x",
     "body-parser": "1.6.x",
     "consolidate": "^0.10.0",
     "express": "4.8.x",

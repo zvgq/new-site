@@ -2,6 +2,8 @@ define ["ember"],
 	(Ember)->
 		route = Ember.Route.extend
 			model: (params)->
-				return this.store.find 'game', { "filter": params.filter }
+				this.store.find 'game', { "filter": params.filter }
+					.then (filtered)->
+						results = filtered
 		
 		return route
