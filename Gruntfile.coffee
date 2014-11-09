@@ -3,51 +3,106 @@ module.exports = (grunt)->
 	grunt.initConfig
 		pkg: grunt.file.readJSON 'package.json'
 		clean:
-			dev: 
+			dev:
 				options:
 					force: true
-				src:
-					["./build/**/*.js", "!./build/public/bower_components/**/*.js", "./build/**/*.hbs"]
-			devclient:
+				src: ["./**/*.js",
+					  "./**/*.js.map",
+					  "./client/style/*.css",
+					  "!./client/lib/**/*.*", 
+					  "!./node_modules/**/*.*"
+					 ]
+			client:
 				options:
 					force: true
-				src:
-					["./build/**/*.hbs"]				
+				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*"]
+			server:
+				options:
+					force: true
+				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*"]
+				
 		coffee:
+			client:
+				expand: true
+				cwd: "./client"
+				src: ["./**/*.coffee"]
+				dest: "./client"
+				ext: ".js"
+				options:
+					sourceMap: true
+			server:
+				expand: true
+				cwd: "./"
+				src: ["./**/*.coffee","!./client","!./Gruntfile.coffee"]
+				dest: "./"
+				ext: ".js"
 			dev:
 				expand: true
-				cwd: "./src"
-				src: ["**/*.coffee", "!public/**/*.*"]
-				dest: "./build"
+				cwd: "./"
+				src: ["./**/*.coffee","!./client/lib","!./Gruntfile.coffee"]
+				dest: "./"
 				ext: ".js"
-			devclient:
-				expand: true
-				cwd: "./src/public"
-				src: "**/*.coffee"
-				dest: "./build/public/script"
-				ext: ".js"
-		copy:
+
+		concurrent:
+			start: ["watch:client", "watch:server", "nodemon:dev"]
+			options:
+				logConcurrentOutput: true
+				
+		copy:				
 			configuration:
-				src: './src/config.json'
+				src: './config.json'
 				dest: './config.json' 
 			views:
-				src: './src/views/browse.handlebars'
-				dest: './build/views/browse.handlebars'
+                files:
+                    "./dist/views/browse.html": "./server/views/browse.html"
+                    "./dist/views/browse.jade": "./server/views/browse.jade"
+			content:
+				files:
+					"./dist/client/content/default-title.png": "./client/content/default-title.png"
+			buildweb:
+				files: [
+					{ expand: true, src: ["./config.json", "./package.json", "bower.json"], dest: "./dist/web" },
+					{ expand: true, src: "./*.js", dest: "./dist/web" },
+					{ expand: true, src: ["./client/**/*.js", "./client/**/*.json", "./client/**/*.css"], dest: "./dist/web" },
+					{ expand: true, src: "./models/**/*.js", dest: "./dist/web" }, 
+					{ expand: true, src: "./repositories/**/*.js", dest: "./dist/web" }, 
+					{ expand: true, src: "./routers/**/*.js", dest: "./dist/web" }, 
+					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" }, 
+				]
+					
 		less:
 			dev:
 				options:
 					cleancss: false
 				files:
-					"./build/public/style/main.css": "./src/public/style/main.less"
-			
+					"./client/style/main.css": "./client/style/main.less"
 					
-
+		nodemon:
+			dev:
+				script: "index.js"
+				options:
+					nodeArgs: ["--debug"]
+					ignore: ['node_modules/**', 'client/**']
+					
+		watch:
+			client:
+				files: ["./client/**/*.coffee", "./client/**/*.less", "./views/*.html"]
+				tasks: ["coffee:client","less:dev","copy:views"]
+			server:
+				files: ["./**/*.coffee","!./client/**/*.*"]
+				tasks: ["coffee:server"]
+			
 	# Plugins
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
 	grunt.loadNpmTasks 'grunt-contrib-less'
+	grunt.loadNpmTasks 'grunt-contrib-watch'
+	grunt.loadNpmTasks 'grunt-nodemon'
+	grunt.loadNpmTasks 'grunt-concurrent'
 
 	# Tasks
-	grunt.registerTask 'default', ['clean:dev', 'coffee:dev', 'coffee:devclient', 'copy:configuration', 'copy:views']
-	grunt.registerTask 'client', ['clean:devclient', 'coffee:devclient', 'less:dev', 'copy:views']
+	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
+	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
+	
+	grunt.registerTask 'f5', 'Build, run, and watch both client and server content', ['server', 'client', 'concurrent:start']

@@ -1,19 +1,20 @@
 {
   "name": "zvgq",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/zvgq/zvgq",
   "authors": [
     "David Wesst <dw@davidwesst.com>"
   ],
   "description": "The zvgq update project",
-  "main": "/build/index.js",
+  "main": "/index.js",
   "moduleType": [
     "amd",
     "node"
   ],
   "keywords": [
     "zvgq",
-    "zany"
+    "zany",
+    "video games"
   ],
   "license": "GNUv3",
   "private": true,
@@ -21,15 +22,21 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "/public/bower_components",
+    "/client/lib",
     "test",
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.11",
-    "reset-css": "~2.0.20110126",
-    "backbone": "~1.1.2",
-    "jquery": "~2.1.1",
-    "bootstrap": "~3.2.0"
+    "requirejs": "~2.1.x",
+    "reset-css": "~2.0.x",
+    "jquery": "~2.1.x",
+    "bootstrap": "~3.2.x",
+    "ember": "~1.7.0",
+    "ember-data": "1.0.0-beta.10",
+    "requirejs-text": "~2.0.12",
+    "fontawesome": "~4.2.0"
+  },
+  "resolutions": {
+    "ember": "~1.7.0"
   }
 }
