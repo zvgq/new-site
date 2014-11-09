@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "",
+  "sources": [
+    "index.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;AAAA,EAAA,MAAA,CAAO,CAAC,2BAAD,CAAP,EACC,SAAC,qBAAD,GAAA;WACC;AAAA,MAAA,KAAA,EAAO,SAAA,GAAA;eACN,UAAU,CAAC,qBAAX,GAAmC,sBAD7B;MAAA,CAAP;MADD;EAAA,CADD,CAAA,CAAA;AAAA"
+}
