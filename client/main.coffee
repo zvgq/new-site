@@ -38,7 +38,8 @@ require ["ember", "models/index", "routes/index", "serializers/index", "controll
 
 		# configure router
 		setupRoutes = ()->
-			@route "games", { path: '/games/:filter' }, ()->
+			@route "games_default", { path: '/games' }
+			@route "games", { path: '/games/:filter' }
 			@route "game", { path: '/game/:game_id' }
 
 		ZVGQBrowse.Router.map setupRoutes
