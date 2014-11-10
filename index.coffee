@@ -30,6 +30,7 @@ server.use "/browse", browseRouter.router
 
 server.use "/", (req, res)->
 	res.redirect "/browse"
-    
-server.listen 3000
-console.log "Listening on port 3000"
+  
+port = if process.env.PORT then process.env.PORT else 3000
+server.listen port
+console.log "ZVGQ started on port " + port
