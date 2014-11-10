@@ -51,8 +51,13 @@ module.exports = (grunt)->
 				
 		copy:				
 			configuration:
-				src: './config.json'
-				dest: './config.json' 
+				files:
+					"./dist/web/package.json" : "./package.json"
+					"./dist/web/config.json" : "./config.json"
+					"./dist/web/.bowerrc" : "./.bowerrc"
+					"./dist/web/bower.json" : "./bower.json"
+					"./dist/web/.deployment" : "./.deployment"
+					"./dist/web/deploy.cmd" : "./deploy.cmd"
 			views:
                 files:
                     "./dist/views/browse.html": "./server/views/browse.html"
@@ -62,7 +67,8 @@ module.exports = (grunt)->
 					"./dist/client/content/default-title.png": "./client/content/default-title.png"
 			buildweb:
 				files: [
-					{ expand: true, src: ["./config.json", "./package.json", "bower.json"], dest: "./dist/web" },
+					{ expand: true, src: ["./config.json", "./package.json", "bower.json", ".bowerrc"], dest: "./dist/web" },
+					{ expand: true, src: ["./deploy.cmd", "./.deployment"], dest: "./dist/web" },
 					{ expand: true, src: "./*.js", dest: "./dist/web" },
 					{ expand: true, src: ["./client/**/*.js", "./client/**/*.json", "./client/**/*.css"], dest: "./dist/web" },
 					{ expand: true, src: "./models/**/*.js", dest: "./dist/web" }, 
