@@ -15,11 +15,10 @@ npm-debug.log
 
 **/config.json
 
-**/*.js.map
-**/*.js
-client/style/*.css
+*.js
+*.css
+
 client/lib/**
 
 dist/**
 node_modules
-
