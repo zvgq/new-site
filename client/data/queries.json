@@ -1,5 +1,6 @@
 [
 	{ "filter": "new", "value": "new"  },
+	{ "filter": "num", "value": "#"  },
 	{ "filter": "a", "value": "a"  },
 	{ "filter": "b", "value": "b"  },
 	{ "filter": "c", "value": "c"  },

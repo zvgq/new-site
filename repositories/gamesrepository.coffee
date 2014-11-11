@@ -18,7 +18,7 @@ class GamesRepository
 	getGames: (filter, withQuotes, callback)=>
 		# TODO: move util functions to separate module
 		getNextCharacter = (character)->
-			return String.fromCharCode(filter.charCodeAt(filter.length-1)+1)
+			return String.fromCharCode(character.charCodeAt(0)+1)
 		
 		results = []
 		error = null;
@@ -33,7 +33,9 @@ class GamesRepository
 			.top 50
 			.where 'PartitionKey eq ?', 'zvgq-game'
 		else if filter == 'num'
-			# TODO: Solve this
+			gameQuery = new azure.TableQuery()
+				.where 'PartitionKey eq ?', 'zvgq-game'
+				.and 'title >= ? and title < ?', '0', getNextCharacter('9')
 		else
 			gameQuery = new azure.TableQuery()
 						.where 'PartitionKey eq ?', 'zvgq-game'
