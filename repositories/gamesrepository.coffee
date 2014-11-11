@@ -58,7 +58,7 @@ class GamesRepository
 				error = gameQueryError
 			
 			# Add quotes to games, if requested
-			if withQuotes == true							
+			if withQuotes == true and results.length > 0						
 				quotesRepo = new QuotesRepository @tableService
 				completeCount = 0
 				getQuotes = (game)->
