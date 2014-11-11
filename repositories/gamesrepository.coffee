@@ -37,12 +37,11 @@ class GamesRepository
 				.where 'PartitionKey eq ?', 'zvgq-game'
 				.and 'title >= ? and title < ?', '0', getNextCharacter('9')
 		else
+			upperCaseFilter = filter.toUpperCase()
 			gameQuery = new azure.TableQuery()
-						.where 'PartitionKey eq ?', 'zvgq-game'
-						.and 'title ge ?', filter.toUpperCase()
-						.and 'title lt ?', getNextCharacter(filter).toUpperCase()
-						.or 'title ge ?', filter
-						.and 'title lt ?', getNextCharacter(filter)
+				.where 'PartitionKey eq ?', 'zvgq-game'
+				.and 'title >= ? and title < ?', filter, getNextCharacter(filter)
+				.or 'title >= ? and title < ?', upperCaseFilter, getNextCharacter(upperCaseFilter)
 					
 		@tableService.queryEntities 'games', gameQuery, null, (gameQueryError, entities)=>
 			# Add games to Results
