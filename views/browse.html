@@ -53,24 +53,22 @@
 		</script>
 		
 		<script type="text/x-handlebars" data-template-name="games">
-			<h5>Games</h5>
-			<ul>
-				{{#each}}
-				<li>
-					{{#link-to 'game' id}}
-					<figure>
-						<img {{bind-attr src=titleMediaUri}} />
-						<figcaption>{{title}}</figcaption>
-					</figure>
-					<h5>Quotes: {{quoteCount}}</h5>
-					{{/link-to}}
-				</li>
-				{{else}}
+			<div id="tileContainer" class="tile-container">
+			{{#each}}
+				{{#link-to 'game' id}}
+				<article class="tile">
+					<div>
+						<h3 class="media-heading">{{title}}</h3>
+						<h5>Quotes: {{quoteCount}}</h5>
+					</div>
+				</article>
+				{{/link-to}}
+			{{else}}
 				<li>
 					No results were returned! Try again, if you're bad enough...
 				</li>
-				{{/each}}
-			</ul>
+			{{/each}}
+			</div>
 		</script>
 		
 		<script type="text/x-handlebars" data-template-name="game">

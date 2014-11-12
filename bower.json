@@ -34,7 +34,8 @@
     "ember": "~1.7.0",
     "ember-data": "1.0.0-beta.10",
     "requirejs-text": "~2.0.12",
-    "fontawesome": "~4.2.0"
+    "fontawesome": "~4.2.0",
+    "masonry": "~3.1.5"
   },
   "resolutions": {
     "ember": "~1.7.0"
