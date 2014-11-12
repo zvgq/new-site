@@ -1,5 +1,5 @@
 define ["ember"],
-	(Ember)->
+	(Ember, UI)->
 		route = Ember.Route.extend
 			model: (params)->
 				if params.filter

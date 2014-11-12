@@ -2,7 +2,7 @@ define ["ember", "jquery"],
 	(Ember, $)->
 		route = Ember.Route.extend
 			actions:
-				loading: (transition, originRoute)->
+				loading: (transition, originRoute)->				
 					$("#loadingDisplay").show()
 					return true
 				

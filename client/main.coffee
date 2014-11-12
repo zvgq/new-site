@@ -1,16 +1,19 @@
 require.config
-	baseUrl: "/"
+	baseUrl: "/lib"
 	paths:
-		"ember": "lib/ember/ember"
-		"ember-data": "lib/ember-data/ember-data"
-		"jquery": "lib/jquery/dist/jquery.min"
-		"handlebars": "lib/handlebars/handlebars.min"
-		"text": "lib/requirejs-text/text"
-		"data": "data"
-		"models": "script/models"
-		"routes": "script/routes"
-		"serializers": "script/serializers"
-		"controllers": "script/controllers"
+		"ember": "ember/ember"
+		"ember-data": "ember-data/ember-data"
+		"jquery": "jquery/dist/jquery.min"
+		"handlebars": "handlebars/handlebars.min"
+		"masonry": "masonry/masonry"
+		"text": "requirejs-text/text"
+		"data": "../data"
+		"models": "../script/models"
+		"routes": "../script/routes"
+		"serializers": "../script/serializers"
+		"controllers": "../script/controllers"
+		"views": "../script/views"
+		"utils": "../script/utils"
 
 	shim:
 		"bootstrap":
@@ -23,14 +26,22 @@ require.config
 			deps: ["ember"]
 			exports: "DS"
                 
-require ["ember", "models/index", "routes/index", "serializers/index", "controllers/index"], 
-	(Ember, Models, Routes, Serializers, Controllers, queries)->
+require [
+	"ember"
+	, "masonry"
+	, "models/index"
+	, "routes/index"
+	, "serializers/index"
+	, "controllers/index"
+	, "views/index"
+], (Ember, Masonry, Models, Routes, Serializers, Controllers, Views)->		
 		window.ZVGQBrowse = Ember.Application.create()
 		
 		Models.setup()
 		Routes.setup()
 		Serializers.setup()
 		Controllers.setup()
+		Views.setup()
 		
 		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
 		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
