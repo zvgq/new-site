@@ -43,6 +43,10 @@ require [
 		Controllers.setup()
 		Views.setup()
 		
+		Ember.LinkView.reopen({
+		  attributeBindings: ['data-toggle', 'data-target']
+		});
+		
 		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
 		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
 			namespace: "api"
@@ -51,7 +55,8 @@ require [
 		setupRoutes = ()->
 			@route "games_default", { path: '/games' }
 			@route "games", { path: '/games/:filter' }
-			@route "game", { path: '/game/:game_id' }
+			@route "game", { path: '/game/:game_id' }, ()->
+				@resource "quote", { path: '/quote/:quote_id' }
 
 		ZVGQBrowse.Router.map setupRoutes
 		ZVGQBrowse.Router.reopen { rootURL: '/browse/' }

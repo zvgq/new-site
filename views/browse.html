@@ -79,22 +79,32 @@
 					<h1>{{title}}</h1>
 				</header>
 				{{/if}}
-				<section>
-					<figcaption>{{description}}</figcaption>
-				</section>
 				
 				<section>
 					<h2>Quotes</h2>
-					<div id="tileContainer" class="tile-container">
+					<section id="tileContainer" class="tile-container">
 						{{#each quote in quotes}}
-						<article class="tile quote">
-							<h3>{{quote.description}}</h3>
-						</article>
+							{{#link-to 'quote' quote.id}}
+								<article class="tile quote">
+									<h3>{{quote.description}}</h3>
+								</article>
+							{{/link-to}}
 						{{else}}
 						<article>ZOMG! No Quotes for this Game!</article>
 						{{/each}}
-					</ul>
+					</section>
 				</section>
+				
+				<section id="quoteDisplay">
+					{{outlet}}
+				</section>
+			</div>
+		</script>
+		
+		<script type="text/x-handlebars" data-template-name="quote">
+			<div class="quote">
+				<h1>Quote Template</h1>
+				<h1>{{description}}</h1>
 			</div>
 		</script>
 		
