@@ -1,6 +1,9 @@
 bodyParser 	= require "body-parser"
 engines		= require "consolidate"
 express 	= require "express"
+fs			= require "fs"
+http		= require "http"
+https		= require "https"
 nconf 		= require "nconf"
 path		= require "path"
 
@@ -10,27 +13,48 @@ routers		= require "./routers"
 nconf.env().file({ file: 'config.json'});
 nconf.load()
 
-# setup server
-server = express()
+# setup app
+app = express()
 
-server.set "view engine", "jade"
-server.set "views", "#{ __dirname }/views"
-server.engine "jade", engines.jade
+app.set "view engine", "jade"
+app.set "views", "#{ __dirname }/views"
+app.engine "jade", engines.jade
 
-server.use bodyParser.json()
-server.use bodyParser.urlencoded({ extended: true })
+app.use bodyParser.json()
+app.use bodyParser.urlencoded({ extended: true })
 
-server.use(express.static(path.join(__dirname, "/client")))
+app.use(express.static(path.join(__dirname, "/client")))
+
+useHTTPS = (req, res, next)->
+	if not (req.get 'x-arr-ssl') and (req.get 'x-site-deployment-id')
+		redirectUrl = "https://" + req.get("host") + req.url
+		res.redirect redirectUrl
+	else
+		next()
+	
+app.use useHTTPS
 
 apiRouter = new routers.ApiRouter()
-server.use "/api", apiRouter.router
+app.use "/api", apiRouter.router
 
 browseRouter = new routers.BrowseRouter()
-server.use "/browse", browseRouter.router
+app.use "/browse", browseRouter.router
 
-server.use "/", (req, res)->
+app.use "/", (req, res)->
 	res.redirect "/browse"
-  
-port = if process.env.PORT then process.env.PORT else 3000
-server.listen port
-console.log "ZVGQ started on port " + port
+
+httpDefaultPort = nconf.get "HTTP_DEFAULT_PORT"
+
+if app.get("env") is "development"
+	httpServer = http.createServer app
+	httpServer.listen
+	console.log "ZVGQ - HTTP started on port " + httpDefaultPort
+
+httpsDefaultPort = nconf.get "HTTPS_DEFAULT_PORT"
+port = if process.env.PORT then process.env.PORT else httpsDefaultPort
+httpsOptions = 
+	key: fs.readFileSync "key.pem"
+	cert: fs.readFileSync "cert.pem"
+httpsServer = https.createServer httpsOptions, app
+httpsServer.listen port
+console.log "ZVGQ - HTTPS started on port " + port
