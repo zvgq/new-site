@@ -63,9 +63,17 @@ NAV.search-bar {
 		height: 100px;
 		background-color: #ccc;
 	}
+}
+
+.quotes {
+	&:extend(.tile-container);
+	padding-left: 0px;
+	padding-right: 0px;
 	
 	.quote {
+		&:extend(.tile);
 		width: 50%;
+		height: 50px;
 		background-color: #ff0000;
 	}
 }
