@@ -2,5 +2,7 @@
     "STORAGE_NAME": "storage account name",
     "STORAGE_KEY": "storage access key",
     "GAME_TABLE_NAME": "games",
-	"QUOTE_TABLE_NAME": "quotes"
+	"QUOTE_TABLE_NAME": "quotes",
+	"HTTPS_DEFAULT_PORT": 3000,
+	"HTTP_DEFAULT_PORT": 3001
 }
