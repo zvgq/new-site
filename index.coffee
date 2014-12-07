@@ -53,8 +53,10 @@ if app.get("env") is "development"
 httpsDefaultPort = nconf.get "HTTPS_DEFAULT_PORT"
 port = if process.env.PORT then process.env.PORT else httpsDefaultPort
 httpsOptions = 
-	key: fs.readFileSync "key.pem"
-	cert: fs.readFileSync "cert.pem"
-httpsServer = https.createServer httpsOptions, app
-httpsServer.listen port
-console.log "ZVGQ - HTTPS started on port " + port
+	key: fs.readFileSync "key.key"
+	cert: fs.readFileSync "cert.crt"
+#httpsServer = https.createServer httpsOptions, app
+#httpsServer.listen port
+httpServer = http.createServer app
+httpServer.listen port
+console.log "ZVGQ - Started on port " + port

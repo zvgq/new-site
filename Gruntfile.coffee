@@ -43,6 +43,12 @@ module.exports = (grunt)->
 				src: ["./**/*.coffee","!./client/lib","!./Gruntfile.coffee"]
 				dest: "./"
 				ext: ".js"
+			prod:
+				expand: true
+				cwd: "./"
+				src: ["./**/*.coffee", "!./client/lib","!./Gruntfile.coffee","!./node_modules"]
+				dest: "./dist/web"
+				ext: ".js"
 
 		concurrent:
 			start: ["watch:client", "watch:server", "nodemon:dev"]
@@ -65,16 +71,14 @@ module.exports = (grunt)->
 			content:
 				files:
 					"./dist/client/content/default-title.png": "./client/content/default-title.png"
-			buildweb:
+			prod:
 				files: [
 					{ expand: true, src: ["./config.json", "./package.json", "bower.json", ".bowerrc"], dest: "./dist/web" },
 					{ expand: true, src: ["./deploy.cmd", "./.deployment"], dest: "./dist/web" },
-					{ expand: true, src: "./*.js", dest: "./dist/web" },
-					{ expand: true, src: ["./client/**/*.js", "./client/**/*.json", "./client/**/*.css"], dest: "./dist/web" },
-					{ expand: true, src: "./models/**/*.js", dest: "./dist/web" }, 
-					{ expand: true, src: "./repositories/**/*.js", dest: "./dist/web" }, 
-					{ expand: true, src: "./routers/**/*.js", dest: "./dist/web" }, 
-					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" }, 
+					{ expand: true, src: ["./client/**/*.json"], dest: "./dist/web" },
+					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" },
+					{ expand: true, src: ["./cert.pem", "./key.pem"], dest: "./dist/web"},
+					{ expand: true, src: ["./IISNode.yml"], dest: "./dist/web" }
 				]
 					
 		less:
@@ -83,6 +87,9 @@ module.exports = (grunt)->
 					cleancss: false
 				files:
 					"./client/style/main.css": "./client/style/main.less"
+			prod:
+				files:
+					"./dist/web/client/style/main.css": "./client/style/main.less"
 					
 		nodemon:
 			dev:
@@ -112,6 +119,6 @@ module.exports = (grunt)->
 	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
 	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
 	
-	grunt.registerTask 'buildweb', 'Build the project into the dist/web', ["copy:buildweb"]
+	grunt.registerTask 'buildweb', 'Build the project into the dist/web', ["coffee:prod","less:prod","copy:prod"]
 	
 	grunt.registerTask 'f5', 'Build, run, and watch both client and server content', ['server', 'client', 'concurrent:start']
