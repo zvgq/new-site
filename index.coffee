@@ -1,9 +1,7 @@
 bodyParser 	= require "body-parser"
 engines		= require "consolidate"
 express 	= require "express"
-fs			= require "fs"
 http		= require "http"
-https		= require "https"
 nconf 		= require "nconf"
 path		= require "path"
 
@@ -31,7 +29,6 @@ useHTTPS = (req, res, next)->
 		res.redirect redirectUrl
 	else
 		next()
-	
 app.use useHTTPS
 
 apiRouter = new routers.ApiRouter()
@@ -43,20 +40,9 @@ app.use "/browse", browseRouter.router
 app.use "/", (req, res)->
 	res.redirect "/browse"
 
-httpDefaultPort = nconf.get "HTTP_DEFAULT_PORT"
+defaultPort = nconf.get "DEFAULT_PORT"
+port = if process.env.PORT then process.env.PORT else defaultPort
 
-if app.get("env") is "development"
-	httpServer = http.createServer app
-	httpServer.listen
-	console.log "ZVGQ - HTTP started on port " + httpDefaultPort
-
-httpsDefaultPort = nconf.get "HTTPS_DEFAULT_PORT"
-port = if process.env.PORT then process.env.PORT else httpsDefaultPort
-httpsOptions = 
-	key: fs.readFileSync "key.key"
-	cert: fs.readFileSync "cert.crt"
-#httpsServer = https.createServer httpsOptions, app
-#httpsServer.listen port
 httpServer = http.createServer app
 httpServer.listen port
 console.log "ZVGQ - Started on port " + port
