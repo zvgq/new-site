@@ -46,7 +46,7 @@ module.exports = (grunt)->
 			prod:
 				expand: true
 				cwd: "./"
-				src: ["./**/*.coffee", "!./client/lib","!./Gruntfile.coffee","!./node_modules"]
+				src: ["./**/*.coffee", "!./client/lib","!./Gruntfile.coffee","!./node_modules","!./dist"]
 				dest: "./dist/web"
 				ext: ".js"
 
@@ -74,11 +74,9 @@ module.exports = (grunt)->
 			prod:
 				files: [
 					{ expand: true, src: ["./config.json", "./package.json", "bower.json", ".bowerrc"], dest: "./dist/web" },
-					{ expand: true, src: ["./deploy.cmd", "./.deployment"], dest: "./dist/web" },
+					{ expand: true, src: ["./deploy.cmd", "./.deployment", "./IISNode.yml", "./web.config"], dest: "./dist/web" },
 					{ expand: true, src: ["./client/**/*.json"], dest: "./dist/web" },
 					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" },
-					{ expand: true, src: ["./cert.pem", "./key.pem"], dest: "./dist/web"},
-					{ expand: true, src: ["./IISNode.yml"], dest: "./dist/web" },
 					{ expand: true, src: ["./client/robots.txt"], dest: "./dist/web" }
 				]
 					
