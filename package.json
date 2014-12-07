@@ -5,6 +5,9 @@
   "scripts": {
     "start": "node ./index.js"
   },
+  "engines" : {
+	  "node": "~0.10.33 < 0.12"
+  },
   "main": "./index.js",
   "dependencies": {
     "azure-storage": "^0.4.x",
