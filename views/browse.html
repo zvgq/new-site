@@ -72,11 +72,14 @@
 			<div class="game">
 				{{#if titleMediaUri}}
 				<header class="game-header" style="background">
+					<img {{bind-attr src=titleMediaUri alt=title}} />
 					<h1>{{title}}</h1>	
+					<h4>{{description}}</h4>
 				</header>
 				{{else}}
 				<header class="game-header">
 					<h1>{{title}}</h1>
+					<h4>{{description}}</h4>
 				</header>
 				{{/if}}
 				
@@ -89,7 +92,7 @@
 									{{#each quote in quotes}}
 										{{#link-to 'quote' quote.id}}
 											<article class="tile quote">
-												<h6>{{quote.description}}</h6>
+												<h6>{{quote.title}}</h6>
 											</article>
 										{{/link-to}}
 									{{else}}
@@ -110,8 +113,10 @@
 		
 		<script type="text/x-handlebars" data-template-name="quote">
 			<div class="quote">
-				<h1>Quote Template</h1>
-				<h1>{{description}}</h1>
+				<img {{bind-attr src=mediaUri alt=title}} />
+				{{#if description}}
+					<h4>{{description}}</h4>
+				{{/if}}
 			</div>
 		</script>
 		

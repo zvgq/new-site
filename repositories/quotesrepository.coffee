@@ -13,8 +13,8 @@ class QuotesRepository
 			accountName = nconf.get "STORAGE_NAME"
 			@tableService = azure.createTableService accountName, accountKey
 		
-		@tableName = 'games'
-		@tableService.createTableIfNotExists @tableName, (error, result, response)->
+		@catalogueTableName = nconf.get "CATALOGUE_TABLE_NAME"
+		@tableService.createTableIfNotExists @catalogueTableName, (error, result, response)->
 			if error
 				console.log "Error createIfNotExists 'quotes' table in QuotesRepository"
 				
@@ -27,7 +27,7 @@ class QuotesRepository
 							.where 'PartitionKey eq ?', 'zvgq-quote'
 							.and 'gameId eq ?', gameId
 				
-		@tableService.queryEntities 'games', query, null, (error, entities)=>
+		@tableService.queryEntities @catalogueTableName, query, null, (error, entities)=>
 			if not error
 				addResult = (entity)->
 					quote = new QuoteModel entity

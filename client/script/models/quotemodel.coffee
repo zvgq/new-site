@@ -3,7 +3,7 @@ define ["ember-data"],
 		model = DS.Model.extend
 			description: DS.attr 'string'
 			mediaUri: DS.attr 'string'
-			text: DS.attr 'string'
+			title: DS.attr 'string'
 			
 			game: DS.belongsTo 'game'
 			

@@ -1,4 +1,5 @@
 azure = require "azure-storage"
+nconf = require "nconf"
 
 GameModel = require "../models/gamemodel"
 QuotesRepository = require "./quotesrepository"
@@ -6,12 +7,12 @@ QuotesRepository = require "./quotesrepository"
 class GamesRepository
 	# constructor
 	constructor: (accountName, accountKey)->
-        @tableName = 'games'
+        @catalogueTableName = nconf.get "CATALOGUE_TABLE_NAME"
         
         @tableService = azure.createTableService accountName, accountKey
-        @tableService.createTableIfNotExists @tableName, (error, result, response)->
+        @tableService.createTableIfNotExists @catalogueTableName, (error, result, response)->
             if error
-                console.log "Error createIfNotExists 'games' table in GamesRepository"
+                console.log "Error createIfNotExists #{ @catalogueTableName } table in GamesRepository"
 
 	# Public Functions
 	# callback, function (error, games)
@@ -43,7 +44,7 @@ class GamesRepository
 				.and 'title >= ? and title < ?', filter, getNextCharacter(filter)
 				.or 'title >= ? and title < ?', upperCaseFilter, getNextCharacter(upperCaseFilter)
 					
-		@tableService.queryEntities 'games', gameQuery, null, (gameQueryError, entities)=>
+		@tableService.queryEntities @catalogueTableName, gameQuery, null, (gameQueryError, entities)=>
 			# Add games to Results
 			if not error
 				# create game models
