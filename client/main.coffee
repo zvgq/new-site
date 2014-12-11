@@ -1,6 +1,7 @@
 require.config
 	baseUrl: "/lib"
 	paths:
+		"bootstrap": "bootstrap/js"
 		"ember": "ember/ember"
 		"ember-data": "ember-data/ember-data"
 		"jquery": "jquery/dist/jquery.min"
@@ -42,10 +43,6 @@ require [
 		Serializers.setup()
 		Controllers.setup()
 		Views.setup()
-		
-		Ember.LinkView.reopen({
-		  attributeBindings: ['data-toggle', 'data-target']
-		});
 		
 		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
 		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
