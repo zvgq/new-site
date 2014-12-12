@@ -51,7 +51,7 @@ module.exports = (grunt)->
 				ext: ".js"
 
 		concurrent:
-			start: ["watch:client", "watch:server", "nodemon:dev"]
+			start: ["watch:client", "nodemon:dev"]
 			options:
 				logConcurrentOutput: true
 				
@@ -95,12 +95,12 @@ module.exports = (grunt)->
 				script: "index.js"
 				options:
 					nodeArgs: ["--debug"]
-					ignore: ['node_modules/**', 'client/**']
+					ignore: ['node_modules/**', 'client/lib/**']
 					
 		watch:
 			client:
-				files: ["./client/**/*.coffee", "./client/**/*.less", "./views/*.html"]
-				tasks: ["coffee:client","less:dev","copy:views"]
+				files: ["./client/**/*.coffee", "./client/**/*.less", "./config.json"]
+				tasks: ["client"]
 			server:
 				files: ["./**/*.coffee","!./client/**/*.*"]
 				tasks: ["coffee:server"]
@@ -120,4 +120,4 @@ module.exports = (grunt)->
 	
 	grunt.registerTask 'buildweb', 'Build the project into the dist/web', ["coffee:prod","less:prod","copy:prod"]
 	
-	grunt.registerTask 'f5', 'Build, run, and watch both client and server content', ['server', 'client', 'concurrent:start']
+	grunt.registerTask 'f5', 'Build, run, and watch application.', ["client","concurrent"]
