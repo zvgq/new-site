@@ -1,5 +1,4 @@
-define ["views/gamesview", "views/gameview"],
-	(GamesView, GameView)->
+define ["views/gamesview"],
+	(GamesView)->
 		setup: ()->
 			ZVGQBrowse.GamesView = GamesView
-			ZVGQBrowse.GameView = GameView
