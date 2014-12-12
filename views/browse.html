@@ -88,11 +88,11 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-4">
-								<section id="tileContainer" class="tile-container quotes">
+								<section class="quotes">
 									{{#each quote in quotes}}
 										{{#link-to 'quote' quote.id}}
-											<article class="tile quote">
-												<h6>{{quote.title}}</h6>
+											<article class="quote">
+												<h3 class="title">{{quote.title}}</h3>
 											</article>
 										{{/link-to}}
 									{{else}}

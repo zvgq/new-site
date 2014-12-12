@@ -9,6 +9,11 @@
 	color: @fg-light !important;
 }
 
+.zero-spacing {
+	padding: 0px;
+	margin: 0px;
+}
+
 BODY {
 	background-color: @bg-light;
 }
@@ -87,14 +92,22 @@ NAV.search-bar {
 }
 
 .quotes {
-	&:extend(.tile-container);
+	border-color: #fff;
+	border-style: dotted;
+	border-width: 5px;
+	background-clip: border-box;
+	background-color: #000;
 	padding-left: 0px;
 	padding-right: 0px;
 	
 	.quote {
-		&:extend(.tile);
-		width: 50%;
-		height: 50px;
-		background-color: #ff0000;
+		.pixel-text;
+		width: 100%;
+		
+		.title {
+			.zero-spacing;
+			padding: 10px 5px;
+			text-align: center;
+		}
 	}
 }
