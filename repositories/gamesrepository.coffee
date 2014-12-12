@@ -76,5 +76,23 @@ class GamesRepository
 			 
 			else						
 				done()
+	getGame: (game_id, withQuotes, done)=>
+		error = null
+
+		@tableService.retrieveEntity @catalogueTableName, 'zvgq-game', game_id, (error, result, response)=>		
+			if withQuotes is true and response.body isnt null
+				game = new GameModel response.body
+				quotesRepo = new QuotesRepository @tableService
+				quotesRepo.getQuotesForGame game.id, (quoteQueryError, quoteEntities)=>
+					if not error
+						game.quotes = quoteEntities
+					else
+						error = quoteQueryError
+						
+					done(error, game)
+			else
+				game = null
+				error = "No game with id #{ game_id } was found!"
+				done(error, game)
 
 module.exports = GamesRepository

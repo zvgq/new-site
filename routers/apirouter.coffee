@@ -21,6 +21,13 @@ class ApiRouter
 					res.status(200).json({"games": games})
 				else
 					res.status(500).json({"error": 'An error occured in retrieveGames'})
+					
+		retrieveGame = (req, res)->
+			gamesRepo.getGame req.param('game_id'), true, (error, game)->
+				if not error
+					res.status(200).json(game)
+				else
+					res.status(500).json({"error": "An error occured in apirouter.retrieveGames(req, res)"})
 		
 		# setup params
 		@router.param "filter", (req, res, next, filter)->
@@ -29,6 +36,6 @@ class ApiRouter
 		
 		# setup routes
 		@router.get "/games", retrieveGames
-		@router.get "/games/:filter", retrieveGames
+		@router.get "/games/:game_id", retrieveGame
 
 module.exports = ApiRouter
