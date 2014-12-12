@@ -1,8 +1,6 @@
 define ["ember"],
 	(Ember)->
-		controller = Ember.ObjectController.extend
-			queryParams: ['filter']
-					
+		controller = Ember.ObjectController.extend				
 			tileStyle: (()->
 				styleValue = ""
 				uri = @get 'titleMediaUri'
