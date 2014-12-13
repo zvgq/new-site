@@ -89,7 +89,7 @@ class GamesRepository
 					else
 						error = quoteQueryError
 						
-					done(error, game)
+					done error, {"game": game }
 			else
 				game = null
 				error = "No game with id #{ game_id } was found!"
