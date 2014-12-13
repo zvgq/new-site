@@ -1,0 +1,42 @@
+		<script type="text/x-handlebars" data-template-name="game">
+			<div class="game">
+				{{#if titleMediaUri}}
+				<header class="game-header" style="background">
+					<img {{bind-attr src=titleMediaUri alt=title}} />
+					<h1>{{title}}</h1>	
+					<h4>{{description}}</h4>
+				</header>
+				{{else}}
+				<header class="game-header">
+					<h1>{{title}}</h1>
+					<h4>{{description}}</h4>
+				</header>
+				{{/if}}
+				
+				<section>
+					<h2>Quotes</h2>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-4">
+								<section class="quotes">
+									{{#each quote in quotes}}
+										{{#link-to 'quote' quote.id}}
+											<article class="quote">
+												<h3 class="title">{{quote.title}}</h3>
+											</article>
+										{{/link-to}}
+									{{else}}
+									<article>ZOMG! No Quotes for this Game!</article>
+									{{/each}}
+								</section>
+							</div>
+							<div class="col-md-8">
+								<section id="quoteDisplay">
+									{{outlet}}
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</script>

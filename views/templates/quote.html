@@ -1,0 +1,8 @@
+		<script type="text/x-handlebars" data-template-name="quote">
+			<div class="quote">
+				<img {{bind-attr src=mediaUri alt=title}} />
+				{{#if description}}
+					<h4>{{description}}</h4>
+				{{/if}}
+			</div>
+		</script>
