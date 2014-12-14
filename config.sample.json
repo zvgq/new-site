@@ -1,9 +1,9 @@
 {
     "STORAGE_NAME": "storage account name",
     "STORAGE_KEY": "storage access key",
-    "GAME_TABLE_NAME": "games",
-	"QUOTE_TABLE_NAME": "quotes",
+	"CATALOGUE_TABLE_NAME": "catalogue",
 	"DEFAULT_PORT": 3000,
 	"MEDIA_LOCATION": "URL of the catalogue media",
-	"GOOGLE_TRACKING_CODE": "Google Tracking ID goes here"
+	"GOOGLE_TRACKING_CODE": "Google Tracking ID goes here",
+	"NEW_CONTENT_DAYS": 1
 }

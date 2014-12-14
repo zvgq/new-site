@@ -1,4 +1,5 @@
 azure = require "azure-storage"
+moment = require "moment"
 nconf = require "nconf"
 
 GameModel = require "../models/gamemodel"
@@ -30,9 +31,12 @@ class GamesRepository
 		
 		# create gameQuery
 		if filter == 'new'
+			dayLimit = nconf.get 'NEW_CONTENT_DAYS'
+			newContentDateLimit = moment().subtract(dayLimit,'days').toDate()
 			gameQuery = new azure.TableQuery()
-			.top 50
-			.where 'PartitionKey eq ?', 'zvgq-game'
+				.top 50
+				.where 'PartitionKey eq ?', 'zvgq-game'
+				.and "Timestamp >= ?date?", newContentDateLimit
 		else if filter == 'num'
 			gameQuery = new azure.TableQuery()
 				.where 'PartitionKey eq ?', 'zvgq-game'
