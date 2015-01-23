@@ -27,3 +27,6 @@ client/lib/**
 dist/**
 node_modules
 *.map
+
+*~
+*.swp
