@@ -31,7 +31,7 @@ useHTTPS = (req, res, next)->
 		next()
 app.use useHTTPS
 
-apiRouter = new routers.ApiRouter()
+apiRouter = new routers.ApiRouter(app)
 app.use "/api", apiRouter.router
 
 browseRouter = new routers.BrowseRouter()

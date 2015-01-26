@@ -1,9 +1,10 @@
 {
-    "STORAGE_NAME": "storage account name",
-    "STORAGE_KEY": "storage access key",
+	"STORAGE_NAME": "storage account name",
+	"STORAGE_KEY": "storage access key",
 	"CATALOGUE_TABLE_NAME": "catalogue",
 	"DEFAULT_PORT": 3000,
 	"MEDIA_LOCATION": "URL of the catalogue media",
 	"GOOGLE_TRACKING_CODE": "Google Tracking ID goes here",
-	"NEW_CONTENT_DAYS": 1
+	"NEW_CONTENT_DAYS": 30,
+	"ACCEPTED_HOSTS": ["new.zanyvideogamequotes.com"]
 }
