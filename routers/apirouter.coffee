@@ -1,5 +1,6 @@
 express = require "express"
 nconf	= require "nconf"
+_ = require "underscore"
 
 repositories = require "../repositories"
 
@@ -34,7 +35,7 @@ class ApiRouter
 			acceptedhosts = nconf.get "ACCEPTED_HOSTS" 
 			if environment is "development" or environment is "dev"
 				next()
-			else if req.hostname is acceptedhosts[0]
+			else if (_.contains acceptedhosts, req.hostname)
 				next()
 			else
 				res.status(403).json({"error": "Forbidden"})
