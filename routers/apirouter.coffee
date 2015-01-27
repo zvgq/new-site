@@ -29,13 +29,29 @@ class ApiRouter
 					res.status(200).json(game)
 				else
 					res.status(500).json({"error": "An error occured in apirouter.retrieveGames(req, res)"})
-		# block based on hostname
+		
+		isValidRequest = (req)->
+			isValid = false;
+			
+			acceptedReferrers = nconf.get "REFERRERS"
+			referrer = req.get "Referrer"
+			
+			if referrer isnt undefined
+				findReferrerHost = (refHost)->
+					if referrer.indexOf(refHost) > -1
+						isValid = true
+					
+				_.each acceptedReferrers, findReferrerHost
+			
+			return isValid;
+		
+		# block based on referrer
 		@router.use (req, res, next)->
 			environment = app.get "env"
-			acceptedhosts = nconf.get "ACCEPTED_HOSTS" 
+			 
 			if environment is "development" or environment is "dev"
 				next()
-			else if (_.contains acceptedhosts, req.hostname)
+			else if isValidRequest(req) 
 				next()
 			else
 				res.status(403).json({"error": "Forbidden"})

@@ -6,5 +6,5 @@
 	"MEDIA_LOCATION": "URL of the catalogue media",
 	"GOOGLE_TRACKING_CODE": "Google Tracking ID goes here",
 	"NEW_CONTENT_DAYS": 30,
-	"ACCEPTED_HOSTS": ["new.zanyvideogamequotes.com"]
+	"REFERRERS": ["new.zanyvideogamequotes.com"]
 }
