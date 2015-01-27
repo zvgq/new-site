@@ -1,0 +1,14 @@
+script(type='text/x-handlebars', data-template-name='games')
+	div(id='tileContainer', class='tile-container')
+		|	{{#each game in controller}}
+		|		{{#link-to 'game' game.id}}
+		|		<article class="tile" >
+		|			<div class="bg" {{bind-attr style=game.tileStyle }}>
+		|				<h3 class="tile-title">{{game.title}}</h3>
+		|				<h5 style="display: none">Quotes: {{game.quoteCount}}</h5>
+		|			</div>
+		|		</article>
+		|		{{/link-to}}
+		|	{{else}}
+		| 		<h3>No results were returned! Try again, if you're bad enough...</h3>
+		|	{{/each}}
