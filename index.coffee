@@ -1,4 +1,5 @@
 bodyParser 	= require "body-parser"
+fs			= require "fs"
 engines		= require "consolidate"
 express 	= require "express"
 http		= require "http"
@@ -23,6 +24,9 @@ app.use bodyParser.urlencoded({ extended: true })
 
 app.use(express.static(path.join(__dirname, "/client")))
 
+pkgJson = JSON.parse(fs.readFileSync("./package.json"))
+app.locals.version = pkgJson.version;
+
 useHTTPS = (req, res, next)->
 	if not (req.get 'x-arr-ssl') and (req.get 'x-site-deployment-id')
 		redirectUrl = "https://" + req.get("host") + req.url
@@ -36,6 +40,9 @@ app.use "/api", apiRouter.router
 
 browseRouter = new routers.BrowseRouter()
 app.use "/browse", browseRouter.router
+
+app.use "/about", (req, res)->
+	res.render "about"
 
 app.use "/", (req, res)->
 	res.redirect "/browse"
