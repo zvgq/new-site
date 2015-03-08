@@ -12,7 +12,10 @@ script(type='text/x-handlebars')
 
 		nav(class='navbar navbar-inverse navbar-fixed-top search-bar')
 			div(class='container-fluid')
-				ui(class='nav navbar-nav browse-options')
+				ul(class='nav navbar-nav')
+					li.visible-lg-block.pull-left: a(href="/about") About
+					li.visible-lg-block.pull-left: a(href="/browse") Browse
+				ul(class='nav navbar-nav browse-options pull-right')
 					| {{#each queries}}
 					|	 <li>{{#link-to 'games' filter}}<span>{{value}}</span>{{/link-to}}</li>
 					| {{/each}}
