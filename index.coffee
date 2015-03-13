@@ -41,8 +41,8 @@ app.use "/api", apiRouter.router
 browseRouter = new routers.BrowseRouter()
 app.use "/browse", browseRouter.router
 
-app.use "/about", (req, res)->
-	res.render "about"
+app.use "/faq", (req, res)->
+	res.render "faq"
 
 app.use "/", (req, res)->
 	res.redirect "/browse"
