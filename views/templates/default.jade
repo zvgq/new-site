@@ -6,22 +6,24 @@ script(type='text/x-handlebars')
 				|	<span class="navbar-brand pixel-text">"New" Zany Video Game Quotes</span>
 				| {{/link-to}}
 				ul(class='nav navbar-nav navbar-right')
+					li.pixel-text: a(href="/browse") Browse
+					li.pixel-text: a(href="/faq") FAQ
 					li: a(href='https://www.facebook.com/zanyvideogamequotes',target='_blank'): i(class='fa fa-facebook')
 					li: a(href='https://twitter.com/zvgq',target='_blank'): i(class='fa fa-twitter')
 					li: a(href='https://github.com/zvgq/zvgq',target='_blank'): i(class='fa fa-github')
-		
+
 		nav(class='navbar navbar-inverse navbar-fixed-top search-bar')
 			div(class='container-fluid')
-				ui(class='nav navbar-nav browse-options')
+				ul(class='nav navbar-nav browse-options pull-left')
 					| {{#each queries}}
 					|	 <li>{{#link-to 'games' filter}}<span>{{value}}</span>{{/link-to}}</li>
 					| {{/each}}
-	
+
 	main
 		section
 			| {{outlet}}
-			
+
 	footer
 		div(class='navbar navbar-inverse navbar-fixed-bottom footer-bar')
-			div(class='navbar-text') Copyright &copy; 2015 David Wesst / Kevin Wojnarski
+			div(class='navbar-text') v #{version}
 			div(id='loadingDisplay', class='navbar-text loading-message') Loading...

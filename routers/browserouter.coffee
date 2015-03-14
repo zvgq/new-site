@@ -6,9 +6,10 @@ class BrowseRouter
 	constructor: ()->
 		@router = express.Router()
 		@router.get "/", (req, res, next)=>
-			data = 
+			data =
 				title: "ZVGQ - Browse"
 				analytics: nconf.get "GOOGLE_TRACKING_CODE"
+				version: req.app.locals.version 
 			res.render "browse", data
 
 module.exports = BrowseRouter

@@ -9,7 +9,7 @@ class GamesRepository
 	# constructor
 	constructor: (accountName, accountKey)->
         @catalogueTableName = nconf.get "CATALOGUE_TABLE_NAME"
-        
+
         @tableService = azure.createTableService accountName, accountKey
         @tableService.createTableIfNotExists @catalogueTableName, (error, result, response)->
             if error
@@ -21,14 +21,14 @@ class GamesRepository
 		# TODO: move util functions to separate module
 		getNextCharacter = (character)->
 			return String.fromCharCode(character.charCodeAt(0)+1)
-		
+
 		results = []
 		error = null;
-		
+
 		done = ()=>
-			# DONE -- use callback	
+			# DONE -- use callback
 			callback error, results
-		
+
 		# create gameQuery
 		if filter == 'new'
 			dayLimit = nconf.get 'NEW_CONTENT_DAYS'
@@ -42,12 +42,10 @@ class GamesRepository
 				.where 'PartitionKey eq ?', 'zvgq-game'
 				.and 'title >= ? and title < ?', '0', getNextCharacter('9')
 		else
-			upperCaseFilter = filter.toUpperCase()
 			gameQuery = new azure.TableQuery()
 				.where 'PartitionKey eq ?', 'zvgq-game'
-				.and 'title >= ? and title < ?', filter, getNextCharacter(filter)
-				.or 'title >= ? and title < ?', upperCaseFilter, getNextCharacter(upperCaseFilter)
-					
+				.and 'RowKey >= ? and RowKey < ?', filter, getNextCharacter(filter)
+
 		@tableService.queryEntities @catalogueTableName, gameQuery, null, (gameQueryError, entities)=>
 			# Add games to Results
 			if not error
@@ -55,14 +53,14 @@ class GamesRepository
 				addResult = (sourceEntity)->
 					newGame = new GameModel sourceEntity
 					results.push newGame
-				
+
 				addResult game for game in entities.entries
 
 			else
 				error = gameQueryError
-			
+
 			# Add quotes to games, if requested
-			if withQuotes == true and results.length > 0						
+			if withQuotes == true and results.length > 0
 				quotesRepo = new QuotesRepository @tableService
 				completeCount = 0
 				getQuotes = (game)->
@@ -71,19 +69,19 @@ class GamesRepository
 							game.quotes = quoteEntities
 						else
 							error = quoteQueryError
-						
+
 						completeCount++
 						if completeCount == results.length
 							done()
-						
+
 				getQuotes game for game in results
-			 
-			else						
+
+			else
 				done()
 	getGame: (game_id, withQuotes, done)=>
 		error = null
 
-		@tableService.retrieveEntity @catalogueTableName, 'zvgq-game', game_id, (error, result, response)=>		
+		@tableService.retrieveEntity @catalogueTableName, 'zvgq-game', game_id, (error, result, response)=>
 			if withQuotes is true and response.body isnt null
 				game = new GameModel response.body
 				quotesRepo = new QuotesRepository @tableService
@@ -92,7 +90,7 @@ class GamesRepository
 						game.quotes = quoteEntities
 					else
 						error = quoteQueryError
-						
+
 					done error, {"game": game }
 			else
 				game = null
