@@ -26,7 +26,7 @@ require.config
 		"ember-data":
 			deps: ["ember"]
 			exports: "DS"
-                
+
 require [
 	"ember"
 	, "masonry"
@@ -35,15 +35,15 @@ require [
 	, "serializers/index"
 	, "controllers/index"
 	, "views/index"
-], (Ember, Masonry, Models, Routes, Serializers, Controllers, Views)->		
+], (Ember, Masonry, Models, Routes, Serializers, Controllers, Views)->
 		window.ZVGQBrowse = Ember.Application.create()
-		
+
 		Models.setup()
 		Routes.setup()
 		Serializers.setup()
 		Controllers.setup()
 		Views.setup()
-		
+
 		#ZVGQBrowse.ApplicationAdapter = DS.FixtureAdapter.extend();
 		ZVGQBrowse.ApplicationAdapter = DS.RESTAdapter.extend
 			namespace: "api"

@@ -16,11 +16,12 @@ class WWWRouter
 				version: req.app.locals.version
 			res.render "faq", data
 
-		@router.get "/games", (req, res, next)=>
+		@router.get "/games/:filter", (req, res, next)=>
 			data =
 				title: "ZVGQ - Games"
 				analytics: nconf.get "GOOGLE_TRACKING_CODE"
 				version: req.app.locals.version
+				games: []
 			res.render "games", data
 
 		@router.get "/game", (req, res, next)=>

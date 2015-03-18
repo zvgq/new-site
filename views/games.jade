@@ -1,4 +1,13 @@
 extends ./base.jade
 
 block content
-	h1 This the games page
+	section(id='tileContainer', class='tile-container')
+		if games.length > 0
+			each game in games
+				article(class='tile')
+					div(class='bg')
+						h3(class='tile-title')= game.title
+		else
+			h1 There are no games for this letter!
+	
+	script(data-main="/script/games", src="/lib/requirejs/require.js")
