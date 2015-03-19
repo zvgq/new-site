@@ -12,16 +12,17 @@ module.exports = (grunt)->
 					  "!./client/lib/**/*.*",
 					  "!./node_modules/**/*.*",
 					  "!./dist/**/*.*",
-					  "!./test/**/*.*"
+					  "!./test/**/*.*",
+					  "!./repositories/**/*.*"
 					 ]
 			client:
 				options:
 					force: true
-				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*", "!./test/**/*.*"]
+				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*"]
 			server:
 				options:
 					force: true
-				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*", "!./test/**/*.*"]
+				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*"]
 
 		coffee:
 			client:
@@ -32,6 +33,7 @@ module.exports = (grunt)->
 				ext: ".js"
 				options:
 					sourceMap: true
+					bare: true
 			server:
 				expand: true
 				cwd: "./"

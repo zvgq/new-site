@@ -31,5 +31,7 @@ node_modules
 *~
 *.swp
 
-# tests written in JS
+# Ember-Refactor / CoffeeScript Refactor
 !/test/*.js
+!/repositories/*.js
+repositories/*.coffee
