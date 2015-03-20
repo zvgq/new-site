@@ -9,7 +9,7 @@ var GameRepository	= rewire("../repositories/gamerepository.js");
 // mocks
 var azure			= require("azure-storage");
 
-describe("Game Repository", function() {
+describe("GameRepository", function() {
 	// STUBS
 	var createTableServiceStub
 		, createTableStub
