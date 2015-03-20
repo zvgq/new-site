@@ -1,6 +1,7 @@
 'use strict';
 
 var azure = require('azure-storage')
+	, moment = require('moment')
 	, nconf = require('nconf');
 
 function GameRepository() {
@@ -8,7 +9,12 @@ function GameRepository() {
 		, accountKey = nconf.get("STORAGE_KEY")
 		, tableName = nconf.get("CATALOGUE_TABLE_NAME");
 
-	this.dataService = azure.createTableService();
+	this.dataService = azure.createTableService(accountName, accountKey);
+	this.dataService.createTableIfNotExists('games', function(err, result) {
+		if(err) {
+			throw(new Error(err));
+		}
+	});
 };
 
 // Static Functions
@@ -22,10 +28,19 @@ GameRepository.validateFilter = function validateFilter(toValidate) {
 GameRepository.prototype.getGames = function getGames(filter, callback) {
 	var err, query, retVal;
 
+	// helper functions
+	function getNewQuery() {
+		var newContentDays	= nconf.get("NEW_CONTENT_DAYS")
+			, startDate 	= moment().subtract(newContentDays,'days').toDate();
+
+		return new azure.TableQuery()
+					.where("PartitionKey eq ?", "zvgq-game")
+					.and("Timestamp >= ?date?", startDate)
+	}
+
 	if(GameRepository.validateFilter(filter.toLowerCase())) {
-		query = new azure.TableQuery()
-					.where("PartitionKey eq ?", filter);
-		this.dataService.queryEntities("games", query, null, function(err, result, response) {
+		query = getNewQuery();
+		this.dataService.queryEntities("catalogue", query, null, function(err, result) {
 			// handle error
 			if(err) {
 				callback(err, null);
@@ -33,7 +48,7 @@ GameRepository.prototype.getGames = function getGames(filter, callback) {
 			else {
 				retVal = {};
 				retVal.filter = filter;
-				retVal.results = entities;
+				retVal.entries = result.entries;
 
 				callback(err, retVal);
 			}

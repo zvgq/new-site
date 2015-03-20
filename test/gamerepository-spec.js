@@ -4,7 +4,6 @@ var expect          = require("chai").expect;
 var sinon           = require("sinon");
 var rewire			= require("rewire");
 
-var Game			= require("../models/gamemodel");
 var GameRepository	= rewire("../repositories/gamerepository.js");
 
 // mocks
@@ -13,19 +12,24 @@ var azure			= require("azure-storage");
 describe("Game Repository", function() {
 	// STUBS
 	var createTableServiceStub
+		, createTableStub
 		, queryEntitiesStub;
 
-	// SETUP ON ALL TESTS
-	before(function() {
-		queryEntitiesStub		= sinon.stub();
+	// DEFAULT SETUP FOR TESTS
+	beforeEach(function() {
+		// table service mock
+		queryEntitiesStub = sinon.stub().callsArgWith(3, null, {entries: []});
+		createTableStub = sinon.stub().callsArg(1);
 		var tableServiceMock = {
 			queryEntities: queryEntitiesStub
+			, createTableIfNotExists: createTableStub
 		};
 		createTableServiceStub 	= sinon.stub().returns(tableServiceMock);
 
+		// azure mock
 		var azureMock = {
 			createTableService: createTableServiceStub
-		}
+		};
 		GameRepository.__set__({
 			"azure.createTableService": createTableServiceStub
 		});
@@ -33,6 +37,7 @@ describe("Game Repository", function() {
 
 	afterEach(function() {
 		createTableServiceStub.reset();
+		createTableStub.reset();
 		queryEntitiesStub.reset();
 	});
 
@@ -44,16 +49,60 @@ describe("Game Repository", function() {
 
 			expect(createTableServiceStub.calledOnce).to.be.true;
 		});
+
+		it("attempts to create 'games' table", function() {
+			var repository = new GameRepository();
+
+			expect(createTableStub.calledOnce).to.be.true;
+			expect(createTableStub.calledWith('games')).to.be.true;
+		});
+
+		it("throws error if fails on creating table", function() {
+			// STUBS & MOCKS
+			queryEntitiesStub = sinon.stub().callsArgWith(3, null, {entries: []});
+			createTableStub = sinon.stub().callsArgWith(1, "test error");
+			var tableServiceMock = {
+				queryEntities: queryEntitiesStub
+				, createTableIfNotExists: createTableStub
+			};
+			createTableServiceStub 	= sinon.stub().returns(tableServiceMock);
+
+			// azure mock
+			var azureMock = {
+				createTableService: createTableServiceStub
+			};
+			GameRepository.__set__({
+				"azure.createTableService": createTableServiceStub
+			});
+
+			// GIVEN
+			var repository;
+			try {
+				repository = new GameRepository();
+			}
+			catch(ex) { }
+
+			// WHEN
+			expect(createTableStub.calledOnce).to.be.true;
+
+			// THEN
+			expect(createTableStub.threw()).to.be.true;
+		});
 	});
 
 	describe("#getGames(filter, callback)", function() {
-		it("queries entities from storage", function() {
+		it("queries entries from storage", function(done) {
 			var filter	= "new"
 				, repository = new GameRepository()
-				, cbSpy = sinon.spy();
+				, cbSpy = sinon.spy(function(err, result) {
+					expect(err).not.to.exist;
+					expect(result.entries).to.be.instanceOf(Array);
+					done();
+				});
 			repository.getGames(filter, cbSpy);
 
 			expect(queryEntitiesStub.calledOnce).to.be.true;
+			expect(cbSpy.calledOnce).to.be.true;
 		});
 
 		it("returns error and no results on invalid filter", function(done) {
