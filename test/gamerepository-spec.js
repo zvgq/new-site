@@ -4,10 +4,8 @@ var expect          = require("chai").expect;
 var sinon           = require("sinon");
 var rewire			= require("rewire");
 
+var GameModel		= rewire("../models/gamemodel.js");
 var GameRepository	= rewire("../repositories/gamerepository.js");
-
-// mocks
-var azure			= require("azure-storage");
 
 describe("GameRepository", function() {
 	// STUBS
@@ -41,7 +39,6 @@ describe("GameRepository", function() {
 		queryEntitiesStub.reset();
 	});
 
-
 	describe("on initialization", function() {
 		// SPECS
 		it("creates a table service", function() {
@@ -68,9 +65,7 @@ describe("GameRepository", function() {
 			createTableServiceStub 	= sinon.stub().returns(tableServiceMock);
 
 			// azure mock
-			var azureMock = {
-				createTableService: createTableServiceStub
-			};
+			var azureMock = { createTableService: createTableServiceStub };
 			GameRepository.__set__({
 				"azure.createTableService": createTableServiceStub
 			});
@@ -103,6 +98,43 @@ describe("GameRepository", function() {
 
 			expect(queryEntitiesStub.calledOnce).to.be.true;
 			expect(cbSpy.calledOnce).to.be.true;
+		});
+
+		it("converts each entry returned", function() {
+			// STUBS & MOCKS
+			var testEntries = ["sample1", "sample2", "sample3"];
+			queryEntitiesStub = sinon.stub().callsArgWith(3, null, {entries: testEntries});
+			createTableStub = sinon.stub().callsArgWith(1, null);
+			var tableServiceMock = {
+				queryEntities: queryEntitiesStub
+				, createTableIfNotExists: createTableStub
+			};
+			createTableServiceStub 	= sinon.stub().returns(tableServiceMock);
+
+			// azure mock
+			var azureMock = {
+				createTableService: createTableServiceStub
+			};
+			GameRepository.__set__({
+				"azure.createTableService": createTableServiceStub
+			});
+
+			// model mock
+			var createModelFromAzureEntryStub = sinon.stub();
+			GameRepository.__set__({
+				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
+			});
+
+			// GIVEN
+			var filter = "new"
+				, repository = new GameRepository()
+				, cbSpy = sinon.spy();
+
+			// WHEN
+			repository.getGames(filter, cbSpy);
+
+			// THEN
+			expect(createModelFromAzureEntryStub.callCount).to.equal(testEntries.length);
 		});
 
 		it("returns error and no results on invalid filter", function(done) {

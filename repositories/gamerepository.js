@@ -1,8 +1,9 @@
 'use strict';
 
-var azure = require('azure-storage')
-	, moment = require('moment')
-	, nconf = require('nconf');
+var azure 		= require('azure-storage')
+	, moment 	= require('moment')
+	, nconf 	= require('nconf')
+	, GameModel = require('../models/gamemodel');
 
 function GameRepository() {
 	var accountName	= nconf.get("STORAGE_NAME")
@@ -26,7 +27,7 @@ GameRepository.validateFilter = function validateFilter(toValidate) {
 
 // Prototype
 GameRepository.prototype.getGames = function getGames(filter, callback) {
-	var err, query, retVal;
+	var err, query, processed, retVal;
 
 	// helper functions
 	function getNewQuery() {
@@ -38,6 +39,10 @@ GameRepository.prototype.getGames = function getGames(filter, callback) {
 					.and("Timestamp >= ?date?", startDate)
 	}
 
+	function processEntries(element, index, array) {
+		processed.push(GameModel.createModelFromAzureEntry(element));
+	}
+
 	if(GameRepository.validateFilter(filter.toLowerCase())) {
 		query = getNewQuery();
 		this.dataService.queryEntities("catalogue", query, null, function(err, result) {
@@ -46,9 +51,13 @@ GameRepository.prototype.getGames = function getGames(filter, callback) {
 				callback(err, null);
 			}
 			else {
+				// process entries
+				processed = [];
+				result.entries.forEach(processEntries);
+
 				retVal = {};
 				retVal.filter = filter;
-				retVal.entries = result.entries;
+				retVal.entries = processed;
 
 				callback(err, retVal);
 			}

@@ -3,7 +3,7 @@
 var expect          = require("chai").expect;
 var sinon           = require("sinon");
 
-var GameModel		= require("../models/GameModel.js");
+var GameModel		= require("../models/gamemodel.js");
 
 describe("GameModel", function() {
 	describe("#createModelFromAzureEntry(entry)", function() {

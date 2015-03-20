@@ -1,12 +1,12 @@
-function Game() {
+function GameModel() {
     this.id = undefined;
     this.description = undefined;
     this.title = undefined;
     this.titleMediaUri = undefined;
 }
 
-Game.createModelFromAzureEntry = function(entry) {
-    model = new Game();
+GameModel.createModelFromAzureEntry = function(entry) {
+    model = new GameModel();
 
     model.id = entry.RowKey ? entry.RowKey._ : undefined;
     model.description = entry.description._ ? entry.description._ : undefined;
@@ -16,4 +16,4 @@ Game.createModelFromAzureEntry = function(entry) {
     return model;
 }
 
-module.exports = Game;
+module.exports = GameModel;
