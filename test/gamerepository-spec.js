@@ -86,6 +86,28 @@ describe("GameRepository", function() {
 	});
 
 	describe("#getGames(filter, callback)", function() {
+		var newQueryHelperSpy
+			, numQueryHelperSpy
+			, letterQueryHelperSpy;
+
+		before(function() {
+			newQueryHelperSpy 		= sinon.spy();
+			numQueryHelperSpy 		= sinon.spy();
+			letterQueryHelperSpy 	= sinon.spy();
+
+			GameRepository.__set__({
+				"getNewQuery": newQueryHelperSpy
+				, "getNumberQuery": numQueryHelperSpy
+				, "getLetterQuery": letterQueryHelperSpy
+			});
+		});
+
+		afterEach(function() {
+			newQueryHelperSpy.reset();
+			numQueryHelperSpy.reset();
+			letterQueryHelperSpy.reset();
+		});
+
 		it("queries entries from storage", function(done) {
 			var filter	= "new"
 				, repository = new GameRepository()
@@ -147,6 +169,51 @@ describe("GameRepository", function() {
 							});
 
 			repository.getGames(invalidFilter, cbSpy);
+		});
+
+		it("creates a 'new' query when passed 'new' as filter", function(done) {
+			var filterValue = "new"
+				, repository = new GameRepository()
+				, cbSpy = sinon.spy(function(err, result) {
+							expect(err).not.to.exist;
+							expect(result.filter).to.equal(filterValue);
+							expect(newQueryHelperSpy.calledOnce).to.be.true;
+							expect(numQueryHelperSpy.callCount).to.equal(0);
+							expect(letterQueryHelperSpy.callCount).to.equal(0);
+							done();
+							});
+
+			repository.getGames(filterValue, cbSpy);
+		});
+
+		it("creates a 'num' query when passed 'num' as filter", function(done) {
+			var filterValue = "num"
+				, repository = new GameRepository()
+				, cbSpy = sinon.spy(function(err, result) {
+							expect(err).not.to.exist;
+							expect(result.filter).to.equal(filterValue);
+							expect(numQueryHelperSpy.calledOnce).to.be.true;
+							expect(newQueryHelperSpy.callCount).to.equal(0);
+							expect(letterQueryHelperSpy.callCount).to.equal(0);
+							done();
+							});
+
+			repository.getGames(filterValue, cbSpy);
+		});
+
+		it("creates a 'letter' query when passed a letter as a filter", function(done) {
+			var filterValue = "a"
+				, repository = new GameRepository()
+				, cbSpy = sinon.spy(function(err, result) {
+							expect(err).not.to.exist;
+							expect(result.filter).to.equal(filterValue);
+							expect(letterQueryHelperSpy.calledOnce).to.be.true;
+							expect(newQueryHelperSpy.callCount).to.equal(0);
+							expect(numQueryHelperSpy.callCount).to.equal(0);
+							done();
+							});
+
+			repository.getGames(filterValue, cbSpy);
 		});
 	});
 

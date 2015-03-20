@@ -18,6 +18,33 @@ function GameRepository() {
 	});
 };
 
+// Private Functions
+var getNextCharacter = function(char) {
+	return String.fromCharCode(char.charCodeAt(0)+1);
+}
+
+var getNewQuery = function() {
+		var newContentDays	= nconf.get("NEW_CONTENT_DAYS")
+			, startDate 	= moment().subtract(newContentDays,'days').toDate();
+
+		return new azure.TableQuery()
+					.where("PartitionKey eq ?", "zvgq-game")
+					.and("Timestamp >= ?date?", startDate)
+	}
+
+var getNumberQuery = function() {
+	return new azure.TableQuery()
+		.where("PartitionKey eq ?", "zvgq-game")
+		.and("title >= ? and title < ?", "0", getNextCharacter('9'))
+}
+
+var getLetterQuery = function(letter) {
+	var filter = letter.toLowerCase();
+	return new azure.TableQuery()
+		.where('PartitionKey eq ?', 'zvgq-game')
+		.and('RowKey >= ? and RowKey < ?', filter, getNextCharacter(filter))
+}
+
 // Static Functions
 GameRepository.validateFilter = function validateFilter(toValidate) {
 	var validFilterRegex = /(num|new|^[a-zA-Z]{1}$)/g;
@@ -29,22 +56,24 @@ GameRepository.validateFilter = function validateFilter(toValidate) {
 GameRepository.prototype.getGames = function getGames(filter, callback) {
 	var err, query, processed, retVal;
 
-	// helper functions
-	function getNewQuery() {
-		var newContentDays	= nconf.get("NEW_CONTENT_DAYS")
-			, startDate 	= moment().subtract(newContentDays,'days').toDate();
-
-		return new azure.TableQuery()
-					.where("PartitionKey eq ?", "zvgq-game")
-					.and("Timestamp >= ?date?", startDate)
-	}
-
 	function processEntries(element, index, array) {
 		processed.push(GameModel.createModelFromAzureEntry(element));
 	}
 
-	if(GameRepository.validateFilter(filter.toLowerCase())) {
-		query = getNewQuery();
+	if(GameRepository.validateFilter(filter)) {
+		// select filter
+		switch(filter) {
+			case "new":
+				query = getNewQuery();
+				break;
+			case "num":
+				query = getNumberQuery();
+				break;
+			default:
+				query = getLetterQuery(filter);
+				break;
+		}
+
 		this.dataService.queryEntities("catalogue", query, null, function(err, result) {
 			// handle error
 			if(err) {
