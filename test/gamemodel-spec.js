@@ -2,17 +2,34 @@
 
 var expect          = require("chai").expect;
 var sinon           = require("sinon");
+var rewire			= require("rewire");
 
-var GameModel		= require("../models/gamemodel.js");
+var GameModel		= rewire("../models/gamemodel.js");
 
 describe("GameModel", function() {
+	// STUBS
+	var testMediaLocation 	= "http://localhost:3000/test/media"
+		, nconfGetStub		= sinon.stub();
+
+	// TEST SETUP
+	before(function() {
+		nconfGetStub.withArgs("MEDIA_LOCATION").returns(testMediaLocation);
+		GameModel.__set__({
+			"nconf.get": nconfGetStub
+		});
+	});
+
+	afterEach(function() {
+		nconfGetStub.reset();
+	});
+
 	describe("#createModelFromAzureEntry(entry)", function() {
 		var testEntry =
 			{
 				RowKey: { _ : "rowkey"}
 				, description: { _ : "description" }
 				, title: { _ : "title" }
-				, titleMediaUri: { _ : "titlemediauri" }
+				, titleMediaUri: { _ : "titlemediauri.png" }
 			};
 
 		it("copies RowKey into the id field", function() {
@@ -30,9 +47,11 @@ describe("GameModel", function() {
 			expect(result.title).to.equal(testEntry.title._);
 		});
 
-		it("copies titleMediaUri into the titleMediaUri field", function() {
-			var result = GameModel.createModelFromAzureEntry(testEntry);
-			expect(result.titleMediaUri).to.equal(testEntry.titleMediaUri._);
+		it("combines the media location and titleMediaUri into the titleMediaUri field", function() {
+			var expected = testMediaLocation.concat(testEntry.titleMediaUri._)
+				, result = GameModel.createModelFromAzureEntry(testEntry);
+
+			expect(result.titleMediaUri).to.equal(expected);
 		});
 	});
 });

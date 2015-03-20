@@ -5,7 +5,7 @@ block content
 		if games.length > 0
 			each game in games
 				article(class='tile')
-					div(class='bg')
+					div(class='bg', style='background-image: url(#{ game.titleMediaUri })')
 						h3(class='tile-title')= game.title
 		else
 			h1 There are no games for this letter!
