@@ -31,7 +31,8 @@ node_modules
 *~
 *.swp
 
-# Ember-Refactor / CoffeeScript Refactor
+# CoffeeScript Refactor
 !/test/*.js
-!/repositories/*.js
-repositories/*.coffee
+
+!/repositories/gamerepository.js
+!/models/gamemodel.js
