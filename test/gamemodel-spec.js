@@ -11,16 +11,35 @@ describe("GameModel", function() {
 	var testMediaLocation 	= "http://localhost:3000/test/media"
 		, nconfGetStub		= sinon.stub();
 
-	// TEST SETUP
-	before(function() {
-		nconfGetStub.withArgs("MEDIA_LOCATION").returns(testMediaLocation);
-		GameModel.__set__({
-			"nconf.get": nconfGetStub
-		});
-	});
+	describe("#validateId(id)", function() {
+		it("validates if id is made of characters, digits, and '-'", function() {
+			var id = "validid-123"
+				, result;
 
-	afterEach(function() {
-		nconfGetStub.reset();
+			result = GameModel.validateId(id);
+			expect(result).to.be.true;
+		});
+
+		it("fails if id contains special characters or whitespace", function() {
+			var specialChars = "!@#$%^&*()_+=;:\"\'{}[]|\\?/<>,.\`~\n\t\0\r "
+				, id
+				, result;
+
+			function testCharacter(char, index, array) {
+				id = "invalid".concat(char,"id");
+				result = GameModel.validateId(id);
+				expect(result).to.equal(false, "Char: '".concat(id, "' is invalid"));
+			}
+			specialChars.split("").forEach(testCharacter);
+		});
+
+		it("fails if id is undefined", function() {
+			var id = undefined
+				, result;
+
+			result = GameModel.validateId(id);
+			expect(result).to.be.false;
+		});
 	});
 
 	describe("#createModelFromAzureEntry(entry)", function() {
@@ -31,6 +50,18 @@ describe("GameModel", function() {
 				, title: { _ : "title" }
 				, titleMediaUri: { _ : "titlemediauri.png" }
 			};
+
+		// TEST SETUP
+		before(function() {
+			nconfGetStub.withArgs("MEDIA_LOCATION").returns(testMediaLocation);
+			GameModel.__set__({
+				"nconf.get": nconfGetStub
+			});
+		});
+
+		afterEach(function() {
+			nconfGetStub.reset();
+		});
 
 		it("copies RowKey into the id field", function() {
 			var result = GameModel.createModelFromAzureEntry(testEntry);

@@ -11,6 +11,17 @@ GameModel.getMediaLocation = function() {
     return nconf.get("MEDIA_LOCATION");
 }
 
+GameModel.validateId = function(id) {
+    var validIdRegex = /^([a-z0-9]+-?[a-z0-9]*)[^\s\0?!{}()<>,.:;'"!@#$%^&*()~`_=+\[\]|\\//]*$/g
+        , result = false;
+
+    if(id !== undefined) {
+        result = validIdRegex.test(id);
+    }
+
+    return result;
+}
+
 GameModel.createModelFromAzureEntry = function(entry) {
     model = new GameModel();
 
