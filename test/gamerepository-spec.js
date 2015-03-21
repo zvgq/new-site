@@ -11,16 +11,27 @@ describe("GameRepository", function() {
 	// STUBS
 	var createTableServiceStub
 		, createTableStub
-		, queryEntitiesStub;
+		, queryEntitiesStub
+		, retrieveEntityStub
+		, sampleEntry;
 
 	// DEFAULT SETUP FOR TESTS
 	beforeEach(function() {
 		// table service mock
+		sampleEntry = {
+			id: "testid"
+			, description: "testdescription"
+			, title: "testtitle"
+			, titleMediaUri: "testtitlemediauri.png"
+		};
+		retrieveEntityStub = sinon.stub().callsArgWith(3, null, sampleEntry);
 		queryEntitiesStub = sinon.stub().callsArgWith(3, null, {entries: []});
 		createTableStub = sinon.stub().callsArg(1);
+
 		var tableServiceMock = {
 			queryEntities: queryEntitiesStub
 			, createTableIfNotExists: createTableStub
+			, retrieveEntity: retrieveEntityStub
 		};
 		createTableServiceStub 	= sinon.stub().returns(tableServiceMock);
 
@@ -39,7 +50,7 @@ describe("GameRepository", function() {
 		queryEntitiesStub.reset();
 	});
 
-	describe("on initialization", function() {
+	describe("#constructor()", function() {
 		// SPECS
 		it("creates a table service", function() {
 			var repository = new GameRepository();
@@ -214,6 +225,42 @@ describe("GameRepository", function() {
 							});
 
 			repository.getGames(filterValue, cbSpy);
+		});
+	});
+
+	describe("#getGame(id, callback)", function() {
+		it("retrieves the game", function() {
+			var repository = new GameRepository()
+			, cbStub = sinon.spy(function(err, result) {
+				expect(retrieveEntityStub.calledOnce).to.be.true;
+				});
+
+			repository.getGame("testid", cbStub);
+		});
+
+		it("converts retrieved entity", function() {
+			var createModelFromAzureEntryStub = sinon.stub();
+			GameRepository.__set__({
+				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
+			});
+
+			var repository = new GameRepository()
+			, cbStub = sinon.spy(function(err, result) {
+				expect(createModelFromAzureEntryStub.calledOnce).to.be.true;
+				});
+
+			repository.getGame("testid", cbStub);
+		});
+
+		it("returns 'invalid id: <id>' error on invalid id", function() {
+			var invalidId = "+++"
+			, repository = new GameRepository()
+			, cbStub = sinon.spy(function(err, result) {
+				expect(err).to.equal("invalid id: ".concat(invalidId));
+				expect(retrieveEntityStub.callCount).to.equal(0);
+				});
+
+			repository.getGame(invalidId, cbStub);
 		});
 	});
 

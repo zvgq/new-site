@@ -11,7 +11,7 @@ function GameRepository() {
 		, tableName = nconf.get("CATALOGUE_TABLE_NAME");
 
 	this.dataService = azure.createTableService(accountName, accountKey);
-	this.dataService.createTableIfNotExists('games', function(err, result) {
+	this.dataService.createTableIfNotExists('catalogue', function(err, result) {
 		if(err) {
 			throw(new Error(err));
 		}
@@ -53,7 +53,7 @@ GameRepository.validateFilter = function validateFilter(toValidate) {
 };
 
 // Prototype
-GameRepository.prototype.getGames = function getGames(filter, callback) {
+GameRepository.prototype.getGames = function(filter, callback) {
 	var err, query, processed, retVal;
 
 	function processEntries(element, index, array) {
@@ -99,5 +99,24 @@ GameRepository.prototype.getGames = function getGames(filter, callback) {
 		callback(err, retVal);
 	}
 }
+
+GameRepository.prototype.getGame = function(id, callback) {
+	var processResult;
+
+	if(!GameModel.validateId(id)) {
+		callback("invalid id: ".concat(id), null);
+	}
+	else {
+		this.dataService.retrieveEntity('catalogue', 'zvgq-game', id, function(err, result) {
+			if(err) {
+				callback(err, null);
+			}
+			else {
+				processResult = GameModel.createModelFromAzureEntry(result);
+				callback(null, processResult);
+			}
+		});
+	}
+};
 
 module.exports = GameRepository;
