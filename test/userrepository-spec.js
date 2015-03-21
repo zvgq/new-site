@@ -4,7 +4,7 @@ var sinon           = require("sinon");
 var UserRepository  = require("../repositories/userrepository");
 var User            = require("../models/usermodel");
 
-describe("UserRepository", function() {
+describe.skip("UserRepository", function() {
     describe("getUser(id)", function() {
         var retrieveStub;
         var repository;
