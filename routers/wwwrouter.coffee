@@ -40,14 +40,21 @@ class WWWRouter
 		@router.get "/games/:filter", getGames
 
 		# /game
+		getGame = (req, res, next)=>
+			id = req.params.id
+			@gamesRepo.getGame id, (err, result)->
+				data =
+					title: "ZVGQ - Games"
+					analytics: nconf.get "GOOGLE_TRACKING_CODE"
+					version: req.app.locals.version
+					game: result
+				if(err)
+					res.status(500).json(err)
+				else
+					res.render "game", data
+
+		@router.get "/game/:id", getGame			
 		@router.get "/game", (req, res, next)=>
 			res.redirect "/games"
-
-		@router.get "/game/:id", (req, res, next)=>
-			data =
-				title: "ZVGQ - Game"
-				analytics: nconf.get "GOOGLE_TRACKING_CODE"
-				version: req.app.locals.version
-			res.render "game", data
 
 module.exports = WWWRouter
