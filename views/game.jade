@@ -1,4 +1,6 @@
 extends ./base.jade
 
 block content
-	h1 This is the game page
+	h1= game.title
+	img(src="#{ game.titleMediaUri }", alt="#{ game.title } title screen")
+	article= game.description
