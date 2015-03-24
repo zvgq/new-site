@@ -1,6 +1,44 @@
 extends ./base.jade
 
 block content
-	h1= game.title
-	img(src="#{ game.titleMediaUri }", alt="#{ game.title } title screen")
-	article= game.description
+	div(class="container")
+		div(class="row")
+			div(class="col-md-12")
+				section(class="game-details",style="background-color: rgba(0,0,0,255);")
+					header(class="row")
+						div(class="col-md-4")
+							img(src="#{ game.titleMediaUri }", alt="#{ game.title } title screen")
+						article(class="col-md-8")= game.description
+		div(class="row")
+			div(class="col-md-12")
+				nav
+					section(class="quote-list tile-container")
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+						article(class="tile quote")
+							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+	
+	// modal				
+	div(class="modal fade" id="quoteModal")
+		div(class="modal-dialog modal-lg")
+			section(class="modal-content")
+				header(class="modal-body")
+					h3 Quote will display here
+				section(class="modal-footer")
+					button(class="btn btn-default", type="button", data-dismiss="modal") Close
+					
+	// script
+	script(data-main="/script/gameview", src="/lib/requirejs/require.js")
+		
