@@ -14,13 +14,13 @@ require [
 ], ($, Masonry)->
 	# setup namespaces
 	ZVGQ = ZVGQ || { };
-	ZVGQ.Games = ZVGQ.Games || { };
+	ZVGQ.GameList = ZVGQ.GameList || { };
 
 	# setup view
-	ZVGQ.Games.init = ()->
+	ZVGQ.GameList.init = ()->
 		masonryEl = document.getElementById "tileContainer"
 		masonryOptions =
 			itemSelector: ".tile"
 		@msnry = new Masonry masonryEl, masonryOptions
 
-	ZVGQ.Games.init()
+	ZVGQ.GameList.init()
