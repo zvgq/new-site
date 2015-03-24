@@ -36,3 +36,4 @@ node_modules
 
 !/repositories/gamerepository.js
 !/models/gamemodel.js
+!/models/quotemodel.js
