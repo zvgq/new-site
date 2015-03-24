@@ -11,12 +11,18 @@ describe("GameRepository", function() {
 	// STUBS
 	var createTableServiceStub
 		, createTableStub
+		, nconfGetStub
 		, queryEntitiesStub
 		, retrieveEntityStub
-		, sampleEntry;
+		, sampleEntry
+		, sampleTableName = "SAMPLETABLE"
 
 	// DEFAULT SETUP FOR TESTS
 	beforeEach(function() {
+		// stub nconf
+		nconfGetStub		= sinon.stub();
+		nconfGetStub.withArgs("CATALOGUE_TABLE_NAME").returns(sampleTableName);
+
 		// table service mock
 		sampleEntry = {
 			id: "testid"
@@ -24,6 +30,9 @@ describe("GameRepository", function() {
 			, title: "testtitle"
 			, titleMediaUri: "testtitlemediauri.png"
 		};
+		GameRepository.__set__({
+			"nconf.get": nconfGetStub
+		});
 		retrieveEntityStub = sinon.stub().callsArgWith(3, null, sampleEntry);
 		queryEntitiesStub = sinon.stub().callsArgWith(3, null, {entries: []});
 		createTableStub = sinon.stub().callsArg(1);
@@ -48,6 +57,7 @@ describe("GameRepository", function() {
 		createTableServiceStub.reset();
 		createTableStub.reset();
 		queryEntitiesStub.reset();
+		nconfGetStub.reset();
 	});
 
 	describe("#constructor()", function() {
@@ -58,11 +68,11 @@ describe("GameRepository", function() {
 			expect(createTableServiceStub.calledOnce).to.be.true;
 		});
 
-		it("attempts to create 'games' table", function() {
+		it("attempts to create table with same name as config entry", function() {
 			var repository = new GameRepository();
 
 			expect(createTableStub.calledOnce).to.be.true;
-			expect(createTableStub.calledWith('games')).to.be.true;
+			expect(createTableStub.calledWith(sampleTableName)).to.be.true;
 		});
 
 		it("throws error if fails on creating table", function() {
@@ -228,14 +238,14 @@ describe("GameRepository", function() {
 		});
 	});
 
-	describe("#getGame(id, callback)", function() {
+	describe("#getGame(id, withQuotes, callback)", function() {
 		it("retrieves the game", function() {
 			var repository = new GameRepository()
 			, cbStub = sinon.spy(function(err, result) {
 				expect(retrieveEntityStub.calledOnce).to.be.true;
 				});
 
-			repository.getGame("testid", cbStub);
+			repository.getGame("testid", false, cbStub);
 		});
 
 		it("converts retrieved entity", function() {
@@ -249,7 +259,7 @@ describe("GameRepository", function() {
 				expect(createModelFromAzureEntryStub.calledOnce).to.be.true;
 				});
 
-			repository.getGame("testid", cbStub);
+			repository.getGame("testid", false, cbStub);
 		});
 
 		it("returns 'invalid id: <id>' error on invalid id", function() {
@@ -260,7 +270,7 @@ describe("GameRepository", function() {
 				expect(retrieveEntityStub.callCount).to.equal(0);
 				});
 
-			repository.getGame(invalidId, cbStub);
+			repository.getGame(invalidId, false, cbStub);
 		});
 	});
 

@@ -11,7 +11,7 @@ function GameRepository() {
 		, tableName = nconf.get("CATALOGUE_TABLE_NAME");
 
 	this.dataService = azure.createTableService(accountName, accountKey);
-	this.dataService.createTableIfNotExists('catalogue', function(err, result) {
+	this.dataService.createTableIfNotExists(tableName, function(err, result) {
 		if(err) {
 			throw(new Error(err));
 		}
@@ -100,7 +100,7 @@ GameRepository.prototype.getGames = function(filter, callback) {
 	}
 }
 
-GameRepository.prototype.getGame = function(id, callback) {
+GameRepository.prototype.getGame = function(id, withQuotes, callback) {
 	var processResult;
 
 	if(!GameModel.validateId(id)) {
