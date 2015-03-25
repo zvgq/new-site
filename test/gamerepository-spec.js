@@ -239,16 +239,18 @@ describe("GameRepository", function() {
 	});
 
 	describe("#getGame(id, withQuotes, callback)", function() {
-		it("retrieves the game", function() {
+
+		it("retrieves the game", function(done) {
 			var repository = new GameRepository()
-			, cbStub = sinon.spy(function(err, result) {
-				expect(retrieveEntityStub.calledOnce).to.be.true;
-				});
+				, cbStub = sinon.spy(function(err, result) {
+								expect(retrieveEntityStub.calledOnce).to.be.true;
+								done();
+								});
 
 			repository.getGame("testid", false, cbStub);
 		});
 
-		it("converts retrieved entity", function() {
+		it("converts retrieved entity", function(done) {
 			var createModelFromAzureEntryStub = sinon.stub();
 			GameRepository.__set__({
 				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
@@ -256,18 +258,42 @@ describe("GameRepository", function() {
 
 			var repository = new GameRepository()
 			, cbStub = sinon.spy(function(err, result) {
-				expect(createModelFromAzureEntryStub.calledOnce).to.be.true;
-				});
+							expect(createModelFromAzureEntryStub.calledOnce).to.be.true;
+							done();
+							});
 
 			repository.getGame("testid", false, cbStub);
 		});
 
-		it("returns 'invalid id: <id>' error on invalid id", function() {
+		it.skip("returns an array of quotes for the game if withQuotes parameter is true", function(done) {
+			var repository = new GameRepository()
+				, cbSpy = sinon.spy(function(err, result) {
+							expect(result.quotes).to.exist;
+							expect(result.quotes).to.be.instanceOf(Array);
+							done();
+							});
+
+			repository.getGame("gameid", true, cbSpy);
+		});
+
+		it.skip("sets quotes to undefined if withQuotes parameter is false", function(done) {
+			var repository = new GameRepository()
+				, cbSpy = sinon.spy(function(err, result) {
+							expect(result.quotes).to.exist;
+							expect(result.quotes).to.be.undefined;
+							done();
+							});
+
+			repository.getGame("gameid", false, cbSpy);
+		});
+
+		it("returns 'invalid id: <id>' error on invalid id", function(done) {
 			var invalidId = "+++"
 			, repository = new GameRepository()
 			, cbStub = sinon.spy(function(err, result) {
 				expect(err).to.equal("invalid id: ".concat(invalidId));
 				expect(retrieveEntityStub.callCount).to.equal(0);
+				done();
 				});
 
 			repository.getGame(invalidId, false, cbStub);
