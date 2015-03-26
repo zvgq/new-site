@@ -29,6 +29,7 @@ describe("GameRepository", function() {
 			, description: "testdescription"
 			, title: "testtitle"
 			, titleMediaUri: "testtitlemediauri.png"
+			, quotes: undefined
 		};
 		GameRepository.__set__({
 			"nconf.get": nconfGetStub
@@ -257,34 +258,47 @@ describe("GameRepository", function() {
 			});
 
 			var repository = new GameRepository()
-			, cbStub = sinon.spy(function(err, result) {
+			, cbSpy = sinon.spy(function(err, result) {
 							expect(createModelFromAzureEntryStub.calledOnce).to.be.true;
 							done();
 							});
 
-			repository.getGame("testid", false, cbStub);
+			repository.getGame("testid", false, cbSpy);
 		});
 
-		it.skip("returns an array of quotes for the game if withQuotes parameter is true", function(done) {
-			var repository = new GameRepository()
+		it("returns an array of quotes for the game if withQuotes parameter is true", function(done) {
+			var createModelFromAzureEntryStub
+				, repository = new GameRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(result.quotes).to.exist;
 							expect(result.quotes).to.be.instanceOf(Array);
 							done();
 							});
 
-			repository.getGame("gameid", true, cbSpy);
+			// setup
+			createModelFromAzureEntryStub = sinon.stub().returns(new GameModel());
+			GameRepository.__set__({
+				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
+			});
+
+			repository.getGame("testid", true, cbSpy);
 		});
 
-		it.skip("sets quotes to undefined if withQuotes parameter is false", function(done) {
-			var repository = new GameRepository()
+		it("leaves quotes to undefined if withQuotes parameter is false", function(done) {
+			var createModelFromAzureEntryStub
+				, repository = new GameRepository()
 				, cbSpy = sinon.spy(function(err, result) {
-							expect(result.quotes).to.exist;
 							expect(result.quotes).to.be.undefined;
 							done();
 							});
 
-			repository.getGame("gameid", false, cbSpy);
+			// setup
+			createModelFromAzureEntryStub = sinon.stub().returns(new GameModel());
+			GameRepository.__set__({
+				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
+			});
+
+			repository.getGame("testid", false, cbSpy);
 		});
 
 		it("returns 'invalid id: <id>' error on invalid id", function(done) {

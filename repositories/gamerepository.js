@@ -1,9 +1,10 @@
 'use strict';
 
-var azure 		= require('azure-storage')
-	, moment 	= require('moment')
-	, nconf 	= require('nconf')
-	, GameModel = require('../models/gamemodel');
+var azure 			= require('azure-storage')
+	, moment 		= require('moment')
+	, nconf 		= require('nconf')
+	, GameModel 	= require('../models/gamemodel')
+	, QuoteModel 	= require('../models/quotemodel');
 
 function GameRepository() {
 	var accountName	= nconf.get("STORAGE_NAME")
@@ -101,21 +102,49 @@ GameRepository.prototype.getGames = function(filter, callback) {
 }
 
 GameRepository.prototype.getGame = function(id, withQuotes, callback) {
-	var processResult;
+	var dataService = this.dataService
+		, processResult
+		, quotes
+		, quoteQuery;
+
+	function processQuotes(element, index, array) {
+		processed.push(QuoteModel.createModelFromAzureEntry(element));
+	}
+
+	function retrieveEntitySuccess(err, result) {
+		if(err) {
+			// exit on error
+			callback(err, null);
+		}
+
+		// convert to GameModel
+		processResult = GameModel.createModelFromAzureEntry(result);
+
+		// add quotes to GameModel
+		if(withQuotes === true) {
+			var quoteQuery = new azure.TableQuery()
+								.where("PartitionKey eq ? and gameId eq ?", "zvgq-quote", "gameId");
+
+			dataService.queryEntities("catalogue", quoteQuery, null, function(err, result) {
+				quotes = [];
+				result.entries.forEach(processQuotes);
+
+				processResult.quotes = quotes;
+				// return with quotes
+				callback(null, processResult);
+			});
+		}
+		else {
+			// return result without quotes
+			callback(null, processResult);
+		}
+	};
 
 	if(!GameModel.validateId(id)) {
 		callback("invalid id: ".concat(id), null);
 	}
 	else {
-		this.dataService.retrieveEntity('catalogue', 'zvgq-game', id, function(err, result) {
-			if(err) {
-				callback(err, null);
-			}
-			else {
-				processResult = GameModel.createModelFromAzureEntry(result);
-				callback(null, processResult);
-			}
-		});
+		dataService.retrieveEntity('catalogue', 'zvgq-game', id, retrieveEntitySuccess);
 	}
 };
 
