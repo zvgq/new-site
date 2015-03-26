@@ -11,24 +11,14 @@ block content
 						article(class="col-md-8")= game.description
 		div(class="row")
 			div(class="col-md-12")
-				nav
-					section(class="quote-list tile-container")
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
-						article(class="tile quote")
-							a(class="btn", data-toggle="modal", data-target="#quoteModal") Quote text will go here
+				if game.quotes
+					if game.quotes.length > 0
+						section(class="quote-list tile-container")
+							each quote in game.quotes
+								article(class="tile quote")
+									a(class="btn", data-toggle="modal", data-target="#quoteModal")= quote.title
+					else
+						h3.pixel-text Awww SNAP! No quotes for this game.
 	
 	// modal				
 	div(class="modal fade" id="quoteModal")

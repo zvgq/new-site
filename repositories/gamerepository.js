@@ -108,7 +108,7 @@ GameRepository.prototype.getGame = function(id, withQuotes, callback) {
 		, quoteQuery;
 
 	function processQuotes(element, index, array) {
-		processed.push(QuoteModel.createModelFromAzureEntry(element));
+		quotes.push(QuoteModel.createModelFromAzureEntry(element));
 	}
 
 	function retrieveEntitySuccess(err, result) {
@@ -123,7 +123,7 @@ GameRepository.prototype.getGame = function(id, withQuotes, callback) {
 		// add quotes to GameModel
 		if(withQuotes === true) {
 			var quoteQuery = new azure.TableQuery()
-								.where("PartitionKey eq ? and gameId eq ?", "zvgq-quote", "gameId");
+								.where("PartitionKey eq ? and gameId eq ?", "zvgq-quote", processResult.id);
 
 			dataService.queryEntities("catalogue", quoteQuery, null, function(err, result) {
 				quotes = [];

@@ -42,7 +42,7 @@ class WWWRouter
 		# /game
 		getGame = (req, res, next)=>
 			id = req.params.id
-			@gamesRepo.getGame id, (err, result)->
+			@gamesRepo.getGame id, true, (err, result)->
 				data =
 					title: "ZVGQ - Games"
 					analytics: nconf.get "GOOGLE_TRACKING_CODE"
@@ -53,7 +53,7 @@ class WWWRouter
 				else
 					res.render "game", data
 
-		@router.get "/game/:id", getGame			
+		@router.get "/game/:id", getGame
 		@router.get "/game", (req, res, next)=>
 			res.redirect "/games"
 
