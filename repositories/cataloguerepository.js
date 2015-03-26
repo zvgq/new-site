@@ -6,7 +6,7 @@ var azure 			= require('azure-storage')
 	, GameModel 	= require('../models/gamemodel')
 	, QuoteModel 	= require('../models/quotemodel');
 
-function GameRepository() {
+function CatalogueRepository() {
 	var accountName	= nconf.get("STORAGE_NAME")
 		, accountKey = nconf.get("STORAGE_KEY")
 		, tableName = nconf.get("CATALOGUE_TABLE_NAME");
@@ -47,21 +47,21 @@ var getLetterQuery = function(letter) {
 }
 
 // Static Functions
-GameRepository.validateFilter = function validateFilter(toValidate) {
+CatalogueRepository.validateFilter = function validateFilter(toValidate) {
 	var validFilterRegex = /(num|new|^[a-zA-Z]{1}$)/g;
 
 	return validFilterRegex.test(toValidate);
 };
 
 // Prototype
-GameRepository.prototype.getGames = function(filter, callback) {
+CatalogueRepository.prototype.getGames = function(filter, callback) {
 	var err, query, processed, retVal;
 
 	function processEntries(element, index, array) {
 		processed.push(GameModel.createModelFromAzureEntry(element));
 	}
 
-	if(GameRepository.validateFilter(filter)) {
+	if(CatalogueRepository.validateFilter(filter)) {
 		// select filter
 		switch(filter) {
 			case "new":
@@ -101,7 +101,7 @@ GameRepository.prototype.getGames = function(filter, callback) {
 	}
 }
 
-GameRepository.prototype.getGame = function(id, withQuotes, callback) {
+CatalogueRepository.prototype.getGame = function(id, withQuotes, callback) {
 	var dataService = this.dataService
 		, processResult
 		, quotes
@@ -148,4 +148,4 @@ GameRepository.prototype.getGame = function(id, withQuotes, callback) {
 	}
 };
 
-module.exports = GameRepository;
+module.exports = CatalogueRepository;

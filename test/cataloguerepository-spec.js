@@ -5,9 +5,9 @@ var sinon           = require("sinon");
 var rewire			= require("rewire");
 
 var GameModel		= rewire("../models/gamemodel.js");
-var GameRepository	= rewire("../repositories/gamerepository.js");
+var CatalogueRepository	= rewire("../repositories/cataloguerepository.js");
 
-describe("GameRepository", function() {
+describe("CatalogueRepository", function() {
 	// STUBS
 	var createTableServiceStub
 		, createTableStub
@@ -31,7 +31,7 @@ describe("GameRepository", function() {
 			, titleMediaUri: "testtitlemediauri.png"
 			, quotes: undefined
 		};
-		GameRepository.__set__({
+		CatalogueRepository.__set__({
 			"nconf.get": nconfGetStub
 		});
 		retrieveEntityStub = sinon.stub().callsArgWith(3, null, sampleEntry);
@@ -49,7 +49,7 @@ describe("GameRepository", function() {
 		var azureMock = {
 			createTableService: createTableServiceStub
 		};
-		GameRepository.__set__({
+		CatalogueRepository.__set__({
 			"azure.createTableService": createTableServiceStub
 		});
 	});
@@ -64,13 +64,13 @@ describe("GameRepository", function() {
 	describe("#constructor()", function() {
 		// SPECS
 		it("creates a table service", function() {
-			var repository = new GameRepository();
+			var repository = new CatalogueRepository();
 
 			expect(createTableServiceStub.calledOnce).to.be.true;
 		});
 
 		it("attempts to create table with same name as config entry", function() {
-			var repository = new GameRepository();
+			var repository = new CatalogueRepository();
 
 			expect(createTableStub.calledOnce).to.be.true;
 			expect(createTableStub.calledWith(sampleTableName)).to.be.true;
@@ -88,14 +88,14 @@ describe("GameRepository", function() {
 
 			// azure mock
 			var azureMock = { createTableService: createTableServiceStub };
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"azure.createTableService": createTableServiceStub
 			});
 
 			// GIVEN
 			var repository;
 			try {
-				repository = new GameRepository();
+				repository = new CatalogueRepository();
 			}
 			catch(ex) { }
 
@@ -117,7 +117,7 @@ describe("GameRepository", function() {
 			numQueryHelperSpy 		= sinon.spy();
 			letterQueryHelperSpy 	= sinon.spy();
 
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"getNewQuery": newQueryHelperSpy
 				, "getNumberQuery": numQueryHelperSpy
 				, "getLetterQuery": letterQueryHelperSpy
@@ -132,7 +132,7 @@ describe("GameRepository", function() {
 
 		it("queries entries from storage", function(done) {
 			var filter	= "new"
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 					expect(err).not.to.exist;
 					expect(result.entries).to.be.instanceOf(Array);
@@ -159,19 +159,19 @@ describe("GameRepository", function() {
 			var azureMock = {
 				createTableService: createTableServiceStub
 			};
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"azure.createTableService": createTableServiceStub
 			});
 
 			// model mock
 			var createModelFromAzureEntryStub = sinon.stub();
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
 			});
 
 			// GIVEN
 			var filter = "new"
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy();
 
 			// WHEN
@@ -183,7 +183,7 @@ describe("GameRepository", function() {
 
 		it("returns error and no results on invalid filter", function(done) {
 			var invalidFilter = ""
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(err).to.exist;
 							expect(result).not.to.exist;
@@ -195,7 +195,7 @@ describe("GameRepository", function() {
 
 		it("creates a 'new' query when passed 'new' as filter", function(done) {
 			var filterValue = "new"
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(err).not.to.exist;
 							expect(result.filter).to.equal(filterValue);
@@ -210,7 +210,7 @@ describe("GameRepository", function() {
 
 		it("creates a 'num' query when passed 'num' as filter", function(done) {
 			var filterValue = "num"
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(err).not.to.exist;
 							expect(result.filter).to.equal(filterValue);
@@ -225,7 +225,7 @@ describe("GameRepository", function() {
 
 		it("creates a 'letter' query when passed a letter as a filter", function(done) {
 			var filterValue = "a"
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(err).not.to.exist;
 							expect(result.filter).to.equal(filterValue);
@@ -242,7 +242,7 @@ describe("GameRepository", function() {
 	describe("#getGame(id, withQuotes, callback)", function() {
 
 		it("retrieves the game", function(done) {
-			var repository = new GameRepository()
+			var repository = new CatalogueRepository()
 				, cbStub = sinon.spy(function(err, result) {
 								expect(retrieveEntityStub.calledOnce).to.be.true;
 								done();
@@ -253,11 +253,11 @@ describe("GameRepository", function() {
 
 		it("converts retrieved entity", function(done) {
 			var createModelFromAzureEntryStub = sinon.stub();
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
 			});
 
-			var repository = new GameRepository()
+			var repository = new CatalogueRepository()
 			, cbSpy = sinon.spy(function(err, result) {
 							expect(createModelFromAzureEntryStub.calledOnce).to.be.true;
 							done();
@@ -268,7 +268,7 @@ describe("GameRepository", function() {
 
 		it("returns an array of quotes for the game if withQuotes parameter is true", function(done) {
 			var createModelFromAzureEntryStub
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(result.quotes).to.exist;
 							expect(result.quotes).to.be.instanceOf(Array);
@@ -277,7 +277,7 @@ describe("GameRepository", function() {
 
 			// setup
 			createModelFromAzureEntryStub = sinon.stub().returns(new GameModel());
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
 			});
 
@@ -286,7 +286,7 @@ describe("GameRepository", function() {
 
 		it("leaves quotes to undefined if withQuotes parameter is false", function(done) {
 			var createModelFromAzureEntryStub
-				, repository = new GameRepository()
+				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(result.quotes).to.be.undefined;
 							done();
@@ -294,7 +294,7 @@ describe("GameRepository", function() {
 
 			// setup
 			createModelFromAzureEntryStub = sinon.stub().returns(new GameModel());
-			GameRepository.__set__({
+			CatalogueRepository.__set__({
 				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
 			});
 
@@ -303,7 +303,7 @@ describe("GameRepository", function() {
 
 		it("returns 'invalid id: <id>' error on invalid id", function(done) {
 			var invalidId = "+++"
-			, repository = new GameRepository()
+			, repository = new CatalogueRepository()
 			, cbStub = sinon.spy(function(err, result) {
 				expect(err).to.equal("invalid id: ".concat(invalidId));
 				expect(retrieveEntityStub.callCount).to.equal(0);
@@ -318,49 +318,49 @@ describe("GameRepository", function() {
 		it("returns true if filter is 'num', or 'new'", function() {
 			var result;
 
-			result = GameRepository.validateFilter('new');
+			result = CatalogueRepository.validateFilter('new');
 			expect(result).to.be.eql(true, "Failed on 'new'");
 
-			result = GameRepository.validateFilter('num');
+			result = CatalogueRepository.validateFilter('num');
 			expect(result).to.be.eql(true, "Failed on 'num'");
 
 			// negative tests
-			result = GameRepository.validateFilter('NEW');
+			result = CatalogueRepository.validateFilter('NEW');
 			expect(result).to.be.eql(false, "Failed on 'NEW'");
 
-			result = GameRepository.validateFilter('NUM');
+			result = CatalogueRepository.validateFilter('NUM');
 			expect(result).to.be.eql(false, "Failed on 'NUM'");
 		});
 
 		it("returns true if filter is a single lower case letter", function() {
 			var result;
 
-			result = GameRepository.validateFilter('a');
+			result = CatalogueRepository.validateFilter('a');
 			expect(result).to.be.eql(true, "Failed on 'a'");
 
-			result = GameRepository.validateFilter('A');
+			result = CatalogueRepository.validateFilter('A');
 			expect(result).to.be.eql(true, "Failed on 'A'");
 
 			// negative testing
-			result =  GameRepository.validateFilter('aa');
+			result =  CatalogueRepository.validateFilter('aa');
 			expect(result).to.be.eql(false, "Failed on 'aa'");
 
-			result =  GameRepository.validateFilter('AA');
+			result =  CatalogueRepository.validateFilter('AA');
 			expect(result).to.be.eql(false, "Failed on 'AA'");
 
-			result =  GameRepository.validateFilter('1');
+			result =  CatalogueRepository.validateFilter('1');
 			expect(result).to.be.eql(false, "Failed on '1'");
 
-			result =  GameRepository.validateFilter('11');
+			result =  CatalogueRepository.validateFilter('11');
 			expect(result).to.be.eql(false, "Failed on '11'");
 
-			result =  GameRepository.validateFilter('a1');
+			result =  CatalogueRepository.validateFilter('a1');
 			expect(result).to.be.eql(false, "Failed on 'a1'");
 
-			result =  GameRepository.validateFilter('');
+			result =  CatalogueRepository.validateFilter('');
 			expect(result).to.be.eql(false, "Failed on ''");
 
-			result =  GameRepository.validateFilter(1);
+			result =  CatalogueRepository.validateFilter(1);
 			expect(result).to.be.eql(false, "Failed on 1");
 		});
 	});
