@@ -5,8 +5,11 @@ function GameModel() {
     this.description = undefined;
     this.title = undefined;
     this.titleMediaUri = undefined;
+
+    this.quotes = undefined;
 }
 
+// STATIC METHODS
 GameModel.getMediaLocation = function() {
     return nconf.get("MEDIA_LOCATION");
 }

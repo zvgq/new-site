@@ -78,6 +78,13 @@ describe("GameModel", function() {
 			expect(result.title).to.equal(testEntry.title._);
 		});
 
+		it("sets quotes to undefined by default", function() {
+			var result;
+
+			result = GameModel.createModelFromAzureEntry(testEntry);
+			expect(result.quotes).to.be.undefined;
+		});
+
 		it("combines the media location and titleMediaUri into the titleMediaUri field", function() {
 			var expected = testMediaLocation.concat(testEntry.titleMediaUri._)
 				, result = GameModel.createModelFromAzureEntry(testEntry);
