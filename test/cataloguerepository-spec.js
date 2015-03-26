@@ -268,6 +268,7 @@ describe("CatalogueRepository", function() {
 
 		it("returns an array of quotes for the game if withQuotes parameter is true", function(done) {
 			var createModelFromAzureEntryStub
+				, testModel = new GameModel()
 				, repository = new CatalogueRepository()
 				, cbSpy = sinon.spy(function(err, result) {
 							expect(result.quotes).to.exist;
@@ -276,7 +277,8 @@ describe("CatalogueRepository", function() {
 							});
 
 			// setup
-			createModelFromAzureEntryStub = sinon.stub().returns(new GameModel());
+			testModel.id = "testid";
+			createModelFromAzureEntryStub = sinon.stub().returns(testModel);
 			CatalogueRepository.__set__({
 				"GameModel.createModelFromAzureEntry": createModelFromAzureEntryStub
 			});
@@ -311,6 +313,38 @@ describe("CatalogueRepository", function() {
 				});
 
 			repository.getGame(invalidId, false, cbStub);
+		});
+	});
+
+	describe.skip("#getQuotes(gameid)", function() {
+		it("retrieves quotes from the data service", function() {
+
+		});
+
+		it("validates the gameid before retrieving", function() {
+
+		});
+
+		it("returns an error on when gameid is invalid", function() {
+
+		});
+
+		it("returns an array when query is successful", function() {
+
+		});
+	});
+
+	describe.skip("#getQuote(quoteid)", function() {
+		it("retrieves the quote from the data service", function() {
+
+		});
+
+		it("returns null if not found", function() {
+
+		});
+
+		it("returns a QuoteModel object if found", function() {
+
 		});
 	});
 
