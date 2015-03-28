@@ -14,16 +14,17 @@ module.exports = (grunt)->
 					  "!./dist/**/*.*",
 					  "!./test/**/*.*",
 					  "!./repositories/**/*.*"
-					  "!./models/**/*.*"
+					  "!./models/**/*.*",
+					  "!./utils/**/*.*"
 					 ]
 			client:
 				options:
 					force: true
-				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*"]
+				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*","!./utils/**/*.*"]
 			server:
 				options:
 					force: true
-				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*"]
+				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*","!./utils/**/*.*"]
 
 		coffee:
 			client:

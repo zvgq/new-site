@@ -33,6 +33,7 @@ node_modules
 
 # CoffeeScript Refactor
 !/test/*.js
+!/utils/*.js
 
 !/repositories/cataloguerepository.js
 !/models/gamemodel.js

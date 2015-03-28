@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./index.js",
-    "test": "mocha --reporter spec"
+    "test": "mocha --harmony --reporter spec"
   },
   "engines": {
     "node": "~0.10.32 < 0.12"
