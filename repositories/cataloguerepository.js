@@ -103,6 +103,7 @@ CatalogueRepository.prototype.getGames = function(filter, callback) {
 
 CatalogueRepository.prototype.getGame = function(id, withQuotes, callback) {
 	var dataService = this.dataService
+		, done = callback
 		, processResult
 		, quotes
 		, quoteQuery;
@@ -113,8 +114,7 @@ CatalogueRepository.prototype.getGame = function(id, withQuotes, callback) {
 
 	function retrieveEntitySuccess(err, result) {
 		if(err) {
-			// exit on error
-			callback(err, null);
+			done(err, null);
 		}
 
 		// convert to GameModel
@@ -131,12 +131,12 @@ CatalogueRepository.prototype.getGame = function(id, withQuotes, callback) {
 
 				processResult.quotes = quotes;
 				// return with quotes
-				callback(null, processResult);
+				done(null, processResult);
 			});
 		}
 		else {
 			// return result without quotes
-			callback(null, processResult);
+			done(null, processResult);
 		}
 	};
 
