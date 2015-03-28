@@ -1,5 +1,9 @@
 "use strict";
 
+var path        = require("path");
+
+var ConfigHelper = require("../utils/confighelper.js");
+
 function QuoteModel() {
     this.id = undefined;
     this.gameId = undefined;
@@ -19,8 +23,8 @@ QuoteModel.createModelFromAzureEntry = function(entry) {
         converted.gameId = entry.gameId._;
         converted.title = entry.title ? entry.title._ : null;
         converted.description = entry.description ? entry.description._ : null;
-        converted.titleMediaUri = entry.titleMediaUri ? entry.titleMediaUri._ : null;
-        converted.mediaUri = entry.mediaUri ? entry.mediaUri._ : null;
+        converted.titleMediaUri = entry.titleMediaUri ? path.join(ConfigHelper.getMediaLocation(), entry.titleMediaUri._) : null;
+        converted.mediaUri = entry.mediaUri ? path.join(ConfigHelper.getMediaLocation(), entry.mediaUri._) : null;
     }
 
     return converted;

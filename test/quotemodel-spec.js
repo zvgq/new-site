@@ -1,14 +1,18 @@
 "use strict";
 
+var path			= require("path");
+
 var expect          = require("chai").expect;
 var sinon           = require("sinon");
+var rewire			= require("rewire");
 
-var QuoteModel		= require("../models/quotemodel.js");
+var QuoteModel		= rewire("../models/quotemodel.js");
 
 describe("QuoteModel", function() {
 	describe("#createModelFromAzureEntry(entry)", function() {
 		// SHARED VARIABLES
 		var testEntry
+			, testLocationUrl
 			, returnEmptyEntry;
 
 		beforeEach(function() {
@@ -28,6 +32,8 @@ describe("QuoteModel", function() {
 				, RowKey: { _: "sampleid" }
 				, gameId: { _: "samplegameid" }
 			};
+
+			testLocationUrl = "https://localhost:3000/testmedialocation";
 		});
 
 		it("copies RowKey to id", function() {
@@ -51,18 +57,41 @@ describe("QuoteModel", function() {
 			expect(result.gameId).to.equal(testEntry.gameId._);
 		});
 
-		it("copies mediaUri to mediaUri", function() {
-			var result;
+		it("combines media location URL mediaUri to the mediaUri", function() {
+			var result
+				, expected
+				, configHelperStub;
 
+			// setup test
+			configHelperStub = sinon.stub().returns(testLocationUrl);
+			QuoteModel.__set__({
+				"ConfigHelper.getMediaLocation" : configHelperStub
+			});
+
+			// expected result
+			expected = path.join(testLocationUrl, testEntry.mediaUri._)
+
+			// test
 			result = QuoteModel.createModelFromAzureEntry(testEntry);
-			expect(result.mediaUri).to.equal(testEntry.mediaUri._);
+			expect(result.mediaUri).to.equal(expected);
 		});
 
-		it("copies titleMediaUri to titleMediaUri", function() {
-			var result;
+		it("combines media location URL mediaUri to the mediaUri", function() {
+			var result
+				, expected
+				, configHelperStub;
+
+			// setup test
+			configHelperStub = sinon.stub().returns(testLocationUrl);
+			QuoteModel.__set__({
+				"ConfigHelper.getMediaLocation" : configHelperStub
+			});
+
+			// expected result
+			expected = path.join(testLocationUrl, testEntry.titleMediaUri._)
 
 			result = QuoteModel.createModelFromAzureEntry(testEntry);
-			expect(result.titleMediaUri).to.equal(testEntry.titleMediaUri._);
+			expect(result.titleMediaUri).to.equal(expected);
 		});
 
 		it("sets title as null if title is undefined on entry", function() {
