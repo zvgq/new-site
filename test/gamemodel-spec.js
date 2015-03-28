@@ -1,5 +1,7 @@
 "use strict";
 
+var path			= require("path");
+
 var expect          = require("chai").expect;
 var sinon           = require("sinon");
 var rewire			= require("rewire");
@@ -8,8 +10,8 @@ var GameModel		= rewire("../models/gamemodel.js");
 
 describe("GameModel", function() {
 	// STUBS
-	var testMediaLocation 	= "http://localhost:3000/test/media"
-		, nconfGetStub		= sinon.stub();
+	var testMediaLocation
+		, configHelperStub;
 
 	describe("#validateId(id)", function() {
 		it("validates if id is made of characters, digits, and '-'", function() {
@@ -43,6 +45,8 @@ describe("GameModel", function() {
 	});
 
 	describe("#createModelFromAzureEntry(entry)", function() {
+		// TEST DATA
+		var testMediaLocation = "http://localhost:3000/testmedialocation";
 		var testEntry =
 			{
 				RowKey: { _ : "rowkey"}
@@ -51,18 +55,23 @@ describe("GameModel", function() {
 				, titleMediaUri: { _ : "titlemediauri.png" }
 			};
 
-		// TEST SETUP
+		//
+		// SETUP & TEARDOWN
+		//
 		before(function() {
-			nconfGetStub.withArgs("MEDIA_LOCATION").returns(testMediaLocation);
+			configHelperStub = sinon.stub().returns(testMediaLocation);
 			GameModel.__set__({
-				"nconf.get": nconfGetStub
+				"ConfigHelper.getMediaLocation": configHelperStub
 			});
 		});
 
 		afterEach(function() {
-			nconfGetStub.reset();
+			configHelperStub.reset();
 		});
 
+		//
+		//	SPEC
+		//
 		it("copies RowKey into the id field", function() {
 			var result = GameModel.createModelFromAzureEntry(testEntry);
 			expect(result.id).to.equal(testEntry.RowKey._);
@@ -86,10 +95,14 @@ describe("GameModel", function() {
 		});
 
 		it("combines the media location and titleMediaUri into the titleMediaUri field", function() {
-			var expected = testMediaLocation.concat(testEntry.titleMediaUri._)
-				, result = GameModel.createModelFromAzureEntry(testEntry);
+			var expected
+				, result;
+
+			expected = path.join(testMediaLocation, testEntry.titleMediaUri._);
+			result = GameModel.createModelFromAzureEntry(testEntry);
 
 			expect(result.titleMediaUri).to.equal(expected);
+			expect(configHelperStub.called).to.be.true;
 		});
 	});
 });
