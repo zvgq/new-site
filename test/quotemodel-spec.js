@@ -74,9 +74,10 @@ describe("QuoteModel", function() {
 			// test
 			result = QuoteModel.createModelFromAzureEntry(testEntry);
 			expect(result.mediaUri).to.equal(expected);
+			expect(configHelperStub.called).to.be.true;
 		});
 
-		it("combines media location URL mediaUri to the mediaUri", function() {
+		it("combines media location URL titleMediaUri to the titleMediaUri", function() {
 			var result
 				, expected
 				, configHelperStub;
@@ -92,6 +93,7 @@ describe("QuoteModel", function() {
 
 			result = QuoteModel.createModelFromAzureEntry(testEntry);
 			expect(result.titleMediaUri).to.equal(expected);
+			expect(configHelperStub.called).to.be.true;
 		});
 
 		it("sets title as null if title is undefined on entry", function() {
