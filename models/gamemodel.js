@@ -1,6 +1,6 @@
 "use strict";
 
-var path            = require("path");
+var url             = require("url");
 
 var ConfigHelper    = require("../utils/confighelper.js");
 
@@ -33,7 +33,7 @@ GameModel.createModelFromAzureEntry = function(entry) {
     model.id = entry.RowKey ? entry.RowKey._ : undefined;
     model.description = entry.description._ ? entry.description._ : undefined;
     model.title = entry.title._ ? entry.title._ : undefined;
-    model.titleMediaUri = entry.titleMediaUri._ ? path.join(ConfigHelper.getMediaLocation(), entry.titleMediaUri._) : undefined;
+    model.titleMediaUri = entry.titleMediaUri._ ? url.resolve(ConfigHelper.getMediaLocation(), entry.titleMediaUri._) : undefined;
 
     return model;
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-var path			= require("path");
+var url				= require("url");
 
 var expect          = require("chai").expect;
 var sinon           = require("sinon");
@@ -98,7 +98,7 @@ describe("GameModel", function() {
 			var expected
 				, result;
 
-			expected = path.join(testMediaLocation, testEntry.titleMediaUri._);
+			expected = url.resolve(testMediaLocation, testEntry.titleMediaUri._);
 			result = GameModel.createModelFromAzureEntry(testEntry);
 
 			expect(result.titleMediaUri).to.equal(expected);

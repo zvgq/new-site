@@ -1,6 +1,6 @@
 "use strict";
 
-var path			= require("path");
+var url				= require("url");
 
 var expect          = require("chai").expect;
 var sinon           = require("sinon");
@@ -69,7 +69,7 @@ describe("QuoteModel", function() {
 			});
 
 			// expected result
-			expected = path.join(testLocationUrl, testEntry.mediaUri._)
+			expected = url.resolve(testLocationUrl, testEntry.mediaUri._)
 
 			// test
 			result = QuoteModel.createModelFromAzureEntry(testEntry);
@@ -89,7 +89,7 @@ describe("QuoteModel", function() {
 			});
 
 			// expected result
-			expected = path.join(testLocationUrl, testEntry.titleMediaUri._)
+			expected = url.resolve(testLocationUrl, testEntry.titleMediaUri._)
 
 			result = QuoteModel.createModelFromAzureEntry(testEntry);
 			expect(result.titleMediaUri).to.equal(expected);
