@@ -23,4 +23,11 @@ require [
 			itemSelector: ".tile"
 		@msnry = new Masonry masonryEl, masonryOptions
 
+		$(".quote-list .quote").on "click", (event)->
+			quoteIndex = $(event.delegateTarget).data("index");
+			$("#quoteDisplay article[data-index='#{ quoteIndex }']").show();
+
+		$("#quoteModal").on "hidden.bs.modal", (event)->
+			$("#quoteDisplay article").hide()
+
 	ZVGQ.GameView.init()

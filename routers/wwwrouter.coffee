@@ -2,13 +2,13 @@ express = require "express"
 http	= require "http"
 nconf	= require "nconf"
 
-GameRepository = require "../repositories/gamerepository"
+CatalogueRepository = require "../repositories/cataloguerepository"
 
 class WWWRouter
 	constructor: ()->
 		@router = express.Router()
 		try
-			@gamesRepo = new GameRepository();
+			@catalogueRepo = new CatalogueRepository();
 		catch ex
 			throw ex
 
@@ -24,7 +24,7 @@ class WWWRouter
 
 		getGames = (req, res, next)=>
 			filter = if req.params.filter then req.params.filter else 'new'
-			@gamesRepo.getGames filter, (err, results)->
+			@catalogueRepo.getGames filter, (err, results)->
 				data =
 					title: "ZVGQ - Games"
 					analytics: nconf.get "GOOGLE_TRACKING_CODE"
@@ -42,7 +42,7 @@ class WWWRouter
 		# /game
 		getGame = (req, res, next)=>
 			id = req.params.id
-			@gamesRepo.getGame id, true, (err, result)->
+			@catalogueRepo.getGame id, true, (err, result)->
 				data =
 					title: "ZVGQ - Games"
 					analytics: nconf.get "GOOGLE_TRACKING_CODE"

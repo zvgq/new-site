@@ -13,21 +13,28 @@ block content
 			div(class="col-md-12")
 				if game.quotes
 					if game.quotes.length > 0
-						section(class="quote-list tile-container")
-							each quote in game.quotes
-								article(class="tile quote")
-									a(class="btn", data-toggle="modal", data-target="#quoteModal")= quote.title
+						section#tileContainer(class="quote-list tile-container")
+							each quote, index in game.quotes
+								article(class="tile quote", data-index="#{ index }", data-quote="#{ quote.id }" data-toggle="modal", data-target="#quoteModal")
+									div(class="bg", style="background-image: url('#{ quote.mediaUri }');")
+										h3(class='tile-title')= quote.title
 					else
 						h3.pixel-text Awww SNAP! No quotes for this game.
 	
-	// modal				
-	div(class="modal fade" id="quoteModal")
-		div(class="modal-dialog modal-lg")
-			section(class="modal-content")
-				header(class="modal-body")
-					h3 Quote will display here
-				section(class="modal-footer")
-					button(class="btn btn-default", type="button", data-dismiss="modal") Close
+	// modal
+	if game.quotes	
+		div(class="modal fade" id="quoteModal")
+			div(class="modal-dialog modal-lg")
+				section(class="modal-content")
+					section#quoteDisplay(class="modal-body")
+						each quote, index in game.quotes
+							article(style="display: none;", data-index="#{ index }")
+								img(src="#{ quote.mediaUri }", alt="#{ quote.title }")
+								h3= quote.title
+								h5= quote.description
+								
+					footer(class="modal-footer")
+						button(class="btn btn-default", type="button", data-dismiss="modal") Close
 					
 	// script
 	script(data-main="/script/gameview", src="/lib/requirejs/require.js")

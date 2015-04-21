@@ -16,7 +16,9 @@ require [
 	ZVGQ = ZVGQ || { };
 	ZVGQ.GameList = ZVGQ.GameList || { };
 
-	# setup view
+	ZVGQ.GameList.loadQuote = ()->
+
+
 	ZVGQ.GameList.init = ()->
 		masonryEl = document.getElementById "tileContainer"
 		masonryOptions =
