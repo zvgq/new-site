@@ -1,11 +1,10 @@
 {
   "name": "zvgq",
-  "version": "0.0.5",
-  "homepage": "https://github.com/zvgq/zvgq",
+  "version": "0.1.5",
+  "homepage": "https://new.zanyvideogamequotes.com",
   "authors": [
     "David Wesst <dw@davidwesst.com>"
   ],
-  "description": "The zvgq update project",
   "main": "/index.js",
   "moduleType": [
     "amd",
