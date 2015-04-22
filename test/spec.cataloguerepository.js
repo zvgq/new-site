@@ -316,38 +316,6 @@ describe("CatalogueRepository", function() {
 		});
 	});
 
-	describe.skip("#getQuotes(gameid)", function() {
-		it("retrieves quotes from the data service", function() {
-
-		});
-
-		it("validates the gameid before retrieving", function() {
-
-		});
-
-		it("returns an error on when gameid is invalid", function() {
-
-		});
-
-		it("returns an array when query is successful", function() {
-
-		});
-	});
-
-	describe.skip("#getQuote(quoteid)", function() {
-		it("retrieves the quote from the data service", function() {
-
-		});
-
-		it("returns null if not found", function() {
-
-		});
-
-		it("returns a QuoteModel object if found", function() {
-
-		});
-	});
-
 	describe("#validateFilter(filter)", function() {
 		it("returns true if filter is 'num', or 'new'", function() {
 			var result;
