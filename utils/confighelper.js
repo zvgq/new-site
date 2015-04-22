@@ -4,7 +4,7 @@ var nconf = require("nconf");
 
 var ConfigHelper = {};
 ConfigHelper.getMediaLocation = function() {
-	const key = "MEDIA_LOCATION";
+	var key = "MEDIA_LOCATION";
 	var retrieved,
 		result;
 

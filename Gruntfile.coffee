@@ -25,6 +25,10 @@ module.exports = (grunt)->
 				options:
 					force: true
 				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*","!./utils/**/*.*"]
+			prod:
+				options:
+					force: true
+				src: ["./dist/web/*", "!./dist/web/.git", "!./dist/web/.gitignore"]
 
 		coffee:
 			client:
@@ -82,8 +86,12 @@ module.exports = (grunt)->
 					{ expand: true, src: ["./deploy.cmd", "./.deployment", "./IISNode.yml", "./web.config"], dest: "./dist/web" },
 					{ expand: true, src: ["./client/**/*.json"], dest: "./dist/web" },
 					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" },
-					{ expand: true, src: ["./client/robots.txt"], dest: "./dist/web" }
+					{ expand: true, src: ["./client/robots.txt"], dest: "./dist/web" },
+					{ expand: true, src: ["./client/lib/**/*.js", "./node_modules"], dest: "./dist/web" },
+					{ expand: true, src: ["./models/*.js","./repositories/*.js","./routers/*.js","./utils/*.js"], dest: "./dist/web" }
 				]
+		jshint:
+			all: ['./**/*.js', '!./node_modules/**/*', '!./test/**/*']
 
 		less:
 			dev:
@@ -114,6 +122,7 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
+	grunt.loadNpmTasks 'grunt-contrib-jshint'
 	grunt.loadNpmTasks 'grunt-contrib-less'
 	grunt.loadNpmTasks 'grunt-contrib-watch'
 	grunt.loadNpmTasks 'grunt-nodemon'
@@ -123,6 +132,6 @@ module.exports = (grunt)->
 	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
 	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
 
-	grunt.registerTask 'buildweb', 'Build the project into the dist/web', ["coffee:prod","less:prod","copy:prod"]
+	grunt.registerTask 'builddist', 'Build the project into the dist/web', ["clean:prod", "coffee:prod","less:prod","copy:prod"]
 
 	grunt.registerTask 'f5', 'Build, run, and watch application.', ["client","concurrent"]
