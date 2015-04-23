@@ -8,7 +8,7 @@ block content
 					header(class="row")
 						div(class="col-md-4")
 							img(src="#{ game.titleMediaUri }", alt="#{ game.title } title screen")
-						article(class="col-md-8")= game.description
+						article.pixel-text(class="col-md-8")= game.description
 		div(class="row")
 			div(class="col-md-12")
 				if game.quotes
@@ -29,9 +29,14 @@ block content
 					section#quoteDisplay(class="modal-body")
 						each quote, index in game.quotes
 							article(style="display: none;", data-index="#{ index }")
-								img(src="#{ quote.mediaUri }", alt="#{ quote.title }")
-								h3= quote.title
-								h5= quote.description
+								if quote.mediaUri.search(/(.mp3)/ig) > -1
+									p.pixel-text.dark Sound file playback is coming soon!
+									h3= quote.title
+									h5= quote.description
+								else
+									img(src="#{ quote.mediaUri }", alt="#{ quote.title }")
+									h3= quote.title
+									h5= quote.description
 								
 					footer(class="modal-footer")
 						button(class="btn btn-default", type="button", data-dismiss="modal") Close
