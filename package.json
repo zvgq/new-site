@@ -1,6 +1,6 @@
 {
   "name": "zvgq",
-  "version": "0.0.5",
+  "version": "0.1.6",
   "private": true,
   "scripts": {
     "start": "node --harmony ./index.js",
