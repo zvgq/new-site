@@ -2,6 +2,7 @@ bodyParser 	= require "body-parser"
 fs			= require "fs"
 engines		= require "consolidate"
 express 	= require "express"
+favicon		= require "serve-favicon"
 http		= require "http"
 nconf 		= require "nconf"
 path		= require "path"
@@ -23,6 +24,8 @@ app.use bodyParser.json()
 app.use bodyParser.urlencoded({ extended: true })
 
 app.use(express.static(path.join(__dirname, "/client")))
+
+app.use(favicon(path.join(__dirname, "/client/favicon.ico")))
 
 pkgJson = JSON.parse(fs.readFileSync("./package.json"))
 app.locals.version = pkgJson.version;
