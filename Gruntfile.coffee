@@ -86,7 +86,7 @@ module.exports = (grunt)->
 					{ expand: true, src: ["./deploy.cmd", "./.deployment", "./IISNode.yml", "./web.config"], dest: "./dist/web" },
 					{ expand: true, src: ["./client/**/*.json"], dest: "./dist/web" },
 					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" },
-					{ expand: true, src: ["./client/robots.txt"], dest: "./dist/web" },
+					{ expand: true, src: ["./client/robots.txt", "./client/images/*.*"], dest: "./dist/web" },
 					{ expand: true, src: ["./client/lib/**/*.js", "./node_modules"], dest: "./dist/web" },
 					{ expand: true, src: ["./models/*.js","./repositories/*.js","./routers/*.js","./utils/*.js"], dest: "./dist/web" }
 				]
