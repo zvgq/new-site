@@ -2,31 +2,49 @@ extends ./base.jade
 
 block content
 	section
-		h1.pixel-text Frequently Asked Questions
-		p.
-			If your question isn't here, try reaching out on <a href='https://www.facebook.com/zanyvideogamequotes' target='_blank'>our Facebook page</a> 
-			or, if it's more technical, drop us a message via <a href='https://github.com/zvgq/zvgq' target='_blank'>Github</a>.
-		
-		h3.pixel-text What is this place?
-		p.
-			This is the "New" Zany Video Games pre-alpha website. This rebuild has been promised and discussed for quite a long time now, and now there is something to show.
-		
-		h3.pixel-text Where are all of the game and quotes?
-		p.
-			The old site was a static HTML site, while this one is a dynamic site that loads data from a database. We
-			need to port all the data over, even though all the pictures and content have been updated. The 
-			<a href='https://github.com/zvgq/zvgq/milestones/0.2%20-%20Administrative%20Features' target='_blank'>next bit
-			of development</a> is to create an administration side so that we don't need to directly update the database
-			for each game and quote.
-		p.
-			That being said, we are going to manually add some content slowly to keep the site fresh and to get some new
-			content up there for everyone to enjoy.
-	
-		h3.pixel-text Is there any way I can help?
-		p.
-			Right now, we need help with development. 
-		
-		p.
-			The reason this site has taken so long is that there is only one
-			developer and real life tends to get in the way. If you've got development skills, reach out to
-			<a href='https://github.com/davidwesst' target='_blank'>David on Github</a> and check out the code.
+		header
+			h1.pixel-text Frequently Asked Questions
+		article
+			p.
+				If your question isn't here, try reaching out on <a href='https://www.facebook.com/zanyvideogamequotes' target='_blank'>our Facebook page</a> 
+				or, if it's more technical, drop us a message via <a href='https://github.com/zvgq/zvgq' target='_blank'>Github</a>.
+		section
+			header
+				h2. About the Content...
+			article
+				h3.pixel-text My favourite quotes are missing! What's the deal?
+				p.
+					You're right! It's missing because we haven't ported it over yet.
+				p.
+					As you can probably can tell, the site is a total work in progress. That includes building the controls to
+					add games and quotes to the site without doing it manually from the database-side of things. We're 
+					<a href='https://github.com/zvgq/zvgq/milestones/0.2%20-%20Administrative%20Features' target='_blank'>working on building it</a>
+					but in the meantime, we'll still be manually  adding some content slowly to try and keep things moving.
+			article
+				h3.pixel-text This site looks worse than the old site!
+				p.
+					Yeah, you're probably right.
+				p.
+					The site is still a total work in progress. We will make some minor improvements to tidy it up, but the design isn't as high
+					a priority as getting all the content over.
+		section
+			header
+				h2. Development Questions...
+			article
+				h3.pixel-text I found a bug! Now what?	
+				p.
+					Awesome! Thanks for sharing, but now we need more details so we can fix it. You can file bugs at the 
+					<a href="https://github.com/zvgq/zvgq/issues" target="_blank">GitHub site</a>, but please include the following details to
+					make it a bit easier on us to find the issue:
+				ul
+					li Web Browser / Operating System where the bug occured
+					li Steps to reproduce the Issue
+					li Description of the error
+					li Link to Screenshot (if possible)
+			article
+				h3.pixel-text I want to help with development! 
+				p.
+					Awesome...but we're not quite ready for that yet.
+				p.
+					As it stands, if you clone the repository and try and run it, it won't work as we don't have a test database or backend environment
+					just yet. It's high up on the list, as we could definitely use the help.

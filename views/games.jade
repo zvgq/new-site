@@ -1,0 +1,14 @@
+extends ./base.jade
+
+block content
+	section(id='tileContainer', class='tile-container')
+		if games.length > 0
+			each game in games
+				article(class='tile game')
+					a(href='/game/#{ game.id }')
+						div(class="bg" style="background-image: url('#{ game.titleMediaUri }');")
+							h3(class="tile-title") #{ game.title }
+		else
+			h1 There are no games for this letter!
+	
+	script(data-main="/script/gamelist", src="/lib/requirejs/require.js")

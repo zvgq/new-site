@@ -9,19 +9,27 @@ module.exports = (grunt)->
 				src: ["./**/*.js",
 					  "./**/*.js.map",
 					  "./client/style/*.css",
-					  "!./client/lib/**/*.*", 
+					  "!./client/lib/**/*.*",
 					  "!./node_modules/**/*.*",
-					  "!./dist/**/*.*"
+					  "!./dist/**/*.*",
+					  "!./test/**/*.*",
+					  "!./repositories/**/*.*"
+					  "!./models/**/*.*",
+					  "!./utils/**/*.*"
 					 ]
 			client:
 				options:
 					force: true
-				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*"]
+				src: ["./client/**/*.js", "./client/**/*.js.map", "!./client/lib/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*","!./utils/**/*.*"]
 			server:
 				options:
 					force: true
-				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*"]
-				
+				src: ["./**/*.js", "!./client/**/*.*", "!./node_modules/**/*.*", "!./dist/**/*.*", "!./test/**/*.*", "!./repositories/**/*.*", "!./models/**/*.*","!./utils/**/*.*"]
+			prod:
+				options:
+					force: true
+				src: ["./dist/web/*", "!./dist/web/.git", "!./dist/web/.gitignore"]
+
 		coffee:
 			client:
 				expand: true
@@ -31,6 +39,7 @@ module.exports = (grunt)->
 				ext: ".js"
 				options:
 					sourceMap: true
+					bare: true
 			server:
 				expand: true
 				cwd: "./"
@@ -54,8 +63,8 @@ module.exports = (grunt)->
 			start: ["watch:client", "nodemon:dev"]
 			options:
 				logConcurrentOutput: true
-				
-		copy:				
+
+		copy:
 			configuration:
 				files:
 					"./dist/web/package.json" : "./package.json"
@@ -77,9 +86,13 @@ module.exports = (grunt)->
 					{ expand: true, src: ["./deploy.cmd", "./.deployment", "./IISNode.yml", "./web.config"], dest: "./dist/web" },
 					{ expand: true, src: ["./client/**/*.json"], dest: "./dist/web" },
 					{ expand: true, src: ["./views/**/*.jade", "./views/**/*.html"], dest: "./dist/web" },
-					{ expand: true, src: ["./client/robots.txt"], dest: "./dist/web" }
+					{ expand: true, src: ["./client/robots.txt"], dest: "./dist/web" },
+					{ expand: true, src: ["./client/lib/**/*.js", "./node_modules"], dest: "./dist/web" },
+					{ expand: true, src: ["./models/*.js","./repositories/*.js","./routers/*.js","./utils/*.js"], dest: "./dist/web" }
 				]
-					
+		jshint:
+			all: ['./**/*.js', '!./node_modules/**/*', '!./test/**/*']
+
 		less:
 			dev:
 				options:
@@ -89,14 +102,14 @@ module.exports = (grunt)->
 			prod:
 				files:
 					"./dist/web/client/style/main.css": "./client/style/main.less"
-					
+
 		nodemon:
 			dev:
 				script: "index.js"
 				options:
 					nodeArgs: ["--debug"]
 					ignore: ['node_modules/**', 'client/lib/**']
-					
+
 		watch:
 			client:
 				files: ["./client/**/*.coffee", "./client/**/*.less", "./config.json"]
@@ -104,11 +117,12 @@ module.exports = (grunt)->
 			server:
 				files: ["./**/*.coffee","!./client/**/*.*"]
 				tasks: ["coffee:server"]
-			
+
 	# Plugins
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
+	grunt.loadNpmTasks 'grunt-contrib-jshint'
 	grunt.loadNpmTasks 'grunt-contrib-less'
 	grunt.loadNpmTasks 'grunt-contrib-watch'
 	grunt.loadNpmTasks 'grunt-nodemon'
@@ -117,7 +131,7 @@ module.exports = (grunt)->
 	# Tasks
 	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
 	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
-	
-	grunt.registerTask 'buildweb', 'Build the project into the dist/web', ["coffee:prod","less:prod","copy:prod"]
-	
+
+	grunt.registerTask 'builddist', 'Build the project into the dist/web', ["clean:prod", "coffee:prod","less:prod","copy:prod"]
+
 	grunt.registerTask 'f5', 'Build, run, and watch application.', ["client","concurrent"]

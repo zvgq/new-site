@@ -9,6 +9,10 @@
 	color: @fg-light !important;
 }
 
+.dark {
+	color: @bg-dark !important;
+}
+
 .zero-spacing {
 	padding: 0px;
 	margin: 0px;
@@ -35,7 +39,7 @@ NAV.site-bar {
 
 NAV.search-bar {
 	.pixel-text;
-	
+
 	margin-top: 50px;
 }
 
@@ -55,36 +59,49 @@ NAV.search-bar {
 
 .loading-message {
 	.pixel-text;
-	
+
 	float: right;
 	display: none;
 }
 
 .tile-container {
 	margin: 0 auto;
-	
+
 	.tile {
-		width: 25%;
-		height: 150px;
 		background-color: #000;
-		
+
 		.bg {
 			background-position: center;
 			background-size: 100%;
 			background-repeat: no-repeat;
 			height: 100%;
 			opacity: 0.7;
+
+			&:hover {
+				opacity: 1;
+			}
 		}
-		
-		.bg:hover {
-			opacity: 1;
+	}
+
+	.tile.game {
+		width: 25%;
+		height: 150px;
+	}
+
+	.tile.quote {
+		width: 50%;
+		height: 100px;
+
+		.bg {
+			background-position: left center;
+			background-size: 150%;
 		}
 	}
 }
 
 .tile-title {
 	.pixel-text;
-	
+
 	background-color: #000;
 	position: absolute;
 	bottom: 0px;
@@ -99,15 +116,24 @@ NAV.search-bar {
 	background-color: #000;
 	padding-left: 0px;
 	padding-right: 0px;
-	
+
 	.quote {
 		.pixel-text;
 		width: 100%;
-		
+
 		.title {
 			.zero-spacing;
 			padding: 10px 5px;
 			text-align: center;
 		}
+	}
+}
+
+.navbar-brand.kobun {
+	padding-top: 0;
+	padding-bottom: 0;
+
+	.site-name {
+		vertical-align: middle;
 	}
 }

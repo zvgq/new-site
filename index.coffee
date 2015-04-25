@@ -6,7 +6,7 @@ http		= require "http"
 nconf 		= require "nconf"
 path		= require "path"
 
-routers		= require "./routers"
+WWWRouter	= require "./routers/wwwrouter"
 
 # get configuration data
 nconf.env().file({ file: 'config.json'});
@@ -35,17 +35,7 @@ useHTTPS = (req, res, next)->
 		next()
 app.use useHTTPS
 
-apiRouter = new routers.ApiRouter(app)
-app.use "/api", apiRouter.router
-
-browseRouter = new routers.BrowseRouter()
-app.use "/browse", browseRouter.router
-
-app.use "/faq", (req, res)->
-	res.render "faq"
-
-app.use "/", (req, res)->
-	res.redirect "/browse"
+app.use "/", (new WWWRouter()).router
 
 defaultPort = nconf.get "DEFAULT_PORT"
 port = if process.env.PORT then process.env.PORT else defaultPort

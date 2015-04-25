@@ -30,3 +30,11 @@ node_modules
 
 *~
 *.swp
+
+# CoffeeScript Refactor
+!/test/*.js
+!/utils/*.js
+
+!/repositories/cataloguerepository.js
+!/models/gamemodel.js
+!/models/quotemodel.js

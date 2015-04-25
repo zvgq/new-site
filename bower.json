@@ -1,11 +1,10 @@
 {
   "name": "zvgq",
-  "version": "0.0.5",
-  "homepage": "https://github.com/zvgq/zvgq",
+  "version": "0.1.6",
+  "homepage": "https://new.zanyvideogamequotes.com",
   "authors": [
     "David Wesst <dw@davidwesst.com>"
   ],
-  "description": "The zvgq update project",
   "main": "/index.js",
   "moduleType": [
     "amd",
@@ -31,13 +30,8 @@
     "reset-css": "~2.0.x",
     "jquery": "~2.1.x",
     "bootstrap": "~3.2.x",
-    "ember": "~1.7.0",
-    "ember-data": "1.0.0-beta.10",
     "requirejs-text": "~2.0.12",
     "fontawesome": "~4.2.0",
     "masonry": "~3.1.5"
-  },
-  "resolutions": {
-    "ember": "~1.7.0"
   }
 }
