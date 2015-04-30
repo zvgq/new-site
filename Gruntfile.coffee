@@ -102,6 +102,10 @@ module.exports = (grunt)->
 			prod:
 				files:
 					"./dist/web/client/style/main.css": "./client/style/main.less"
+					
+		mocha_phantomjs: {
+			client: ['client/test/*.html']
+		}
 
 		nodemon:
 			dev:
@@ -127,10 +131,12 @@ module.exports = (grunt)->
 	grunt.loadNpmTasks 'grunt-contrib-watch'
 	grunt.loadNpmTasks 'grunt-nodemon'
 	grunt.loadNpmTasks 'grunt-concurrent'
+	grunt.loadNpmTasks 'grunt-mocha-phantomjs'
 
 	# Tasks
 	grunt.registerTask 'client', 'Build all client content', ['clean:client', 'coffee:client', 'less:dev']
 	grunt.registerTask 'server', 'Build all server content', ['clean:server','coffee:server']
+	grunt.registerTask 'test', 'Run tests', ['mocha_phantomjs:client']
 
 	grunt.registerTask 'builddist', 'Build the project into the dist/web', ["clean:prod", "coffee:prod","less:prod","copy:prod"]
 

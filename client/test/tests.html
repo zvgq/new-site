@@ -15,8 +15,9 @@
     </script>
     <!-- Application Libraries -->
     <script src="..\lib\requirejs\require.js"></script>
-    <!-- Code to Test -->
-    <script src="..\script\gamelist.js"></script>
+    <!-- Tests -->
+    <script src="spec.gamelist.js"></script>
+    <script src="spec.gameview.js"></script>
     <script>
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
       else { mocha.run(); }
