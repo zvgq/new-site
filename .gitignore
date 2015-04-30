@@ -33,6 +33,7 @@ node_modules
 
 # CoffeeScript Refactor
 !/test/*.js
+!/client/test/*.js
 !/utils/*.js
 
 !/repositories/cataloguerepository.js
