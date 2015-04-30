@@ -39,10 +39,13 @@
 		configFile = "config.json";
 	}
 	
-	// setup nconf
+	// setup
 	nconf.argv()
 			.file(configFile)
 			.env();
+			
+	defaultPort = nconf.get("DEFAULT_PORT");
+	port = process.env.PORT ? process.env.PORT : defaultPort;
 			
 	// intialize
 	app = express();
@@ -58,9 +61,7 @@
 	app.use(useHTTPS);
 	app.use("/", (new WWWRouter()).router);
 	
-	defaultPort = nconf.get("DEFAULT_PORT");
-	port = process.env.PORT ? process.env.PORT : defaultPort;
-	
+	// start
 	server = http.createServer(app);
 	server.listen(port);
 	console.log("ZVGQ -- Started on Port " + port);
