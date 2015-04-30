@@ -17,7 +17,9 @@ results
 
 npm-debug.log
 
-**/config.json
+config*.json
+!config.sample.json
+
 
 *.js
 *.css
