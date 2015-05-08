@@ -36,8 +36,10 @@ node_modules
 *.swp
 
 # CoffeeScript Refactor
+!gruntfile.js
 !/test/*.js
 !/client/test/*.js
+!/client/script/gameviewhelper.js
 !/utils/*.js
 !/index.js
 
