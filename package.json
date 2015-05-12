@@ -3,7 +3,7 @@
   "version": "0.1.6",
   "private": true,
   "scripts": {
-    "start": "node --harmony ./index.js",
+    "start": "node --harmony ./dist/index.js",
     "test": "mocha --harmony --reporter spec"
   },
   "engines": {
